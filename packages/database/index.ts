@@ -7,6 +7,8 @@ const url = new URL(connectionString!)
 const pool = new Pool({ 
   connectionString,
   ssl: {
+    // TODO: Verify if rejectUnauthorized: false is strictly necessary for Supabase in production. 
+    // If Supabase certs validate locally, we can remove this or set it to true.
     rejectUnauthorized: false,
     servername: url.hostname // Provides the sni_hostname required by Supabase Session Pooler
   }
