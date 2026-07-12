@@ -11,3 +11,4 @@ build/
 coverage/
 .prisma/
 prisma/migrations/*.sql.bak
+/generated/prisma
