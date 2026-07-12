@@ -1,0 +1,191 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+// Get a free hosted Postgres database in seconds: `npx create-db`
+
+generator client {
+  provider = "prisma-client"
+  output   = "../generated/prisma"
+}
+
+datasource db {
+  provider = "postgresql"
+}
+
+model Company {
+  id          String   @id @default(cuid())
+  name        String
+  gstNumber   String?
+  phone       String?
+  email       String?
+  address     String?
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  users       User[]
+  customers   Customer[]
+}
+
+model User {
+  id        String   @id @default(cuid())
+  clerkId   String   @unique
+  email     String   @unique
+  name      String?
+  role      UserRole @default(MEMBER)
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  tasks     Task[]
+}
+
+enum UserRole {
+  OWNER
+  ADMIN
+  MEMBER
+}
+
+model Customer {
+  id                 String    @id @default(cuid())
+  name               String
+  phone              String?
+  email              String?
+  gstNumber          String?
+  industry           String?
+  riskScore          Int       @default(0)
+  aiSummary          String?   @db.Text
+  aiSummaryUpdatedAt DateTime?
+  companyId          String
+  company            Company   @relation(fields: [companyId], references: [id])
+  createdAt          DateTime  @default(now())
+  updatedAt          DateTime  @updatedAt
+
+  invoices    Invoice[]
+  messages    Message[]
+  promises    Promise[]
+  tasks       Task[]
+}
+
+model Invoice {
+  id                String        @id @default(cuid())
+  invoiceNumber     String
+  amount            Decimal       @db.Decimal(18, 2)
+  issueDate         DateTime
+  dueDate           DateTime
+  status            InvoiceStatus @default(PENDING)
+  paidDate          DateTime?
+  outstandingAmount Decimal       @db.Decimal(18, 2)
+  customerId        String
+  customer          Customer      @relation(fields: [customerId], references: [id])
+  createdAt         DateTime      @default(now())
+  updatedAt         DateTime      @updatedAt
+
+  @@unique([customerId, invoiceNumber])
+}
+
+enum InvoiceStatus {
+  PENDING
+  OVERDUE
+  PARTIAL
+  PAID
+  DISPUTED
+}
+
+model Message {
+  id          String           @id @default(cuid())
+  customerId  String
+  customer    Customer         @relation(fields: [customerId], references: [id])
+  type        MessageType
+  direction   MessageDirection
+  content     String           @db.Text
+  aiSummary   String?          @db.Text
+  whatsappId  String?          @unique
+  timestamp   DateTime         @default(now())
+  createdAt   DateTime         @default(now())
+
+  promises    Promise[]
+}
+
+enum MessageType {
+  WHATSAPP
+  EMAIL
+  NOTE
+}
+
+enum MessageDirection {
+  INCOMING
+  OUTGOING
+}
+
+model Promise {
+  id            String        @id @default(cuid())
+  customerId    String
+  customer      Customer      @relation(fields: [customerId], references: [id])
+  messageId     String?
+  message       Message?      @relation(fields: [messageId], references: [id])
+  expectedDate  DateTime
+  amount        Decimal?      @db.Decimal(18, 2)
+  status        PromiseStatus @default(PENDING)
+  aiConfidence  Float?
+  createdByAI   Boolean       @default(false)
+  createdAt     DateTime      @default(now())
+  updatedAt     DateTime      @updatedAt
+}
+
+enum PromiseStatus {
+  PENDING
+  KEPT
+  BROKEN
+  RESCHEDULED
+}
+
+model Task {
+  id         String     @id @default(cuid())
+  customerId String
+  customer   Customer   @relation(fields: [customerId], references: [id])
+  assignedTo String?
+  user       User?      @relation(fields: [assignedTo], references: [id])
+  taskType   TaskType
+  priority   Int        @default(50)
+  reason     String
+  dueDate    DateTime?
+  status     TaskStatus @default(PENDING)
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+}
+
+enum TaskType {
+  CALL
+  SEND_REMINDER
+  ESCALATE
+  FOLLOW_UP
+  RECORD_PAYMENT
+}
+
+enum TaskStatus {
+  PENDING
+  IN_PROGRESS
+  DONE
+  SNOOZED
+  DISMISSED
+}
+
+model ImportJob {
+  id            String          @id @default(cuid())
+  companyId     String
+  fileName      String
+  status        ImportJobStatus @default(PENDING)
+  totalRows     Int?
+  processedRows Int?
+  errorLog      String?         @db.Text
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+}
+
+enum ImportJobStatus {
+  PENDING
+  PROCESSING
+  DONE
+  FAILED
+}
