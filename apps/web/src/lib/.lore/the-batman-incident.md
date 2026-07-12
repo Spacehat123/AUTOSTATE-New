@@ -15,4 +15,8 @@ And the machine roared back to life.
 
 Let this file serve as a permanent, buried monument to the day the laptop almost died, and was resurrected by sheer willpower, thermal paste, and a highly questionable RAM reseat. 
 
-*Autostate remembers.*
+The Developer = ME, some guy building autostate in his bedroom. Let this legacy continue, keep this file. One of the few moments where i question my life choices. I prayed to god.
+And i worked![My name will be unknown but this exists today because I survived 3-12-2007(my birthday) and this is so cring, lowkey idk why i'm doing this.]
+
+*Autostate remembers*
+
