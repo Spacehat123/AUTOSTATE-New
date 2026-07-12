@@ -4,7 +4,7 @@ import { cn } from '@/lib/utils'
 
 interface StatCardProps {
   title: string
-  value: string | number
+  value: React.ReactNode
   subtitle?: string
   icon?: React.ReactNode
   trend?: {
@@ -12,9 +12,10 @@ interface StatCardProps {
     direction: 'up' | 'down'
   }
   className?: string
+  valueClassName?: string
 }
 
-export function StatCard({ title, value, subtitle, icon, trend, className }: StatCardProps) {
+export function StatCard({ title, value, subtitle, icon, trend, className, valueClassName }: StatCardProps) {
   return (
     <Card className={cn("bg-surface-card border-surface-border overflow-hidden relative group", className)}>
       {/* Subtle hover effect for premium feel */}
@@ -31,7 +32,7 @@ export function StatCard({ title, value, subtitle, icon, trend, className }: Sta
         )}
       </CardHeader>
       <CardContent>
-        <div className="text-2xl font-bold text-brand-500">{value}</div>
+        <div className={cn("text-2xl font-bold text-brand-500", valueClassName)}>{value}</div>
         
         {(subtitle || trend) && (
           <div className="flex items-center mt-1 text-xs text-slate-400">
