@@ -2,8 +2,7 @@ import { inngest } from '../client'
 import { prisma } from '@autostate/database'
 
 export const promiseFollowUpCheck = (inngest.createFunction as any)(
-  { id: 'promise-follow-up-check', name: 'Promise Follow-Up Check' },
-  { cron: '30 3 * * *' }, // 3:30 AM UTC = 9:00 AM IST
+  { id: 'promise-follow-up-check', name: 'Promise Follow-Up Check', triggers: [{ cron: '30 3 * * *' }] }, // 3:30 AM UTC = 9:00 AM IST
   async ({ step }: any) => {
     // 1. Fetch pending promises where the expected date has passed
     const today = new Date()

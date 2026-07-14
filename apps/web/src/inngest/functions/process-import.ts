@@ -9,8 +9,7 @@ function getSupabase() {
 }
 
 export const processImport = (inngest.createFunction as any)(
-  { id: 'process-import', name: 'Process File Import' },
-  { event: 'import.file.uploaded' },
+  { id: 'process-import', name: 'Process File Import', triggers: [{ event: 'import.file.uploaded' }] },
   async ({ event, step }: any) => {
     const { jobId, filePath, companyId } = event.data
 
