@@ -15,6 +15,12 @@ export type { CustomerWithInvoicesAndPromises } from './prioritization'
 // Task generation engine
 export { generateTasksForCompany } from './task-generator'
 
-// AI Message Parsers
+// AI Message Parsers & Generators
 export { parseReply } from './reply-parser'
 export type { ParsedReply } from './reply-parser'
+
+export { generateCollectionMessage } from './message-generator'
+export type { MessageGenerationParams } from './message-generator'
+
+export { generateRelationshipSummary } from './relationship-summary'
+export type { RelationshipSummaryParams } from './relationship-summary'
