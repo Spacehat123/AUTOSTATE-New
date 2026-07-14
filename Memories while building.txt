@@ -1,0 +1,111 @@
+The First Green Build
+
+There was a point where every deployment ended in red.
+
+One error after another.
+
+Not because the project was doomed—because every fix uncovered the next assumption. The first green deployment wasn't luck. It was simply the moment there were no more mistakes left to find.
+
+"Batman Breaks"
+
+It started as a joke.
+
+Batman breaks. Alfred and Lucius build.
+
+But it became the way problems were approached. Break things, understand why they broke, rebuild them better. Fear of breaking things slowly disappeared.
+
+The Prayer Before Deploy
+
+Not a dramatic prayer.
+
+Just:
+
+May the environment variables be present.
+
+May the build cache stay out of the way.
+
+May next build find no more ancient API migrations.
+
+May the logs end with "Build completed."
+
+And may Gotham finally come online.
+
+A few minutes later, it did.
+
+"It Was Easy"
+
+The deployment finally worked.
+
+The first thought was:
+
+"Can't believe it was this easy."
+
+It wasn't.
+
+It only looked easy because all the hard parts had already been solved.
+
+The Import That Wasn't Deleted
+
+An AI wanted to remove imports.
+
+Something felt off.
+
+Instead of clicking "Accept," the question was simply:
+
+"Why are you deleting them?"
+
+The AI had duplicated imports earlier and was cleaning up its own mistake.
+
+That tiny pause prevented blind trust from becoming a habit.
+
+The Production URL
+
+For days it was:
+
+localhost:3000
+
+Then it became:
+
+https://autostate-official.vercel.app
+
+The application didn't change much.
+
+The feeling did.
+
+The Longest Day
+
+One day contained:
+
+Prisma
+Supabase
+Turbo
+Inngest
+Vercel
+
+Each problem looked like the final boss until the next one appeared.
+
+Looking back, it was just one long debugging session.
+
+"Phase X Done"
+
+The best moments weren't the deployment.
+
+They were the messages that kept showing up:
+
+Phase 11 done.
+
+Phase 14 done.
+
+Phase 17 complete.
+
+Tiny milestones that slowly turned an empty repository into something real.
+
+The Lesson
+
+At the beginning, every error felt like proof something was wrong.
+
+By the end, every error meant the same thing:
+
+"Good. We know what to fix next."
+
+That mindset is probably the most valuable thing you built.

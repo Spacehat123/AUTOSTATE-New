@@ -6,6 +6,7 @@
       "outputs": [".next/**", "dist/**"],
       "env": [
         "CLERK_SECRET_KEY",
+        "CLERK_WEBHOOK_SECRET",
         "NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY",
         "DATABASE_URL",
         "AI_GATEWAY_API_KEY",
