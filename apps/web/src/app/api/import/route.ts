@@ -6,9 +6,9 @@ import { inngest } from '@/inngest/client'
 
 export const dynamic = 'force-dynamic'
 
-const supabaseUrl = process.env.SUPABASE_URL!
-const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
-const supabase = createClient(supabaseUrl, supabaseKey)
+function getSupabase() {
+  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+}
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
@@ -45,7 +45,7 @@ export async function POST(request: NextRequest) {
 
     const filePath = `${user.companyId}/${timestamp}-${fileName.replace(/[^a-zA-Z0-9.-]/g, '_')}`
 
-    const { error: uploadError } = await supabase.storage
+    const { error: uploadError } = await getSupabase().storage
       .from('imports')
       .upload(filePath, buffer, {
         contentType: file.type || 'application/octet-stream',

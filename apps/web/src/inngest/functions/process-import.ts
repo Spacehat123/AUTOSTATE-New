@@ -4,7 +4,9 @@ import { createClient } from '@supabase/supabase-js'
 import { parseExcelFile } from '@autostate/importer'
 import { generateTasksForCompany } from '@autostate/ai'
 
-const supabase = createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+function getSupabase() {
+  return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
+}
 
 export const processImport = (inngest.createFunction as any)(
   { id: 'process-import', name: 'Process File Import' },
@@ -20,7 +22,7 @@ export const processImport = (inngest.createFunction as any)(
     })
 
     const parsedData = await step.run('download-and-parse', async () => {
-      const { data, error } = await supabase.storage.from('imports').download(filePath)
+      const { data, error } = await getSupabase().storage.from('imports').download(filePath)
       if (error || !data) {
         throw new Error('Failed to download file from Supabase: ' + error?.message)
       }
