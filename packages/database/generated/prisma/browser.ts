@@ -33,6 +33,11 @@ export type User = Prisma.UserModel
  */
 export type Customer = Prisma.CustomerModel
 /**
+ * Model CompanyIntegration
+ * 
+ */
+export type CompanyIntegration = Prisma.CompanyIntegrationModel
+/**
  * Model Invoice
  * 
  */

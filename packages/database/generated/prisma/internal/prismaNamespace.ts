@@ -387,6 +387,7 @@ export const ModelName = {
   Company: 'Company',
   User: 'User',
   Customer: 'Customer',
+  CompanyIntegration: 'CompanyIntegration',
   Invoice: 'Invoice',
   Message: 'Message',
   Promise: 'Promise',
@@ -407,7 +408,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "customer" | "invoice" | "message" | "promise" | "task" | "importJob"
+    modelProps: "company" | "user" | "customer" | "companyIntegration" | "invoice" | "message" | "promise" | "task" | "importJob"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -630,6 +631,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CustomerCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CustomerCountAggregateOutputType> | number
+        }
+      }
+    }
+    CompanyIntegration: {
+      payload: Prisma.$CompanyIntegrationPayload<ExtArgs>
+      fields: Prisma.CompanyIntegrationFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.CompanyIntegrationFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.CompanyIntegrationFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+        }
+        findFirst: {
+          args: Prisma.CompanyIntegrationFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.CompanyIntegrationFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+        }
+        findMany: {
+          args: Prisma.CompanyIntegrationFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>[]
+        }
+        create: {
+          args: Prisma.CompanyIntegrationCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+        }
+        createMany: {
+          args: Prisma.CompanyIntegrationCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.CompanyIntegrationCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>[]
+        }
+        delete: {
+          args: Prisma.CompanyIntegrationDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+        }
+        update: {
+          args: Prisma.CompanyIntegrationUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+        }
+        deleteMany: {
+          args: Prisma.CompanyIntegrationDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.CompanyIntegrationUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.CompanyIntegrationUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>[]
+        }
+        upsert: {
+          args: Prisma.CompanyIntegrationUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$CompanyIntegrationPayload>
+        }
+        aggregate: {
+          args: Prisma.CompanyIntegrationAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateCompanyIntegration>
+        }
+        groupBy: {
+          args: Prisma.CompanyIntegrationGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompanyIntegrationGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.CompanyIntegrationCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.CompanyIntegrationCountAggregateOutputType> | number
         }
       }
     }
@@ -1088,6 +1163,18 @@ export const CustomerScalarFieldEnum = {
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
+export const CompanyIntegrationScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  type: 'type',
+  config: 'config',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type CompanyIntegrationScalarFieldEnum = (typeof CompanyIntegrationScalarFieldEnum)[keyof typeof CompanyIntegrationScalarFieldEnum]
+
+
 export const InvoiceScalarFieldEnum = {
   id: 'id',
   invoiceNumber: 'invoiceNumber',
@@ -1175,6 +1262,13 @@ export const SortOrder = {
 export type SortOrder = (typeof SortOrder)[keyof typeof SortOrder]
 
 
+export const JsonNullValueInput = {
+  JsonNull: JsonNull
+} as const
+
+export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
 export const QueryMode = {
   default: 'default',
   insensitive: 'insensitive'
@@ -1189,6 +1283,15 @@ export const NullsOrder = {
 } as const
 
 export type NullsOrder = (typeof NullsOrder)[keyof typeof NullsOrder]
+
+
+export const JsonNullValueFilter = {
+  DbNull: DbNull,
+  JsonNull: JsonNull,
+  AnyNull: AnyNull
+} as const
+
+export type JsonNullValueFilter = (typeof JsonNullValueFilter)[keyof typeof JsonNullValueFilter]
 
 
 
@@ -1250,6 +1353,20 @@ export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'In
  * Reference to a field of type 'Int[]'
  */
 export type ListIntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Json'
+ */
+export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Json'>
+    
+
+
+/**
+ * Reference to a field of type 'QueryMode'
+ */
+export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
     
 
 
@@ -1498,6 +1615,7 @@ export type GlobalOmitConfig = {
   company?: Prisma.CompanyOmit
   user?: Prisma.UserOmit
   customer?: Prisma.CustomerOmit
+  companyIntegration?: Prisma.CompanyIntegrationOmit
   invoice?: Prisma.InvoiceOmit
   message?: Prisma.MessageOmit
   promise?: Prisma.PromiseOmit

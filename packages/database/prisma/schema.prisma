@@ -24,6 +24,7 @@ model Company {
 
   users       User[]
   customers   Customer[]
+  integrations CompanyIntegration[]
 }
 
 model User {
@@ -65,6 +66,18 @@ model Customer {
   messages    Message[]
   promises    Promise[]
   tasks       Task[]
+}
+
+model CompanyIntegration {
+  id        String   @id @default(cuid())
+  companyId String
+  company   Company  @relation(fields: [companyId], references: [id])
+  type      String   // e.g., 'EMAIL', 'WHATSAPP'
+  config    Json     // Stores credentials and settings securely
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@unique([companyId, type])
 }
 
 model Invoice {

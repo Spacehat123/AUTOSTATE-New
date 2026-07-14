@@ -1,5 +1,15 @@
-import { PageHeader } from '@/components/shared/page-header'
+import { PageHeader } from '@/components/ui/page-header'
+import { SettingsLayout } from '@/components/settings/settings-layout'
 
 export default function SettingsPage() {
-  return <PageHeader title="Settings" subtitle="Coming soon" />
+  return (
+    <div className="space-y-6">
+      <PageHeader 
+        title="Settings" 
+        subtitle="Manage your company preferences and integrations" 
+      />
+      
+      <SettingsLayout />
+    </div>
+  )
 }
