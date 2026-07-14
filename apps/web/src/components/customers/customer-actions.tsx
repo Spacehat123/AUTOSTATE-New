@@ -121,7 +121,7 @@ export function CustomerActions({ customerId }: { customerId: string }) {
         
         {/* WhatsApp Dialog */}
         <Dialog open={waOpen} onOpenChange={setWaOpen}>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <Button className="w-full bg-brand-500 hover:bg-brand-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]">
               <MessageCircle className="w-4 h-4 mr-2" />
               WhatsApp
@@ -148,7 +148,7 @@ export function CustomerActions({ customerId }: { customerId: string }) {
 
         {/* Record Payment Dialog */}
         <Dialog open={payOpen} onOpenChange={setPayOpen}>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <Button variant="outline" className="w-full border-emerald-500/30 text-emerald-400 hover:text-emerald-300 hover:bg-emerald-500/10">
               <DollarSign className="w-4 h-4 mr-2" />
               Payment
@@ -194,7 +194,7 @@ export function CustomerActions({ customerId }: { customerId: string }) {
 
         {/* Add Note Dialog */}
         <Dialog open={noteOpen} onOpenChange={setNoteOpen}>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <Button variant="outline" className="w-full border-amber-500/30 text-amber-400 hover:text-amber-300 hover:bg-amber-500/10">
               <StickyNote className="w-4 h-4 mr-2" />
               Add Note
@@ -230,7 +230,7 @@ export function CustomerActions({ customerId }: { customerId: string }) {
 
         {/* Create Reminder Dialog */}
         <Dialog open={remOpen} onOpenChange={setRemOpen}>
-          <DialogTrigger asChild>
+          <DialogTrigger>
             <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-white hover:bg-white/5">
               <Calendar className="w-4 h-4 mr-2" />
               Reminder
@@ -246,7 +246,7 @@ export function CustomerActions({ customerId }: { customerId: string }) {
             <div className="space-y-4 py-4">
               <div className="space-y-2">
                 <Label>Action Type</Label>
-                <Select value={remType} onValueChange={setRemType}>
+                <Select value={remType} onValueChange={(v) => setRemType(v || 'CALL')}>
                   <SelectTrigger className="bg-black/20 border-surface-border">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>

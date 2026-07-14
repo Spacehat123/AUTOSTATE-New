@@ -26,7 +26,7 @@ export function MobileHeader() {
       <Logo />
       
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
+        <SheetTrigger>
           <Button variant="ghost" size="icon" className="text-zinc-400 hover:text-white">
             <Menu className="w-6 h-6" />
             <span className="sr-only">Toggle menu</span>

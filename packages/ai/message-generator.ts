@@ -60,7 +60,7 @@ INSTRUCTIONS:
 
   try {
     const { text } = await generateText({
-      model: fastModel,
+      model: fastModel as any,
       prompt
     })
 

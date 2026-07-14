@@ -120,12 +120,12 @@ export async function generateTasksForCompany(companyId: string): Promise<void> 
     }
   })
 
-  const customerIds = customers.map(c => c.id)
+  const customerIds = customers.map((c: any) => c.id)
   const processedCustomerIds: string[] = []
 
   for (const customer of customers) {
     const overdueInvoices = customer.invoices.filter(
-      inv => inv.status === 'OVERDUE' || inv.status === 'PARTIAL'
+      (inv: any) => inv.status === 'OVERDUE' || inv.status === 'PARTIAL'
     )
 
     // Skip customers with no overdue invoices — clean up their tasks below
@@ -169,7 +169,7 @@ export async function generateTasksForCompany(companyId: string): Promise<void> 
   }
 
   // 4. Delete stale PENDING tasks for customers who no longer have overdue invoices
-  const staleCustomerIds = customerIds.filter(id => !processedCustomerIds.includes(id))
+  const staleCustomerIds = customerIds.filter((id: string) => !processedCustomerIds.includes(id))
 
   if (staleCustomerIds.length > 0) {
     await prisma.task.deleteMany({

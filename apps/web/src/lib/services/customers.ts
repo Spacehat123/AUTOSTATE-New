@@ -76,7 +76,7 @@ export async function getCustomers({
       }
     }
 
-    const lastContact = customer.messages.length > 0 ? customer.messages[0].timestamp : null
+    const lastContact = customer.messages.length > 0 ? customer.messages[0]?.timestamp ?? null : null
     const { invoices, messages, ...rest } = customer
 
     return {

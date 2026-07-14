@@ -156,9 +156,11 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
                     {customer.lastContact ? formatDistanceToNow(new Date(customer.lastContact), { addSuffix: true }) : 'Never'}
                   </TableCell>
                   <TableCell className="text-right pr-6">
-                    <Button asChild size="sm" variant="outline" className="opacity-0 group-hover:opacity-100 transition-opacity border-brand-500/20 text-brand-400 hover:bg-brand-500/10 hover:text-brand-300">
-                      <Link href={`/customers/${customer.id}`}>View</Link>
-                    </Button>
+                    <Link href={`/customers/${customer.id}`}>
+                      <Button size="sm" variant="outline" className="opacity-0 group-hover:opacity-100 transition-opacity border-brand-500/20 text-brand-400 hover:bg-brand-500/10 hover:text-brand-300">
+                        View
+                      </Button>
+                    </Link>
                   </TableCell>
                 </TableRow>
               ))

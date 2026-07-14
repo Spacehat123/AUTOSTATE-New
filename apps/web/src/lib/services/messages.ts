@@ -31,19 +31,18 @@ export async function getMessageInbox(companyId: string) {
     }
   })
 
-  // Count unread (INCOMING with no task) per customer in one query
+  // Count unread (INCOMING) per customer in one query
   const unreadCounts = await prisma.message.groupBy({
     by: ['customerId'],
     where: {
       customer: { companyId },
-      direction: 'INCOMING',
-      taskId: null
+      direction: 'INCOMING'
     },
     _count: { id: true }
   })
 
   const unreadMap = new Map(
-    unreadCounts.map(r => [r.customerId, r._count.id])
+    unreadCounts.map((r: any) => [r.customerId, r._count?.id ?? 0])
   )
 
   // Shape and sort by most recent message timestamp

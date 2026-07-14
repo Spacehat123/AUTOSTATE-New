@@ -47,7 +47,7 @@ export async function PATCH(
     // 3. Perform mutation
     const updatedTask = await prisma.task.update({
       where: { id },
-      data: { status }
+      data: { status: status === 'COMPLETED' ? 'DONE' : status }
     })
     
     return NextResponse.json(updatedTask)

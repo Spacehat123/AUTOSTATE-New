@@ -1,6 +1,6 @@
 'use client'
 
-import { ErrorState } from '@/components/ui/error-state'
+import { ErrorState } from '@/components/shared/error-state'
 
 export default function ReportsError({
   error,
@@ -14,7 +14,7 @@ export default function ReportsError({
       <ErrorState 
         title="Failed to load reports"
         description={error.message || "Something went wrong while fetching your financial metrics."}
-        retryAction={reset}
+        retry={reset}
       />
     </div>
   )

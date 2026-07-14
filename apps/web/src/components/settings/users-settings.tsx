@@ -126,7 +126,7 @@ export function UsersSettings() {
             <div className="col-span-5 flex justify-end">
               <Select
                 value={user.role}
-                onValueChange={(val) => handleRoleChange(user.id, val)}
+                onValueChange={(val) => handleRoleChange(user.id, val || 'MEMBER')}
               >
                 <SelectTrigger className="w-[130px] h-9 bg-black/20 border-surface-border">
                   <SelectValue />

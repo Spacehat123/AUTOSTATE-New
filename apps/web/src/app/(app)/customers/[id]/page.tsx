@@ -11,7 +11,6 @@ import {
 import { InvoiceList } from '@/components/customers/invoice-list'
 import { CommunicationTimeline } from '@/components/customers/communication-timeline'
 import { CustomerActions } from '@/components/customers/customer-actions'
-import { CommunicationTimeline } from '@/components/customers/communication-timeline'
 
 export default async function CustomerProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser()

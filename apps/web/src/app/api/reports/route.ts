@@ -94,7 +94,7 @@ export async function GET(request: NextRequest) {
         }
       }
       const amt = typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : inv.outstandingAmount.toNumber()
-      customerBalances[inv.customerId].outstanding += amt
+      customerBalances[inv.customerId]!.outstanding += amt
     }
 
     const topDelayedCustomers = Object.values(customerBalances)

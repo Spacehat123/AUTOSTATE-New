@@ -40,7 +40,7 @@ function getAvatarColor(name: string): string {
   for (let i = 0; i < name.length; i++) {
     hash = name.charCodeAt(i) + ((hash << 5) - hash)
   }
-  return colors[Math.abs(hash) % colors.length]
+  return colors[Math.abs(hash) % colors.length]!
 }
 
 export function MessageInbox({ conversations, selectedId, onSelect }: MessageInboxProps) {

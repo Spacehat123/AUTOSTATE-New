@@ -1,5 +1,5 @@
 import { Loader2 } from 'lucide-react'
-import { PageHeader } from '@/components/ui/page-header'
+import { PageHeader } from '@/components/shared/page-header'
 
 export default function ReportsLoading() {
   return (

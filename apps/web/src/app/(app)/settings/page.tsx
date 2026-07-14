@@ -1,4 +1,4 @@
-import { PageHeader } from '@/components/ui/page-header'
+import { PageHeader } from '@/components/shared/page-header'
 import { SettingsLayout } from '@/components/settings/settings-layout'
 
 export default function SettingsPage() {

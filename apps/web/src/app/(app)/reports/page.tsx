@@ -1,11 +1,11 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { PageHeader } from '@/components/ui/page-header'
-import { StatCard } from '@/components/ui/stat-card'
+import { PageHeader } from '@/components/shared/page-header'
+import { StatCard } from '@/components/shared/stat-card'
 import { Button } from '@/components/ui/button'
 import { Loader2, TrendingUp, Clock, AlertCircle, CheckCircle2 } from 'lucide-react'
-import { CurrencyDisplay } from '@/components/ui/currency-display'
+import { CurrencyDisplay } from '@/components/shared/currency-display'
 import { toast } from 'sonner'
 import {
   LineChart,
@@ -212,7 +212,7 @@ export default function ReportsPage() {
                         </div>
                       </div>
                       <div className="font-medium text-rose-400 shrink-0">
-                        <CurrencyDisplay amount={customer.outstanding} />
+                        <CurrencyDisplay value={customer.outstanding} compact className="font-semibold text-rose-500" />
                       </div>
                     </div>
                   ))}

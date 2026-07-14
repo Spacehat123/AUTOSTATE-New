@@ -83,7 +83,7 @@ INSTRUCTIONS:
 
   try {
     const { text } = await generateText({
-      model: summaryModel, // We use the higher-quality model here for better nuance
+      model: summaryModel as any, // We use the higher-quality model here for better nuance
       prompt
     })
 
