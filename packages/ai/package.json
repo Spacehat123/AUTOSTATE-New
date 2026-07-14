@@ -5,15 +5,17 @@
   "main": "index.ts",
   "private": true,
   "scripts": {
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test": "vitest run"
   },
   "dependencies": {
     "@ai-sdk/gateway": "^1.0.41",
+    "@autostate/database": "workspace:*",
     "ai": "^4.3.19",
-    "zod": "^3.23.8",
-    "@autostate/database": "workspace:*"
+    "zod": "^3.23.8"
   },
   "devDependencies": {
-    "typescript": "^5.0.0"
+    "typescript": "^5.0.0",
+    "vitest": "^4.1.10"
   }
 }
