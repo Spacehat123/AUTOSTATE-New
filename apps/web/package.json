@@ -12,10 +12,12 @@
   "dependencies": {
     "@autostate/ai": "workspace:^",
     "@autostate/database": "workspace:^",
+    "@autostate/importer": "workspace:^",
     "@base-ui/react": "^1.6.0",
     "@clerk/nextjs": "^7.5.17",
     "@google/generative-ai": "^0.24.1",
     "@prisma/client": "^7.8.0",
+    "@supabase/supabase-js": "^2.110.4",
     "axios": "^1.18.1",
     "class-variance-authority": "^0.7.1",
     "clsx": "^2.1.1",

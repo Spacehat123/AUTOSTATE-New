@@ -1,0 +1,16 @@
+{
+  "name": "@autostate/importer",
+  "version": "1.0.0",
+  "description": "Data importer service module for Autostate",
+  "main": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  },
+  "devDependencies": {
+    "@types/node": "^20.19.43",
+    "typescript": "^5.9.3"
+  }
+}

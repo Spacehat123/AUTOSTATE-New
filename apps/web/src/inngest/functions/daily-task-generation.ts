@@ -5,7 +5,7 @@ import { generateTasksForCompany } from '@autostate/ai'
 export const dailyTaskGeneration = (inngest.createFunction as any)(
   { id: 'daily-task-generation', name: 'Daily Task Generation' },
   { cron: '30 1 * * *' }, // 1:30 AM UTC = 7:00 AM IST
-  async ({ step }) => {
+  async ({ step }: any) => {
     // 1. Fetch all companies
     const companies = await step.run('fetch-companies', async () => {
       return prisma.company.findMany({ select: { id: true } })

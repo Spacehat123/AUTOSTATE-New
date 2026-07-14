@@ -130,7 +130,7 @@ export default function ReportsPage() {
               title="Total Outstanding"
               value={`₹${data.totalOutstanding.toLocaleString('en-IN')}`}
               icon={<AlertCircle className="w-4 h-4 text-rose-400" />}
-              trend={{ value: 0, label: 'All time', isPositive: false }}
+              trend={{ value: 0, direction: 'up' }}
             />
             <StatCard
               title={`Collected This ${period.charAt(0).toUpperCase() + period.slice(1)}`}

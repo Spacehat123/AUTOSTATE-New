@@ -1,8 +1,14 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
+import { createClient } from '@supabase/supabase-js'
+import { inngest } from '@/inngest/client'
 
 export const dynamic = 'force-dynamic'
+
+const supabaseUrl = process.env.SUPABASE_URL!
+const supabaseKey = process.env.SUPABASE_SERVICE_ROLE_KEY!
+const supabase = createClient(supabaseUrl, supabaseKey)
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
@@ -32,7 +38,25 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'No file uploaded' }, { status: 400 })
     }
 
-    // Create a pending job
+    const arrayBuffer = await file.arrayBuffer()
+    const buffer = Buffer.from(arrayBuffer)
+    const timestamp = Date.now()
+    const fileName = file.name
+
+    const filePath = `${user.companyId}/${timestamp}-${fileName.replace(/[^a-zA-Z0-9.-]/g, '_')}`
+
+    const { error: uploadError } = await supabase.storage
+      .from('imports')
+      .upload(filePath, buffer, {
+        contentType: file.type || 'application/octet-stream',
+        upsert: false
+      })
+
+    if (uploadError) {
+      console.error('[IMPORT_UPLOAD_ERROR]', uploadError)
+      return NextResponse.json({ error: 'Failed to upload file to storage' }, { status: 500 })
+    }
+
     const job = await prisma.importJob.create({
       data: {
         companyId: user.companyId,
@@ -41,7 +65,14 @@ export async function POST(request: NextRequest) {
       }
     })
 
-    // NOTE: In Phase 16, we will trigger an Inngest background function here to process the file.
+    await inngest.send({
+      name: 'import.file.uploaded',
+      data: {
+        jobId: job.id,
+        filePath,
+        companyId: user.companyId
+      }
+    })
 
     return NextResponse.json(job)
   } catch (error) {
