@@ -31,8 +31,7 @@ export async function POST(request: NextRequest) {
   } catch (error: any) {
     console.error('[SETTINGS_WHATSAPP_TEST]', error)
     return NextResponse.json({ 
-      error: 'Failed to send test message. Check your WhatsApp Cloud API credentials.',
-      details: error?.message
+      error: error?.message || 'Failed to send test message. Check your WhatsApp Cloud API credentials.'
     }, { status: 500 })
   }
 }
