@@ -1,0 +1,56 @@
+import { z } from 'zod'
+
+const envSchema = z.object({
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: z.string().min(1),
+  CLERK_SECRET_KEY: z.string().min(1),
+  NEXT_PUBLIC_CLERK_SIGN_IN_URL: z.string().min(1),
+  NEXT_PUBLIC_CLERK_SIGN_UP_URL: z.string().min(1),
+  NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: z.string().min(1),
+  NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: z.string().min(1),
+  CLERK_WEBHOOK_SECRET: z.string().min(1),
+
+  DATABASE_URL: z.string().min(1),
+
+  AI_GATEWAY_API_KEY: z.string().min(1),
+  AI_FAST_MODEL: z.string().min(1),
+  AI_SUMMARY_MODEL: z.string().min(1),
+
+  WHATSAPP_ACCESS_TOKEN: z.string().min(1),
+  WHATSAPP_PHONE_NUMBER_ID: z.string().min(1),
+  WHATSAPP_VERIFY_TOKEN: z.string().min(1),
+
+  SUPABASE_URL: z.string().url(),
+  SUPABASE_ANON_KEY: z.string().min(1),
+  SUPABASE_SERVICE_ROLE_KEY: z.string().min(1),
+
+  INNGEST_EVENT_KEY: z.string().min(1),
+  INNGEST_SIGNING_KEY: z.string().min(1),
+
+  SENTRY_DSN: z.string().optional(),
+
+  NEXT_PUBLIC_APP_URL: z.string().url(),
+})
+
+export const env = envSchema.parse({
+  NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY: process.env.NEXT_PUBLIC_CLERK_PUBLISHABLE_KEY,
+  CLERK_SECRET_KEY: process.env.CLERK_SECRET_KEY,
+  NEXT_PUBLIC_CLERK_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_IN_URL,
+  NEXT_PUBLIC_CLERK_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_SIGN_UP_URL,
+  NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_IN_URL,
+  NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL: process.env.NEXT_PUBLIC_CLERK_AFTER_SIGN_UP_URL,
+  CLERK_WEBHOOK_SECRET: process.env.CLERK_WEBHOOK_SECRET,
+  DATABASE_URL: process.env.DATABASE_URL,
+  AI_GATEWAY_API_KEY: process.env.AI_GATEWAY_API_KEY,
+  AI_FAST_MODEL: process.env.AI_FAST_MODEL,
+  AI_SUMMARY_MODEL: process.env.AI_SUMMARY_MODEL,
+  WHATSAPP_ACCESS_TOKEN: process.env.WHATSAPP_ACCESS_TOKEN,
+  WHATSAPP_PHONE_NUMBER_ID: process.env.WHATSAPP_PHONE_NUMBER_ID,
+  WHATSAPP_VERIFY_TOKEN: process.env.WHATSAPP_VERIFY_TOKEN,
+  SUPABASE_URL: process.env.SUPABASE_URL,
+  SUPABASE_ANON_KEY: process.env.SUPABASE_ANON_KEY,
+  SUPABASE_SERVICE_ROLE_KEY: process.env.SUPABASE_SERVICE_ROLE_KEY,
+  INNGEST_EVENT_KEY: process.env.INNGEST_EVENT_KEY,
+  INNGEST_SIGNING_KEY: process.env.INNGEST_SIGNING_KEY,
+  SENTRY_DSN: process.env.SENTRY_DSN,
+  NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+})
