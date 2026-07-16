@@ -4,151 +4,112 @@ import React from 'react'
 
 export function StorySection() {
   return (
-    <section className="relative w-full py-24 sm:py-32 px-6 md:px-12 lg:px-24 bg-[#fafafa]">
-      <div className="max-w-3xl mx-auto text-center mb-20 sm:mb-24">
-        <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-serif text-zinc-900 tracking-tight leading-[1.1]">
-          One customer. One message.<br />
-          <span className="text-zinc-400">Everything handled.</span>
-        </h2>
-      </div>
+    <section className="relative w-full py-32 px-6 md:px-12 lg:px-24 bg-white overflow-hidden">
+      <div className="absolute inset-0 bg-[radial-gradient(circle_at_top,rgba(0,0,0,0.02),transparent_50%)]"></div>
+      
+      <div className="max-w-5xl mx-auto relative z-10">
+        
+        {/* Header */}
+        <div className="text-center mb-24">
+          <h2 className="text-4xl sm:text-5xl lg:text-6xl font-bold font-serif text-zinc-900 tracking-tight leading-[1.1]">
+            One simple message.<br />
+            <span className="text-zinc-400">Three automated actions.</span>
+          </h2>
+          <p className="mt-6 text-lg text-zinc-500 max-w-xl mx-auto">
+            See how the AutoState engine processes incoming requests and orchestrates your entire tech stack instantly.
+          </p>
+        </div>
 
-      <div className="relative max-w-2xl mx-auto mt-12">
-        {/* Central Wire */}
-        <div className="absolute top-0 bottom-12 left-[28px] sm:left-1/2 sm:-translate-x-1/2 w-px bg-gradient-to-b from-transparent via-black/10 to-transparent"></div>
-
-        {/* 1. Customer Message (Incoming WhatsApp) */}
-        <div className="relative z-10 flex flex-col sm:flex-row items-start sm:items-center w-full mb-16">
-          <div className="hidden sm:flex w-1/2 pr-12 justify-end">
-            <div className="relative">
-              {/* WhatsApp Incoming Bubble */}
-              <div className="bg-white px-4 py-3 rounded-2xl rounded-tr-none shadow-[0_2px_4px_rgba(0,0,0,0.05)] border border-black/[0.02] max-w-[260px] relative">
-                <div className="absolute top-0 -right-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(0 0, 0 100%, 100% 0)' }}></div>
-                <div className="text-[14px] text-[#111b21] leading-snug pr-2">Can you send me the invoice?</div>
-                <div className="text-[10px] text-zinc-400 mt-1.5 text-right font-medium">10:42 AM</div>
-              </div>
-              
-              {/* Connector dot */}
-              <div className="absolute top-1/2 -translate-y-1/2 -right-[54px] w-3 h-3 rounded-full border-[3px] border-[#fafafa] bg-zinc-300"></div>
-            </div>
-          </div>
+        {/* The Magic Engine Visual */}
+        <div className="relative flex flex-col items-center">
           
-          {/* Mobile version */}
-          <div className="sm:hidden pl-16 relative w-full">
-            <div className="absolute top-1/2 -translate-y-1/2 left-[23px] w-3 h-3 rounded-full border-[3px] border-[#fafafa] bg-zinc-300"></div>
-            <div className="bg-white px-4 py-3 rounded-2xl rounded-tl-none shadow-[0_2px_4px_rgba(0,0,0,0.05)] border border-black/[0.02] max-w-[260px] relative">
-              <div className="absolute top-0 -left-2 w-4 h-4 bg-white" style={{ clipPath: 'polygon(100% 0, 100% 100%, 0 0)' }}></div>
-              <div className="text-[14px] text-[#111b21] leading-snug">Can you send me the invoice?</div>
-              <div className="text-[10px] text-zinc-400 mt-1.5 text-right font-medium">10:42 AM</div>
-            </div>
-          </div>
-        </div>
-
-        {/* 2. AutoState Hub */}
-        <div className="relative z-20 flex justify-start sm:justify-center mb-16 pl-[10px] sm:pl-0">
-          <div className="bg-zinc-900 text-white rounded-full px-5 py-2.5 text-sm font-semibold flex items-center gap-2.5 shadow-[0_12px_24px_rgba(0,0,0,0.15)] ring-[6px] ring-[#fafafa]">
-            <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" /></svg>
-            AutoState AI
-          </div>
-        </div>
-
-        {/* 3. Action 1: Creates invoice */}
-        <VisualAction side="right">
-          <div className="bg-white border border-black/5 shadow-[0_8px_16px_-6px_rgba(0,0,0,0.05)] rounded-xl p-4 w-56 transform rotate-1 hover:rotate-0 transition-transform">
-            <div className="flex justify-between items-center mb-3 border-b border-black/5 pb-2">
-              <div className="w-12 h-3 bg-zinc-200 rounded-sm"></div>
-              <div className="text-[12px] font-bold text-zinc-900 font-serif">$4,200</div>
-            </div>
-            <div className="space-y-2">
-              <div className="flex justify-between items-center"><div className="w-full h-1.5 bg-zinc-100 rounded-sm mr-4"></div><div className="w-6 h-1.5 bg-zinc-200 rounded-sm"></div></div>
-              <div className="flex justify-between items-center"><div className="w-3/4 h-1.5 bg-zinc-100 rounded-sm mr-4"></div><div className="w-6 h-1.5 bg-zinc-200 rounded-sm"></div></div>
-              <div className="flex justify-between items-center"><div className="w-5/6 h-1.5 bg-zinc-100 rounded-sm mr-4"></div><div className="w-6 h-1.5 bg-zinc-200 rounded-sm"></div></div>
-            </div>
-            <div className="mt-4 pt-3 border-t border-black/5 text-[10px] font-semibold text-zinc-400 uppercase tracking-wider text-center">Invoice Generated</div>
-          </div>
-        </VisualAction>
-        
-        {/* 4. Action 2: Replies on WhatsApp (Outgoing) */}
-        <VisualAction side="left">
-          <div className="bg-[#dcf8c6] px-4 py-3 rounded-2xl rounded-tr-none shadow-[0_2px_4px_rgba(0,0,0,0.05)] border border-black/[0.02] w-56 relative -rotate-1 hover:rotate-0 transition-transform">
-            <div className="absolute top-0 -right-2 w-4 h-4 bg-[#dcf8c6]" style={{ clipPath: 'polygon(0 0, 0 100%, 100% 0)' }}></div>
-            <div className="text-[14px] text-[#111b21] leading-snug">Sent! The invoice is due in 14 days.</div>
-            <div className="flex justify-end items-center gap-1 mt-1.5">
-              <div className="text-[10px] text-zinc-500 font-medium">10:42 AM</div>
-              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="#53bdeb" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-          </div>
-        </VisualAction>
-        
-        {/* 5. Action 3: Creates follow-up task */}
-        <VisualAction side="right">
-          <div className="bg-white border border-black/5 shadow-[0_8px_16px_-6px_rgba(0,0,0,0.05)] rounded-xl p-3.5 flex items-start gap-3 w-56 rotate-1 hover:rotate-0 transition-transform">
-            <div className="w-5 h-5 rounded-md bg-blue-500 text-white flex items-center justify-center shrink-0 shadow-sm mt-0.5">
-              <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
-            </div>
-            <div className="flex-1">
-              <div className="text-[13px] font-semibold text-zinc-800 leading-tight">Follow up on payment</div>
-              <div className="text-[11px] font-medium text-blue-500 mt-1 flex items-center gap-1">
-                <svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg>
-                Next Friday
+          {/* Step 1: Incoming Message */}
+          <div className="relative z-20 mb-8 transition-transform hover:scale-105 group">
+            <div className="absolute -inset-4 bg-green-500/10 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition duration-500"></div>
+            <div className="bg-white border border-zinc-200 shadow-xl rounded-2xl p-4 sm:px-6 flex items-center gap-4 relative">
+              <div className="w-10 h-10 rounded-full bg-[#25D366]/10 flex items-center justify-center shrink-0 text-[#25D366]">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </div>
+              <div>
+                <div className="text-[13px] font-semibold text-zinc-900">Client: "Can you send the invoice?"</div>
+                <div className="text-[11px] text-zinc-500 font-medium">WhatsApp • 10:42 AM</div>
               </div>
             </div>
           </div>
-        </VisualAction>
-        
-        {/* 6. Action 4: Updates customer history */}
-        <VisualAction side="left">
-          <div className="bg-white border border-black/5 shadow-[0_8px_16px_-6px_rgba(0,0,0,0.05)] rounded-xl p-3.5 w-60 flex gap-3 items-center -rotate-1 hover:rotate-0 transition-transform">
-            <div className="w-10 h-10 rounded-full bg-zinc-100 flex items-center justify-center shrink-0 border border-black/5">
-              <div className="text-[15px] font-serif font-bold text-zinc-500">A</div>
-            </div>
-            <div>
-              <div className="text-[13px] font-bold text-zinc-900">Alex (Client)</div>
-              <div className="text-[11px] text-zinc-500 flex items-center gap-1.5 mt-0.5 font-medium">
-                <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
-                Profile updated
+
+          {/* Vertical Connecting Line */}
+          <div className="w-px h-12 bg-gradient-to-b from-zinc-200 to-zinc-400"></div>
+
+          {/* Step 2: AutoState Brain */}
+          <div className="relative z-20 group">
+            <div className="absolute -inset-8 bg-zinc-900/5 blur-2xl rounded-full opacity-50 group-hover:opacity-100 transition duration-700"></div>
+            <div className="bg-zinc-900 text-white border border-zinc-800 shadow-[0_20px_40px_rgba(0,0,0,0.2)] rounded-[2.5rem] p-8 w-64 text-center relative transform transition-transform hover:scale-105">
+              <div className="w-16 h-16 mx-auto bg-white/10 rounded-2xl flex items-center justify-center mb-5 backdrop-blur-md border border-white/10">
+                <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" /></svg>
               </div>
+              <div className="font-serif text-2xl font-bold mb-1">AutoState</div>
+              <div className="text-[10px] text-zinc-400 font-bold uppercase tracking-[0.2em]">Processing Engine</div>
             </div>
           </div>
-        </VisualAction>
 
+          {/* Branching Lines (Desktop) */}
+          <div className="hidden md:block w-full max-w-3xl relative h-16 mt-[-1px] z-10">
+            {/* Center line */}
+            <div className="absolute top-0 left-1/2 w-px h-full bg-gradient-to-b from-zinc-400 to-zinc-200"></div>
+            {/* Left branch */}
+            <div className="absolute top-8 left-12 right-1/2 h-px bg-zinc-300"></div>
+            <div className="absolute top-8 left-12 w-px h-8 bg-gradient-to-b from-zinc-300 to-zinc-200"></div>
+            {/* Right branch */}
+            <div className="absolute top-8 left-1/2 right-12 h-px bg-zinc-300"></div>
+            <div className="absolute top-8 right-12 w-px h-8 bg-gradient-to-b from-zinc-300 to-zinc-200"></div>
+          </div>
+
+          {/* Branching Lines (Mobile) */}
+          <div className="md:hidden w-px h-16 bg-gradient-to-b from-zinc-400 to-zinc-200 z-10 mt-[-1px]"></div>
+
+          {/* Step 3: Outcomes Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full relative z-20">
+            
+            {/* Outcome 1: Invoice */}
+            <div className="bg-white border border-zinc-100 shadow-xl shadow-black/[0.03] rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl group relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-blue-50 text-blue-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg>
+              </div>
+              <div className="text-[15px] font-bold text-zinc-900 mb-2 font-serif">Invoice Generated</div>
+              <div className="text-[13px] text-zinc-500 font-medium leading-relaxed">Drafted a $4,200 PDF invoice directly in Stripe.</div>
+            </div>
+            
+            {/* Outcome 2: WhatsApp Reply */}
+            <div className="bg-white border border-zinc-100 shadow-xl shadow-black/[0.03] rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl group relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-green-50 text-green-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
+              </div>
+              <div className="text-[15px] font-bold text-zinc-900 mb-2 font-serif">Reply Sent</div>
+              <div className="text-[13px] text-zinc-500 font-medium leading-relaxed">"Sent! The invoice is due in 14 days."</div>
+            </div>
+            
+            {/* Outcome 3: CRM Update */}
+            <div className="bg-white border border-zinc-100 shadow-xl shadow-black/[0.03] rounded-3xl p-8 transition-all hover:-translate-y-2 hover:shadow-2xl group relative overflow-hidden">
+              <div className="absolute top-0 right-0 p-4 opacity-5 group-hover:opacity-10 transition-opacity">
+                <svg width="60" height="60" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div className="w-12 h-12 rounded-2xl bg-purple-50 text-purple-500 flex items-center justify-center mb-6 group-hover:scale-110 transition-transform">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path><circle cx="12" cy="7" r="4"></circle></svg>
+              </div>
+              <div className="text-[15px] font-bold text-zinc-900 mb-2 font-serif">CRM Updated</div>
+              <div className="text-[13px] text-zinc-500 font-medium leading-relaxed">Client profile automatically marked as "Invoice Sent".</div>
+            </div>
+
+          </div>
+
+        </div>
       </div>
     </section>
-  )
-}
-
-function VisualAction({ side, children }: { side: 'left' | 'right', children: React.ReactNode }) {
-  const isLeft = side === 'left'
-  
-  return (
-    <div className="relative z-10 flex flex-col sm:flex-row items-center w-full mb-12">
-      {isLeft ? (
-        <div className="hidden sm:flex w-1/2 pr-10 justify-end">
-          <div className="relative">
-            {children}
-            <div className="absolute top-1/2 -translate-y-1/2 -right-[46px] w-2.5 h-2.5 rounded-full border-[2px] border-[#fafafa] bg-[#16a34a]"></div>
-          </div>
-        </div>
-      ) : (
-        <div className="hidden sm:block w-1/2"></div>
-      )}
-
-      {/* Right side (Desktop) */}
-      {!isLeft ? (
-        <div className="hidden sm:flex w-1/2 pl-10 text-left">
-          <div className="relative">
-            <div className="absolute top-1/2 -translate-y-1/2 -left-[46px] w-2.5 h-2.5 rounded-full border-[2px] border-[#fafafa] bg-[#16a34a]"></div>
-            {children}
-          </div>
-        </div>
-      ) : (
-        <div className="hidden sm:block w-1/2"></div>
-      )}
-
-      {/* Mobile version (Always on the right of the line) */}
-      <div className="sm:hidden pl-12 relative w-full flex justify-start">
-        <div className="absolute top-1/2 -translate-y-1/2 left-[25px] w-2.5 h-2.5 rounded-full border-[2px] border-[#fafafa] bg-[#16a34a]"></div>
-        {children}
-      </div>
-    </div>
   )
 }

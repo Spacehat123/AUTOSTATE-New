@@ -39,62 +39,30 @@ export async function POST(request: NextRequest) {
 
   try {
     const body = await request.json()
+    const headers = Object.fromEntries(request.headers.entries())
 
-    // Meta wraps everything in a nested structure:
-    // body.entry[].changes[].value.messages[]
-    const entry = body?.entry?.[0]
-    const change = entry?.changes?.[0]
-    const value = change?.value
-
-    // Ignore status updates (delivered, read receipts, etc.)
-    if (!value?.messages || value.messages.length === 0) {
-      return respond()
-    }
-
-    const msg = value.messages[0]
-
-    // We only handle plain text messages for now
-    if (msg?.type !== 'text') {
-      return respond()
-    }
-
-    const from: string = msg.from            // e.g. "919876543210"
-    const whatsappId: string = msg.id        // Meta's unique message ID
-    const text: string = msg.text?.body ?? ''
-    const timestamp = new Date(Number(msg.timestamp) * 1000) // Unix → JS Date
-
-    // Normalise the phone to E.164 style for DB look-up (add + prefix)
-    const normalizedPhone = from.startsWith('+') ? from : `+${from}`
-
-    // Find matching customer by phone number
-    const customer = await prisma.customer.findFirst({
-      where: { phone: normalizedPhone }
-    })
-
-    if (!customer) {
-      console.warn(`[WHATSAPP_WEBHOOK] No customer found for phone ${normalizedPhone}`)
-      return respond()
-    }
-
-    // Persist the incoming message
-    const message = await prisma.message.create({
+    // 1. Durably store the exact raw payload first.
+    // We do NO parsing, NO customer lookups, NO AI processing here.
+    const inboxEvent = await prisma.inboxEvent.create({
       data: {
-        customerId: customer.id,
-        direction: 'INCOMING',
-        type: 'WHATSAPP',
-        content: text,
-        timestamp,
-        whatsappId
+        provider: 'WHATSAPP',
+        payload: body,
+        headers: headers
       }
     })
 
-    // Fire an Inngest event so the AI reply-parser worker can pick it up
+    // 2. Dispatch to the async queue. Inngest handles retries and state.
     await inngest.send({
-      name: 'whatsapp/message.received',
-      data: { messageId: message.id, customerId: customer.id }
+      name: 'inbox.whatsapp.received',
+      data: { inboxEventId: inboxEvent.id }
     })
 
-    console.log(`[WHATSAPP_WEBHOOK] Stored message ${message.id} from ${normalizedPhone}`)
+    // 3. Mark as QUEUED. If this fails, the event is still safe in RECEIVED state.
+    await prisma.inboxEvent.update({
+      where: { id: inboxEvent.id },
+      data: { status: 'QUEUED' }
+    })
+
     return respond()
   } catch (error) {
     // Log but still return 200 so Meta doesn't retry and flood us

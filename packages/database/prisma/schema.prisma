@@ -9,23 +9,21 @@ generator client {
 }
 
 datasource db {
-  provider  = "postgresql"
-  url       = env("DATABASE_URL")
-  directUrl = env("DIRECT_URL")
+  provider = "postgresql"
 }
 
 model Company {
-  id          String   @id @default(cuid())
-  name        String
-  gstNumber   String?
-  phone       String?
-  email       String?
-  address     String?
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id        String   @id @default(cuid())
+  name      String
+  gstNumber String?
+  phone     String?
+  email     String?
+  address   String?
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
-  users       User[]
-  customers   Customer[]
+  users        User[]
+  customers    Customer[]
   integrations CompanyIntegration[]
 }
 
@@ -40,7 +38,7 @@ model User {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
-  tasks     Task[]
+  tasks Task[]
 }
 
 enum UserRole {
@@ -64,18 +62,18 @@ model Customer {
   createdAt          DateTime  @default(now())
   updatedAt          DateTime  @updatedAt
 
-  invoices    Invoice[]
-  messages    Message[]
-  promises    Promise[]
-  tasks       Task[]
+  invoices Invoice[]
+  messages Message[]
+  promises Promise[]
+  tasks    Task[]
 }
 
 model CompanyIntegration {
   id        String   @id @default(cuid())
   companyId String
   company   Company  @relation(fields: [companyId], references: [id])
-  type      String   // e.g., 'EMAIL', 'WHATSAPP'
-  config    Json     // Stores credentials and settings securely
+  type      String // e.g., 'EMAIL', 'WHATSAPP'
+  config    Json // Stores credentials and settings securely
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 
@@ -108,18 +106,18 @@ enum InvoiceStatus {
 }
 
 model Message {
-  id          String           @id @default(cuid())
-  customerId  String
-  customer    Customer         @relation(fields: [customerId], references: [id])
-  type        MessageType
-  direction   MessageDirection
-  content     String           @db.Text
-  aiSummary   String?          @db.Text
-  whatsappId  String?          @unique
-  timestamp   DateTime         @default(now())
-  createdAt   DateTime         @default(now())
+  id         String           @id @default(cuid())
+  customerId String
+  customer   Customer         @relation(fields: [customerId], references: [id])
+  type       MessageType
+  direction  MessageDirection
+  content    String           @db.Text
+  aiSummary  String?          @db.Text
+  whatsappId String?          @unique
+  timestamp  DateTime         @default(now())
+  createdAt  DateTime         @default(now())
 
-  promises    Promise[]
+  promises Promise[]
 }
 
 enum MessageType {
@@ -134,18 +132,18 @@ enum MessageDirection {
 }
 
 model Promise {
-  id            String        @id @default(cuid())
-  customerId    String
-  customer      Customer      @relation(fields: [customerId], references: [id])
-  messageId     String?
-  message       Message?      @relation(fields: [messageId], references: [id])
-  expectedDate  DateTime
-  amount        Decimal?      @db.Decimal(18, 2)
-  status        PromiseStatus @default(PENDING)
-  aiConfidence  Float?
-  createdByAI   Boolean       @default(false)
-  createdAt     DateTime      @default(now())
-  updatedAt     DateTime      @updatedAt
+  id           String        @id @default(cuid())
+  customerId   String
+  customer     Customer      @relation(fields: [customerId], references: [id])
+  messageId    String?
+  message      Message?      @relation(fields: [messageId], references: [id])
+  expectedDate DateTime
+  amount       Decimal?      @db.Decimal(18, 2)
+  status       PromiseStatus @default(PENDING)
+  aiConfidence Float?
+  createdByAI  Boolean       @default(false)
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
 }
 
 enum PromiseStatus {
@@ -203,4 +201,46 @@ enum ImportJobStatus {
   PROCESSING
   DONE
   FAILED
+}
+
+// ─────────────────────────────────────────────────────────────────────────────
+// Inbox Events (Durability & Idempotency)
+// ─────────────────────────────────────────────────────────────────────────────
+model InboxEvent {
+  id              String        @id @default(cuid())
+  provider        InboxProvider
+  providerEventId String? // Extracted post-parsing (e.g. Meta message ID)
+  companyId       String? // Tenant awareness for debugging
+  payload         Json // Raw JSON payload
+  headers         Json? // Useful for debugging webhook signatures
+  signature       String?
+  schemaVersion   Int           @default(1)
+
+  status    InboxEventStatus @default(RECEIVED)
+  attempts  Int              @default(0)
+  lastError String?          @db.Text
+
+  processedAt DateTime?
+  receivedAt  DateTime  @default(now())
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+}
+
+enum InboxProvider {
+  WHATSAPP
+  STRIPE
+  GMAIL
+  OUTLOOK
+  SLACK
+  SHOPIFY
+}
+
+enum InboxEventStatus {
+  RECEIVED
+  QUEUED
+  PROCESSING
+  PROCESSED
+  FAILED
+  FAILED_PERMANENT // Poison messages that hit retry ceiling
+  IGNORED
 }
