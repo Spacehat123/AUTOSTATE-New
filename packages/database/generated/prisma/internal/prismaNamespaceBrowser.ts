@@ -59,7 +59,8 @@ export const ModelName = {
   Message: 'Message',
   Promise: 'Promise',
   Task: 'Task',
-  ImportJob: 'ImportJob'
+  ImportJob: 'ImportJob',
+  InboxEvent: 'InboxEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -215,6 +216,27 @@ export const ImportJobScalarFieldEnum = {
 export type ImportJobScalarFieldEnum = (typeof ImportJobScalarFieldEnum)[keyof typeof ImportJobScalarFieldEnum]
 
 
+export const InboxEventScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  providerEventId: 'providerEventId',
+  companyId: 'companyId',
+  payload: 'payload',
+  headers: 'headers',
+  signature: 'signature',
+  schemaVersion: 'schemaVersion',
+  status: 'status',
+  attempts: 'attempts',
+  lastError: 'lastError',
+  processedAt: 'processedAt',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InboxEventScalarFieldEnum = (typeof InboxEventScalarFieldEnum)[keyof typeof InboxEventScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -228,6 +250,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {

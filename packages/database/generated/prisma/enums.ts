@@ -86,3 +86,28 @@ export const ImportJobStatus = {
 } as const
 
 export type ImportJobStatus = (typeof ImportJobStatus)[keyof typeof ImportJobStatus]
+
+
+export const InboxProvider = {
+  WHATSAPP: 'WHATSAPP',
+  STRIPE: 'STRIPE',
+  GMAIL: 'GMAIL',
+  OUTLOOK: 'OUTLOOK',
+  SLACK: 'SLACK',
+  SHOPIFY: 'SHOPIFY'
+} as const
+
+export type InboxProvider = (typeof InboxProvider)[keyof typeof InboxProvider]
+
+
+export const InboxEventStatus = {
+  RECEIVED: 'RECEIVED',
+  QUEUED: 'QUEUED',
+  PROCESSING: 'PROCESSING',
+  PROCESSED: 'PROCESSED',
+  FAILED: 'FAILED',
+  FAILED_PERMANENT: 'FAILED_PERMANENT',
+  IGNORED: 'IGNORED'
+} as const
+
+export type InboxEventStatus = (typeof InboxEventStatus)[keyof typeof InboxEventStatus]

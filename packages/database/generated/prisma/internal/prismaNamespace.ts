@@ -392,7 +392,8 @@ export const ModelName = {
   Message: 'Message',
   Promise: 'Promise',
   Task: 'Task',
-  ImportJob: 'ImportJob'
+  ImportJob: 'ImportJob',
+  InboxEvent: 'InboxEvent'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -408,7 +409,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "customer" | "companyIntegration" | "invoice" | "message" | "promise" | "task" | "importJob"
+    modelProps: "company" | "user" | "customer" | "companyIntegration" | "invoice" | "message" | "promise" | "task" | "importJob" | "inboxEvent"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1078,6 +1079,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    InboxEvent: {
+      payload: Prisma.$InboxEventPayload<ExtArgs>
+      fields: Prisma.InboxEventFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.InboxEventFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.InboxEventFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>
+        }
+        findFirst: {
+          args: Prisma.InboxEventFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.InboxEventFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>
+        }
+        findMany: {
+          args: Prisma.InboxEventFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>[]
+        }
+        create: {
+          args: Prisma.InboxEventCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>
+        }
+        createMany: {
+          args: Prisma.InboxEventCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.InboxEventCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>[]
+        }
+        delete: {
+          args: Prisma.InboxEventDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>
+        }
+        update: {
+          args: Prisma.InboxEventUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>
+        }
+        deleteMany: {
+          args: Prisma.InboxEventDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.InboxEventUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.InboxEventUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>[]
+        }
+        upsert: {
+          args: Prisma.InboxEventUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$InboxEventPayload>
+        }
+        aggregate: {
+          args: Prisma.InboxEventAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateInboxEvent>
+        }
+        groupBy: {
+          args: Prisma.InboxEventGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InboxEventGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.InboxEventCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.InboxEventCountAggregateOutputType> | number
+        }
+      }
+    }
   }
 } & {
   other: {
@@ -1254,6 +1329,27 @@ export const ImportJobScalarFieldEnum = {
 export type ImportJobScalarFieldEnum = (typeof ImportJobScalarFieldEnum)[keyof typeof ImportJobScalarFieldEnum]
 
 
+export const InboxEventScalarFieldEnum = {
+  id: 'id',
+  provider: 'provider',
+  providerEventId: 'providerEventId',
+  companyId: 'companyId',
+  payload: 'payload',
+  headers: 'headers',
+  signature: 'signature',
+  schemaVersion: 'schemaVersion',
+  status: 'status',
+  attempts: 'attempts',
+  lastError: 'lastError',
+  processedAt: 'processedAt',
+  receivedAt: 'receivedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type InboxEventScalarFieldEnum = (typeof InboxEventScalarFieldEnum)[keyof typeof InboxEventScalarFieldEnum]
+
+
 export const SortOrder = {
   asc: 'asc',
   desc: 'desc'
@@ -1267,6 +1363,14 @@ export const JsonNullValueInput = {
 } as const
 
 export type JsonNullValueInput = (typeof JsonNullValueInput)[keyof typeof JsonNullValueInput]
+
+
+export const NullableJsonNullValueInput = {
+  DbNull: DbNull,
+  JsonNull: JsonNull
+} as const
+
+export type NullableJsonNullValueInput = (typeof NullableJsonNullValueInput)[keyof typeof NullableJsonNullValueInput]
 
 
 export const QueryMode = {
@@ -1502,6 +1606,34 @@ export type EnumImportJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
 export type ListEnumImportJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportJobStatus[]'>
     
 
+
+/**
+ * Reference to a field of type 'InboxProvider'
+ */
+export type EnumInboxProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InboxProvider'>
+    
+
+
+/**
+ * Reference to a field of type 'InboxProvider[]'
+ */
+export type ListEnumInboxProviderFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InboxProvider[]'>
+    
+
+
+/**
+ * Reference to a field of type 'InboxEventStatus'
+ */
+export type EnumInboxEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InboxEventStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'InboxEventStatus[]'
+ */
+export type ListEnumInboxEventStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'InboxEventStatus[]'>
+    
+
 /**
  * Batch Payload for updateMany & deleteMany & createMany
  */
@@ -1621,6 +1753,7 @@ export type GlobalOmitConfig = {
   promise?: Prisma.PromiseOmit
   task?: Prisma.TaskOmit
   importJob?: Prisma.ImportJobOmit
+  inboxEvent?: Prisma.InboxEventOmit
 }
 
 /* Types for Logging */

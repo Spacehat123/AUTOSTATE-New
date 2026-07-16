@@ -62,3 +62,8 @@ export type Task = Prisma.TaskModel
  * 
  */
 export type ImportJob = Prisma.ImportJobModel
+/**
+ * Model InboxEvent
+ * 
+ */
+export type InboxEvent = Prisma.InboxEventModel

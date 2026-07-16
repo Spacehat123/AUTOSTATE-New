@@ -1,0 +1,31 @@
+The enterprise resilience layer (Pillar 1) has been completely shipped into the codebase! 🚀
+
+  Here is what I executed:
+
+  1. Prisma Schema Updated (schema.prisma): Added the robust InboxEvent model, status enums,
+  strict typings, metadata fields, and versioning. (Note: I also safely removed the url and
+  directUrl properties from the schema because Prisma v7 now demands they live in prisma.config.
+  ts, which was already correctly set up).
+  2. Webhook Decoupling (api/webhooks/whatsapp/route.ts): Gutted the old, blocking logic. It now
+  acts as a pure, zero-latency funnel that saves the raw body to InboxEvent, pushes to Inngest,
+  and returns 200 OK.
+  3. The Inngest Worker (inngest/functions/inbox.ts):
+      • Built the processWhatsappInbox function featuring the atomic updateMany lock.
+      • Built the safe extraction logic to pluck the providerEventId.
+      • Built the atomic $transaction boundary for creating the Message and closing the
+      InboxEvent.
+      • Built the safety-net cron poller (recoverStuckInboxEvents) to sweep crashed jobs every 5
+      minutes.
+  4. Worker Registration: Exported the new functions in inngest/functions/index.ts.
+
+  ### Next Steps for You
+
+  Because database pushes require your actual local .env file (which isn't loaded in my
+  sandbox), please run this in your terminal to apply the new tables:
+
+    cd packages/database
+    npx prisma db push
+
+  Once that's done, your webhook is officially bulletproof. Do you want to hit the webhook with
+  a test payload via Postman/curl to watch it flow through the DB and Inngest UI, or should we
+  move on to Pillar 2: AI Intent Parsing?
