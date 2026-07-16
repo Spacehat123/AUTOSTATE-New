@@ -8,6 +8,8 @@ import { DashboardMockup } from '@/components/ui/dashboard-mockup'
 import { StorySection } from '@/components/ui/story-section'
 import { PhilosophySection } from '@/components/ui/philosophy-section'
 import { AiKnowledgeSection } from '@/components/ui/ai-knowledge-section'
+import { PricingSection } from '@/components/ui/pricing-section'
+import { Footer } from '@/components/layout/footer'
 
 import { HeroScrollWrapper } from '@/components/ui/hero-scroll-wrapper'
 import { ScrollDownButton } from '@/components/ui/scroll-down-button'
@@ -72,6 +74,8 @@ export default async function Home() {
       <StorySection />
       <PhilosophySection />
       <AiKnowledgeSection />
+      <PricingSection />
+      <Footer />
     </div>
   )
 }
