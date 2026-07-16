@@ -1,6 +1,5 @@
 import { inngest } from '../client'
-import { prisma } from '@autostate/database'
-import { Prisma } from '@prisma/client'
+import { prisma, Prisma } from '@autostate/database'
 
 const MAX_ATTEMPTS = 10;
 
@@ -28,8 +27,7 @@ function extractWhatsappMessage(payload: any) {
 }
 
 export const processWhatsappInbox = inngest.createFunction(
-  { id: 'process-whatsapp-inbox' },
-  { event: 'inbox.whatsapp.received' },
+  { id: 'process-whatsapp-inbox', triggers: [{ event: 'inbox.whatsapp.received' }] },
   async ({ event, step }) => {
     const { inboxEventId } = event.data
 
@@ -123,9 +121,10 @@ export const processWhatsappInbox = inngest.createFunction(
 
     // 5. Trigger downstream workflow
     if (processResult.status === 'created') {
+      const createdResult = processResult as { status: 'created', messageId: string, customerId: string };
       await step.sendEvent('trigger-ai', {
         name: 'message.analyze',
-        data: { messageId: processResult.messageId, customerId: processResult.customerId }
+        data: { messageId: createdResult.messageId, customerId: createdResult.customerId }
       })
     }
 
@@ -137,8 +136,7 @@ export const processWhatsappInbox = inngest.createFunction(
 // SAFETY NET: Sweep stuck events (RECEIVED, QUEUED, stale PROCESSING)
 // ─────────────────────────────────────────────────────────────────────────────
 export const recoverStuckInboxEvents = inngest.createFunction(
-  { id: 'recover-stuck-inbox-events' },
-  { cron: '*/5 * * * *' }, // Runs every 5 minutes
+  { id: 'recover-stuck-inbox-events', triggers: [{ cron: '*/5 * * * *' }] },
   async ({ step }) => {
     await step.run('re-enqueue-stuck-events', async () => {
       const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000)

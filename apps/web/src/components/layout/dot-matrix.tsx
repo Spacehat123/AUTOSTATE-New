@@ -2,9 +2,17 @@
 
 import React, { useState, useEffect } from 'react'
 
+interface Spark {
+  id: number
+  x1: number
+  y1: number
+  x2: number
+  y2: number
+}
+
 export function DotMatrix() {
   const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 })
-  const [shootingSparks, setShootingSparks] = useState<{id: number, x1: number, y1: number, x2: number, y2: number}[]>([])
+  const [shootingSparks, setShootingSparks] = useState<Spark[]>([])
 
   useEffect(() => {
     const handleMouseMove = (e: MouseEvent) => {
@@ -18,7 +26,7 @@ export function DotMatrix() {
     const interval = setInterval(() => {
       // Spawn 1 to 3 sparks at a time
       const count = Math.floor(Math.random() * 3) + 1
-      const newSparks = []
+      const newSparks: Spark[] = []
       
       for(let i = 0; i < count; i++) {
         // Pick a random grid dot (screen size approx max 3000x2000)

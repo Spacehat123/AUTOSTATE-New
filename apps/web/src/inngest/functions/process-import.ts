@@ -8,9 +8,9 @@ function getSupabase() {
   return createClient(process.env.SUPABASE_URL!, process.env.SUPABASE_SERVICE_ROLE_KEY!)
 }
 
-export const processImport = (inngest.createFunction as any)(
+export const processImport = inngest.createFunction(
   { id: 'process-import', name: 'Process File Import', triggers: [{ event: 'import.file.uploaded' }] },
-  async ({ event, step }: any) => {
+  async ({ event, step }) => {
     const { jobId, filePath, companyId } = event.data
 
     await step.run('update-job-processing', async () => {

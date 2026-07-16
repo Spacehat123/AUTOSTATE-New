@@ -2,6 +2,7 @@ import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
 import { Playfair_Display } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
+import { SpeedInsights } from "@vercel/speed-insights/next"
 import '@/lib/env'
 import './globals.css'
 
@@ -26,6 +27,7 @@ export default function RootLayout({
         <body className="min-h-full flex flex-col">
           {children}
           <Toaster />
+          <SpeedInsights />
         </body>
       </html>
     </ClerkProvider>

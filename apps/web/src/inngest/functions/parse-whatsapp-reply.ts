@@ -2,9 +2,9 @@ import { inngest } from '../client'
 import { prisma } from '@autostate/database'
 import { parseReply } from '@autostate/ai'
 
-export const parseWhatsappReply = (inngest.createFunction as any)(
+export const parseWhatsappReply = inngest.createFunction(
   { id: 'parse-whatsapp-reply', name: 'Parse WhatsApp Reply for Intent', triggers: [{ event: 'whatsapp.message.received' }] },
-  async ({ event, step }: any) => {
+  async ({ event, step }) => {
     const { messageId } = event.data
 
     const message = await step.run('fetch-message', async () => {
