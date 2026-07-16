@@ -5,6 +5,8 @@ import { DotMatrix } from '@/components/layout/dot-matrix'
 import { Magnetic } from '@/components/ui/magnetic'
 import { FloatingBento } from '@/components/ui/floating-bento'
 import { DashboardMockup } from '@/components/ui/dashboard-mockup'
+import { StorySection } from '@/components/ui/story-section'
+import { PhilosophySection } from '@/components/ui/philosophy-section'
 
 import { HeroScrollWrapper } from '@/components/ui/hero-scroll-wrapper'
 import { ScrollDownButton } from '@/components/ui/scroll-down-button'
@@ -65,6 +67,9 @@ export default async function Home() {
       <section className="relative z-10 w-full px-6 md:px-12 lg:px-24 pb-32 pt-20">
         <DashboardMockup />
       </section>
+
+      <StorySection />
+      <PhilosophySection />
     </div>
   )
 }
