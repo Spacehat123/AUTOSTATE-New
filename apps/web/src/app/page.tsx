@@ -9,6 +9,7 @@ import { StorySection } from '@/components/ui/story-section'
 import { PhilosophySection } from '@/components/ui/philosophy-section'
 import { AiKnowledgeSection } from '@/components/ui/ai-knowledge-section'
 import { PricingSection } from '@/components/ui/pricing-section'
+import { CtaSection } from '@/components/ui/cta-section'
 import { Footer } from '@/components/layout/footer'
 
 import { HeroScrollWrapper } from '@/components/ui/hero-scroll-wrapper'
@@ -75,6 +76,7 @@ export default async function Home() {
       <PhilosophySection />
       <AiKnowledgeSection />
       <PricingSection />
+      <CtaSection />
       <Footer />
     </div>
   )

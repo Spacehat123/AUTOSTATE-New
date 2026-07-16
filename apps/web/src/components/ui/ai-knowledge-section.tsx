@@ -4,10 +4,19 @@ import React from 'react'
 
 export function AiKnowledgeSection() {
   return (
-    <section className="relative w-full py-32 sm:py-40 px-6 md:px-12 lg:px-24 bg-[#0a0a0a] text-white overflow-hidden">
+    <section className="relative w-full py-32 sm:py-40 px-6 md:px-12 lg:px-24 bg-zinc-950 text-white overflow-hidden">
+      {/* Background White Dots */}
+      <div 
+        className="absolute inset-0 w-full h-full pointer-events-none z-0"
+        style={{
+          backgroundImage: 'radial-gradient(rgba(255, 255, 255, 0.08) 1px, transparent 1px)',
+          backgroundSize: '32px 32px'
+        }}
+      />
+
       {/* Background Glows */}
-      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-blue-500/10 rounded-[100%] blur-[120px] pointer-events-none opacity-50"></div>
-      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[150px] pointer-events-none opacity-40"></div>
+      <div className="absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-3xl h-[400px] bg-blue-500/10 rounded-[100%] blur-[120px] pointer-events-none opacity-50 z-0"></div>
+      <div className="absolute bottom-0 right-0 w-[600px] h-[600px] bg-purple-500/10 rounded-full blur-[150px] pointer-events-none opacity-40 z-0"></div>
 
       <div className="max-w-6xl mx-auto relative z-10">
         
