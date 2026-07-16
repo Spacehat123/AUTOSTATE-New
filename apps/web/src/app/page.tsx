@@ -56,10 +56,10 @@ export default async function Home() {
         <div className="hidden lg:flex items-center justify-center relative w-full h-full">
           <FloatingBento />
         </div>
-      </main>
 
-      {/* Button to Trigger Scroll Sequence */}
-      <ScrollDownButton />
+        {/* Button to Trigger Scroll Sequence */}
+        <ScrollDownButton />
+      </main>
 
       {/* Demo Dashboard Section */}
       <section className="relative z-10 w-full px-6 md:px-12 lg:px-24 pb-32 pt-20">
