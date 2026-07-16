@@ -7,6 +7,7 @@ import { FloatingBento } from '@/components/ui/floating-bento'
 import { DashboardMockup } from '@/components/ui/dashboard-mockup'
 import { StorySection } from '@/components/ui/story-section'
 import { PhilosophySection } from '@/components/ui/philosophy-section'
+import { AiKnowledgeSection } from '@/components/ui/ai-knowledge-section'
 
 import { HeroScrollWrapper } from '@/components/ui/hero-scroll-wrapper'
 import { ScrollDownButton } from '@/components/ui/scroll-down-button'
@@ -70,6 +71,7 @@ export default async function Home() {
 
       <StorySection />
       <PhilosophySection />
+      <AiKnowledgeSection />
     </div>
   )
 }
