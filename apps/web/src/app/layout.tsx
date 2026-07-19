@@ -1,15 +1,22 @@
 import type { Metadata } from 'next'
 import { ClerkProvider } from '@clerk/nextjs'
-import { Playfair_Display } from 'next/font/google'
+import { Geist, Geist_Mono } from 'next/font/google'
 import { Toaster } from '@/components/ui/sonner'
 import { SpeedInsights } from "@vercel/speed-insights/next"
 import '@/lib/env'
 import './globals.css'
 
-const playfair = Playfair_Display({
+const geistSans = Geist({
+  variable: '--font-sans',
   subsets: ['latin'],
-  variable: '--font-serif',
 })
+
+const geistMono = Geist_Mono({
+  variable: '--font-mono',
+  subsets: ['latin'],
+})
+
+import { ThemeProvider } from '@/components/theme-provider'
 
 export const metadata: Metadata = {
   title: 'Autostate — AI Collection Manager',
@@ -23,11 +30,18 @@ export default function RootLayout({
 }>) {
   return (
     <ClerkProvider>
-      <html lang="en" className={`dark h-full antialiased ${playfair.variable}`}>
+      <html lang="en" suppressHydrationWarning className={`h-full antialiased ${geistSans.variable} ${geistMono.variable}`}>
         <body className="min-h-full flex flex-col">
-          {children}
-          <Toaster />
-          <SpeedInsights />
+          <ThemeProvider
+            attribute="class"
+            defaultTheme="dark"
+            enableSystem
+            disableTransitionOnChange
+          >
+            {children}
+            <Toaster />
+            <SpeedInsights />
+          </ThemeProvider>
         </body>
       </html>
     </ClerkProvider>

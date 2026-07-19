@@ -59,7 +59,7 @@ export function TodaysWork({ tasks }: TodaysWorkProps) {
                   </div>
                   
                   <div className="flex items-baseline gap-2 truncate">
-                    <span className="text-lg font-bold text-white truncate">
+                    <span className="text-lg font-bold text-foreground truncate">
                       {task.customer?.name || 'Unknown Customer'}
                     </span>
                     {amount > 0 && (
@@ -99,7 +99,7 @@ export function TodaysWork({ tasks }: TodaysWorkProps) {
                 )}
                 {/* Fallback for other types */}
                 {!['CALL', 'SEND_REMINDER', 'ESCALATE'].includes(task.taskType) && (
-                  <Button variant="outline" className="border-surface-border text-white hover:bg-white/5 w-full sm:w-auto">
+                  <Button variant="outline" className="border-surface-border text-foreground hover:bg-zinc-100 dark:hover:bg-white/5 w-full sm:w-auto">
                     Take Action
                     <ArrowRight className="w-4 h-4 ml-2" />
                   </Button>

@@ -14,9 +14,9 @@ export function PageHeader({ title, subtitle, actions, className, ...props }: Pa
       {...props}
     >
       <div className="flex flex-col">
-        <h1 className="text-2xl font-bold text-white tracking-tight">{title}</h1>
+        <h1 className="text-2xl font-bold text-foreground tracking-tight">{title}</h1>
         {subtitle && (
-          <p className="text-zinc-400 mt-1 text-sm">{subtitle}</p>
+          <p className="text-muted-foreground mt-1 text-sm">{subtitle}</p>
         )}
       </div>
       

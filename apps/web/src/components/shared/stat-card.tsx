@@ -22,11 +22,11 @@ export function StatCard({ title, value, subtitle, icon, trend, className, value
       <div className="absolute inset-0 bg-gradient-to-br from-brand-500/5 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none" />
       
       <CardHeader className="flex flex-row items-center justify-between pb-2 space-y-0">
-        <CardTitle className="text-sm font-medium text-slate-400">
+        <CardTitle className="text-sm font-medium text-slate-500 dark:text-slate-400">
           {title}
         </CardTitle>
         {icon && (
-          <div className="text-slate-400 h-4 w-4">
+          <div className="text-slate-500 dark:text-slate-400 h-4 w-4">
             {icon}
           </div>
         )}
@@ -35,7 +35,7 @@ export function StatCard({ title, value, subtitle, icon, trend, className, value
         <div className={cn("text-2xl font-bold text-brand-500", valueClassName)}>{value}</div>
         
         {(subtitle || trend) && (
-          <div className="flex items-center mt-1 text-xs text-slate-400">
+          <div className="flex items-center mt-1 text-xs text-slate-500 dark:text-slate-400">
             {trend && (
               <span 
                 className={cn(

@@ -73,7 +73,7 @@ export default function ReportsPage() {
     if (active && payload && payload.length) {
       return (
         <div className="bg-surface-card border border-surface-border p-3 rounded-lg shadow-lg">
-          <p className="text-sm text-zinc-400 mb-1">{label}</p>
+          <p className="text-sm text-zinc-500 dark:text-zinc-400 mb-1">{label}</p>
           <p className="text-sm font-semibold text-brand-400">
             ₹{payload[0].value.toLocaleString('en-IN')}
           </p>
@@ -152,10 +152,10 @@ export default function ReportsPage() {
           <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div className="lg:col-span-2 bg-surface-card border border-surface-border rounded-xl overflow-hidden">
               <div className="p-5 border-b border-surface-border">
-                <h2 className="text-lg font-medium text-white">Outstanding Balance Trend</h2>
-                <p className="text-sm text-zinc-400">Last 30 days</p>
+                <h2 className="text-lg font-medium text-zinc-900 dark:text-white">Outstanding Balance Trend</h2>
+                <p className="text-sm text-zinc-500 dark:text-zinc-400">Last 30 days</p>
               </div>
-              <div className="p-5 h-[350px] w-full" style={{ background: '#1e293b' }}>
+              <div className="p-5 h-[350px] w-full">
                 <ResponsiveContainer width="100%" height="100%">
                   <LineChart data={trendData} margin={{ top: 10, right: 10, left: 20, bottom: 0 }}>
                     <CartesianGrid strokeDasharray="3 3" stroke="#334155" vertical={false} />
@@ -191,23 +191,23 @@ export default function ReportsPage() {
 
             <div className="bg-surface-card border border-surface-border rounded-xl overflow-hidden h-fit">
               <div className="p-5 border-b border-surface-border">
-                <h2 className="text-lg font-medium text-white">Top Delayed Customers</h2>
-                <p className="text-sm text-zinc-400">Highest outstanding balances</p>
+                <h2 className="text-lg font-medium text-foreground">Top Delayed Customers</h2>
+                <p className="text-sm text-muted-foreground">Highest outstanding balances</p>
               </div>
               
               {data.topDelayedCustomers.length === 0 ? (
-                <div className="p-8 text-center text-zinc-500">
+                <div className="p-8 text-center text-muted-foreground">
                   No delayed customers to show.
                 </div>
               ) : (
                 <div className="divide-y divide-surface-border">
                   {data.topDelayedCustomers.map((customer, i) => (
-                    <div key={customer.id} className="flex items-center justify-between p-5 hover:bg-white/5 transition-colors">
+                    <div key={customer.id} className="flex items-center justify-between p-5 hover:bg-zinc-50 dark:hover:bg-white/5 transition-colors">
                       <div className="flex items-center gap-4">
-                        <div className="w-8 h-8 rounded-full bg-surface-background flex items-center justify-center text-xs font-medium text-zinc-300 shrink-0">
+                        <div className="w-8 h-8 rounded-full bg-zinc-100 dark:bg-surface flex items-center justify-center text-xs font-medium text-zinc-500 dark:text-zinc-300 shrink-0">
                           {i + 1}
                         </div>
-                        <div className="font-medium text-zinc-200 truncate pr-2 max-w-[120px]" title={customer.name}>
+                        <div className="font-medium text-zinc-900 dark:text-zinc-200 truncate pr-2 max-w-[120px]" title={customer.name}>
                           {customer.name}
                         </div>
                       </div>

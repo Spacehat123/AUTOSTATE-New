@@ -1,23 +1,19 @@
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
 @import 'tailwindcss';
 @import "tw-animate-css";
 @import "shadcn/tailwind.css";
 
-@custom-variant dark (&:is(.dark *));
+@variant dark (&:where(.dark, .dark *));
 
 @theme {
-  --color-brand-50: #eff6ff;
-  --color-brand-100: #dbeafe;
-  --color-brand-500: #3b82f6;
-  --color-brand-600: #2563eb;
-  --color-brand-700: #1d4ed8;
-  --color-brand-900: #1e3a8a;
-
-  --color-surface: #0f172a;
-  --color-surface-card: #1e293b;
-  --color-surface-border: #334155;
-
-  --font-sans: 'Inter', sans-serif;
+  --color-brand-50: #edf4ff;
+  --color-brand-100: #dbe8ff;
+  --color-brand-300: #8aaaff;
+  --color-brand-400: #527bff;
+  --color-brand-500: #0047ff;
+  --color-brand-600: #003ddb;
+  --color-brand-700: #0031b2;
+  --color-brand-900: #001f70;
+  /* Surface colors handled via inline vars now */
 }
 
 @theme inline {
@@ -34,6 +30,12 @@
   --color-sidebar-primary: var(--sidebar-primary);
   --color-sidebar-foreground: var(--sidebar-foreground);
   --color-sidebar: var(--sidebar);
+  
+  --color-surface: var(--surface);
+  --color-surface-card: var(--surface-card);
+  --color-surface-sidebar: var(--surface-sidebar);
+  --color-surface-border: var(--surface-border);
+  
   --color-chart-5: var(--chart-5);
   --color-chart-4: var(--chart-4);
   --color-chart-3: var(--chart-3);
@@ -65,24 +67,31 @@
 }
 
 :root {
-  --background: hsl(222.2, 84%, 4.9%);
-  --foreground: hsl(210, 40%, 98%);
-  --card: hsl(222.2, 84%, 4.9%);
-  --card-foreground: hsl(210, 40%, 98%);
-  --popover: hsl(222.2, 84%, 4.9%);
-  --popover-foreground: hsl(210, 40%, 98%);
-  --primary: hsl(217.2, 91.2%, 59.8%);
-  --primary-foreground: hsl(222.2, 47.4%, 11.2%);
-  --secondary: hsl(217.2, 32.6%, 17.5%);
-  --secondary-foreground: hsl(210, 40%, 98%);
-  --muted: hsl(217.2, 32.6%, 17.5%);
-  --muted-foreground: hsl(215, 20.2%, 65.1%);
-  --accent: hsl(217.2, 32.6%, 17.5%);
-  --accent-foreground: hsl(210, 40%, 98%);
-  --destructive: hsl(0, 62.8%, 30.6%);
-  --border: hsl(217.2, 32.6%, 17.5%);
-  --input: hsl(217.2, 32.6%, 17.5%);
-  --ring: hsl(224.3, 76.3%, 48%);
+  --surface: #ffffff;
+  --surface-card: #ffffff;
+  --surface-sidebar: #f3f3f3;
+  --surface-border: #e5e5e5;
+  --grid-color: rgba(0, 0, 0, 0.05);
+
+  --background: #fafafa;
+  --foreground: hsl(222.2, 84%, 4.9%);
+  --card: hsl(0, 0%, 100%);
+  --card-foreground: hsl(222.2, 84%, 4.9%);
+  --popover: hsl(0, 0%, 100%);
+  --popover-foreground: hsl(222.2, 84%, 4.9%);
+  --primary: hsl(221.2 83.2% 53.3%);
+  --primary-foreground: hsl(210 40% 98%);
+  --secondary: hsl(210 40% 96.1%);
+  --secondary-foreground: hsl(222.2 47.4% 11.2%);
+  --muted: hsl(210 40% 96.1%);
+  --muted-foreground: hsl(215.4 16.3% 46.9%);
+  --accent: hsl(210 40% 96.1%);
+  --accent-foreground: hsl(222.2 47.4% 11.2%);
+  --destructive: hsl(0 84.2% 60.2%);
+  --destructive-foreground: hsl(210 40% 98%);
+  --border: hsl(214.3 31.8% 91.4%);
+  --input: hsl(214.3 31.8% 91.4%);
+  --ring: hsl(221.2 83.2% 53.3%);
   --chart-1: oklch(0.87 0 0);
   --chart-2: oklch(0.556 0 0);
   --chart-3: oklch(0.439 0 0);
@@ -100,6 +109,12 @@
 }
 
 .dark {
+  --surface: #0f172a;
+  --surface-card: #0f172a;
+  --surface-sidebar: #09090b;
+  --surface-border: #1e293b;
+  --grid-color: rgba(255, 255, 255, 0.1);
+
   --background: oklch(0.145 0 0);
   --foreground: oklch(0.985 0 0);
   --card: oklch(0.205 0 0);
@@ -169,6 +184,19 @@
     }
     50% {
       transform: translateY(-12px);
+    }
+  }
+
+  .animate-breathe {
+    animation: breathe 8s ease-in-out infinite;
+  }
+  
+  @keyframes breathe {
+    0%, 100% {
+      opacity: 0.6;
+    }
+    50% {
+      opacity: 1;
     }
   }
 }
