@@ -40,7 +40,7 @@ export function MonthlyCollectionsChart({ data = [] }: { data?: any[] }) {
               cursor={{ fill: 'rgba(255,255,255,0.05)' }}
               contentStyle={{ backgroundColor: '#0f172a', border: 'none', borderRadius: '8px', color: '#fff' }}
               itemStyle={{ color: '#fff' }}
-              formatter={(value: number) => [`₹${value.toLocaleString()}`, 'Total']}
+              formatter={(value) => [`₹${Number(value ?? 0).toLocaleString()}`, 'Total']}
             />
             <Bar dataKey="total" fill="currentColor" className="fill-emerald-500" radius={[4, 4, 0, 0]} />
           </BarChart>

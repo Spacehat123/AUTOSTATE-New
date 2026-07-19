@@ -133,7 +133,10 @@ export async function getDashboardData(companyId: string) {
     const day = inv.paidDate.getDate()
     let weekIdx = Math.floor((day - 1) / 7)
     if (weekIdx > 3) weekIdx = 3 // Put extra days in week 4
-    monthlyData[weekIdx].total += Number(inv.amount)
+    const targetWeek = monthlyData[weekIdx]
+    if (targetWeek) {
+      targetWeek.total += Number(inv.amount)
+    }
   })
 
   return {
