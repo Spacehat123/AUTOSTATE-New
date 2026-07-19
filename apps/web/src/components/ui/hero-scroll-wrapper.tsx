@@ -19,7 +19,7 @@ export function HeroScrollWrapper({ children }: { children: React.ReactNode }) {
   
   return (
     <div 
-      className="will-change-transform will-change-opacity"
+      className="will-change-transform will-change-opacity mobile-no-scroll-anim"
       style={{ 
         opacity, 
         transform: `translateY(${yOffset}px)`,

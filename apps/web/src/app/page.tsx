@@ -28,17 +28,17 @@ export default async function Home() {
       <MarketingNavbar userId={userId} />
       
       {/* Hero Section */}
-      <main className="relative z-10 grid grid-cols-1 lg:grid-cols-2 min-h-screen pt-40 lg:pt-48 px-6 md:px-12 lg:px-24">
+      <main className="relative z-10 grid grid-cols-1 lg:grid-cols-2 lg:min-h-screen pt-32 pb-32 lg:pb-0 lg:pt-48 px-6 md:px-12 lg:px-24">
         
         <HeroScrollWrapper>
           <div className="flex flex-col items-start text-left lg:pl-12 xl:pl-16 relative z-10 pt-12">
-            <h1 className="text-6xl sm:text-7xl md:text-8xl lg:text-[5.5rem] font-bold tracking-tight text-zinc-900 leading-[1.05] animate-fade-up font-serif">
+            <h1 className="text-3xl min-[420px]:text-4xl sm:text-7xl md:text-8xl lg:text-[5.5rem] font-bold tracking-tight text-zinc-900 leading-[1.05] animate-fade-up font-serif">
               Run your business.<br />
               Not your software.
             </h1>
             
-            <p className="mt-8 text-lg sm:text-xl md:text-[1.35rem] text-zinc-500 max-w-xl font-normal leading-relaxed animate-fade-up" style={{ animationDelay: '200ms' }}>
-              Customers, WhatsApp, invoices, tasks, and AI—working together in one workspace.
+            <p className="mt-8 text-base sm:text-xl md:text-[1.35rem] text-zinc-500 max-w-xl font-normal leading-relaxed animate-fade-up" style={{ animationDelay: '200ms' }}>
+              Customers, WhatsApp, invoices, tasks, and <br className="sm:hidden" />AI—working together in one workspace.
             </p>
 
             <div className="flex flex-col sm:flex-row items-center gap-4 mt-12 animate-fade-up" style={{ animationDelay: '400ms' }}>
@@ -68,7 +68,7 @@ export default async function Home() {
       </main>
 
       {/* Demo Dashboard Section */}
-      <section className="relative z-10 w-full px-6 md:px-12 lg:px-24 pb-32 pt-20">
+      <section className="relative z-10 w-full px-6 md:px-12 lg:px-24 pb-12 pt-4 sm:pb-32 sm:pt-20">
         <DashboardMockup />
       </section>
 

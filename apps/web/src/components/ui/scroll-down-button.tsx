@@ -5,7 +5,10 @@ import React from 'react'
 export function ScrollDownButton() {
   return (
     <button 
-      onClick={() => window.scrollTo({ top: window.innerHeight * 1, behavior: 'smooth' })}
+      onClick={() => {
+        const scrollFactor = window.innerWidth < 640 ? 0.6 : 1;
+        window.scrollTo({ top: window.innerHeight * scrollFactor, behavior: 'smooth' })
+      }}
       className="absolute bottom-8 sm:bottom-12 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2 text-zinc-400 hover:text-zinc-900 transition-colors animate-bounce z-50 cursor-pointer"
     >
       <span className="text-[10px] font-bold uppercase tracking-[0.2em] opacity-80">See the Workspace</span>

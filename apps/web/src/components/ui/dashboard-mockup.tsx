@@ -21,7 +21,7 @@ export function DashboardMockup() {
 
   return (
     <div 
-      className="relative mx-auto w-full max-w-[90%] lg:max-w-[65%] mt-12 mb-40 z-20 will-change-transform will-change-opacity ease-out duration-100"
+      className="relative mx-auto w-full max-w-[90%] lg:max-w-[65%] mt-4 lg:mt-12 mb-20 lg:mb-40 z-20 will-change-transform will-change-opacity ease-out duration-100 mobile-no-scroll-anim"
       style={{
         opacity,
         transform: `translateY(${yOffset}px) scale(${scale})`,
@@ -41,10 +41,10 @@ export function DashboardMockup() {
         <div className="absolute -inset-4 bg-gradient-to-r from-[#e0f2fe] to-[#dcfce7] rounded-[3rem] blur-3xl opacity-50 z-0"></div>
         
         {/* Main App Container */}
-        <div className="relative bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.12)] overflow-hidden flex flex-col h-[55vh] min-h-[500px] z-10">
+        <div className="relative bg-white/70 backdrop-blur-2xl rounded-3xl border border-white/60 shadow-[0_40px_80px_-20px_rgba(0,0,0,0.12)] overflow-hidden flex flex-col aspect-video sm:aspect-auto sm:h-[55vh] sm:min-h-[500px] z-10">
           
           {/* Mockup Header (Mac window style) */}
-          <div className="h-14 border-b border-black/[0.04] flex items-center justify-between px-4 bg-white/40 backdrop-blur-md">
+          <div className="h-10 sm:h-14 border-b border-black/[0.04] flex items-center justify-between px-3 sm:px-4 bg-white/40 backdrop-blur-md">
             <div className="flex items-center gap-4">
               <div className="flex gap-2">
                 <div className="w-3 h-3 rounded-full bg-[#ff5f56] shadow-sm"></div>
@@ -65,7 +65,7 @@ export function DashboardMockup() {
           {/* Mockup Body */}
           <div className="flex flex-1 overflow-hidden">
             {/* Sidebar */}
-            <div className="w-16 border-r border-black/[0.04] bg-white/30 flex flex-col items-center py-6 gap-6">
+            <div className="w-12 sm:w-16 border-r border-black/[0.04] bg-white/30 flex flex-col items-center py-4 sm:py-6 gap-4 sm:gap-6">
               <div className="w-9 h-9 rounded-xl bg-zinc-900 shadow-md"></div>
               <div className="w-6 h-6 rounded-lg bg-black/5 mt-4"></div>
               <div className="w-6 h-6 rounded-lg bg-black/5"></div>
@@ -74,16 +74,16 @@ export function DashboardMockup() {
             </div>
 
             {/* Main Content Area */}
-            <div className="flex-1 p-6 sm:p-10 bg-zinc-50/30 flex flex-col gap-8 overflow-hidden">
+            <div className="flex-1 p-4 sm:p-6 md:p-10 bg-zinc-50/30 flex flex-col gap-4 sm:gap-8 overflow-hidden">
               <div className="flex items-center justify-between">
                 <div className="w-48 h-8 bg-zinc-200/50 rounded-xl"></div>
                 <div className="w-28 h-9 bg-zinc-900 rounded-xl shadow-md"></div>
               </div>
 
               {/* Metrics */}
-              <div className="grid grid-cols-3 gap-6">
+              <div className="grid grid-cols-3 gap-3 sm:gap-6">
                 {[1, 2, 3].map(i => (
-                  <div key={i} className="h-28 sm:h-32 bg-white/60 backdrop-blur-md border border-white rounded-2xl p-5 flex flex-col justify-between shadow-[0_8px_16px_-6px_rgba(0,0,0,0.03)]">
+                  <div key={i} className="h-16 sm:h-28 md:h-32 bg-white/60 backdrop-blur-md border border-white rounded-xl sm:rounded-2xl p-3 sm:p-5 flex flex-col justify-between shadow-[0_8px_16px_-6px_rgba(0,0,0,0.03)]">
                     <div className="w-10 h-10 rounded-full bg-black/[0.03] flex items-center justify-center">
                       <div className="w-4 h-4 bg-black/10 rounded-sm"></div>
                     </div>

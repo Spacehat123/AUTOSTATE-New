@@ -4,11 +4,11 @@ import React from 'react'
 
 export function PhilosophySection() {
   return (
-    <section className="relative w-full py-24 sm:py-32 px-6 md:px-12 lg:px-24 bg-white overflow-hidden">
+    <section className="relative w-full py-8 sm:py-32 px-6 md:px-12 lg:px-24 bg-white overflow-hidden">
       <div className="max-w-6xl mx-auto flex flex-col items-center">
         
         {/* Title */}
-        <div className="text-center mb-20 sm:mb-24">
+        <div className="text-center mb-10 sm:mb-24">
           <h2 className="text-5xl sm:text-6xl lg:text-7xl font-bold font-serif tracking-tight text-zinc-900 leading-[1.05]">
             <span className="text-zinc-300">Five apps.</span><br />
             One workspace.
@@ -19,7 +19,7 @@ export function PhilosophySection() {
         <div className="w-full flex flex-col xl:flex-row items-center justify-center gap-12 xl:gap-24">
           
           {/* Left Side: Overlapping Cards */}
-          <div className="relative w-[280px] h-[380px] shrink-0">
+          <div className="relative w-[280px] h-[380px] shrink-0 max-sm:scale-[0.7] max-sm:origin-top max-sm:-mb-[114px]">
             
             {/* WhatsApp */}
             <div className="absolute top-0 left-4 z-10 -rotate-[8deg] transition-transform hover:scale-105 hover:z-[60] shadow-md rounded-2xl">

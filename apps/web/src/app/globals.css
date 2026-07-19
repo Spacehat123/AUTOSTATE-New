@@ -172,3 +172,21 @@
     }
   }
 }
+
+@media (max-width: 639px) {
+  *, *::before, *::after {
+    animation: none !important;
+    transition: none !important;
+  }
+  
+  .animate-fade-up {
+    animation: none !important;
+    opacity: 1 !important;
+    transform: none !important;
+  }
+  
+  .mobile-no-scroll-anim {
+    transform: none !important;
+    opacity: 1 !important;
+  }
+}
