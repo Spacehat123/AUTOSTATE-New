@@ -36,7 +36,7 @@ export function MobileHeader() {
       </div>
       
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger asChild>
+        <SheetTrigger>
           <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
             <Menu className="w-6 h-6" />
             <span className="sr-only">Toggle menu</span>
