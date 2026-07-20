@@ -324,7 +324,7 @@ export function CustomerActions({
                 </div>
                 <div className="space-y-1.5">
                   <Label className="text-xs text-zinc-400">Method (optional)</Label>
-                  <Select value={payMethod} onValueChange={setPayMethod}>
+                  <Select value={payMethod} onValueChange={(v) => setPayMethod(v ?? '')}>
                     <SelectTrigger className="bg-black/20 border-surface-border">
                       <SelectValue placeholder="Select method" />
                     </SelectTrigger>
@@ -372,7 +372,7 @@ export function CustomerActions({
                           <div className="flex-1 space-y-1">
                             <Select
                               value={alloc.invoiceId}
-                              onValueChange={(v) => handleInvoiceSelect(i, v)}
+                              onValueChange={(v) => handleInvoiceSelect(i, v ?? '')}
                             >
                               <SelectTrigger className="bg-black/20 border-surface-border text-sm h-9">
                                 <SelectValue placeholder="Select invoice" />
