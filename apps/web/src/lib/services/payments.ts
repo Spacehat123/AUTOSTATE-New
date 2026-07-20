@@ -50,3 +50,17 @@ export async function getPaymentsByCompany(companyId: string) {
     },
   })
 }
+
+/**
+ * Returns all invoices for a company across all customers, newest due-date first.
+ * Used by the /invoices page.
+ */
+export async function getInvoicesByCompany(companyId: string) {
+  return prisma.invoice.findMany({
+    where: { customer: { companyId } },
+    orderBy: { dueDate: 'asc' },
+    include: {
+      customer: { select: { id: true, name: true } },
+    },
+  })
+}
