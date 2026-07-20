@@ -3,6 +3,7 @@ import Link from 'next/link'
 import { ArrowLeft } from 'lucide-react'
 import { getCurrentUser } from '@/lib/auth'
 import { getCustomerById } from '@/lib/services/customers'
+import { getOpenInvoicesForCustomer } from '@/lib/services/payments'
 import { CurrencyDisplay } from '@/components/shared/currency-display'
 import { RiskBadge } from '@/components/shared/risk-badge'
 import { 
@@ -16,7 +17,10 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
   const user = await getCurrentUser()
   const { id } = await params
   
-  const result = await getCustomerById(id, user.companyId)
+  const [result, openInvoices] = await Promise.all([
+    getCustomerById(id, user.companyId),
+    getOpenInvoicesForCustomer(id, user.companyId),
+  ])
   
   if (result.error === 'Customer not found' || result.status === 404) {
     notFound()
@@ -27,9 +31,9 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
 
   const customer = result.data!
   
-  // Compute total outstanding dynamically
+  // Compute total outstanding across all non-paid, non-disputed invoices
   const totalOutstanding = customer.invoices
-    .filter((inv: any) => inv.status === 'OVERDUE')
+    .filter((inv: any) => ['PENDING', 'OVERDUE', 'PARTIAL'].includes(inv.status))
     .reduce((sum: number, inv: any) => sum + Number(inv.outstandingAmount), 0)
 
   return (
@@ -71,7 +75,7 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
 
         {/* Right Column */}
         <div className="flex flex-col gap-6">
-          <CustomerActions customerId={customer.id} />
+          <CustomerActions customerId={customer.id} openInvoices={openInvoices as any} />
           <CommunicationTimeline messages={customer.messages} />
         </div>
       </div>

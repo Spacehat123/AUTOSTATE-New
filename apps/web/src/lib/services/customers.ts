@@ -115,7 +115,17 @@ export async function getCustomerById(id: string, companyId: string) {
     where: { id },
     include: {
       invoices: {
-        orderBy: { dueDate: 'asc' }
+        orderBy: { dueDate: 'asc' },
+        include: {
+          paymentAllocations: {
+            include: {
+              payment: {
+                select: { id: true, receivedAt: true, reference: true, method: true },
+              },
+            },
+            orderBy: { createdAt: 'asc' },
+          },
+        },
       },
       messages: {
         orderBy: { timestamp: 'asc' }

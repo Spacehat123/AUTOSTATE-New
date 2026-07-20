@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState } from 'react'
+import React, { useState, useRef, useEffect } from 'react'
 import Link from 'next/link'
 import { usePathname } from 'next/navigation'
 import { useUser, SignOutButton } from '@clerk/nextjs'
@@ -21,7 +21,8 @@ import {
   ArrowRight,
   MoreVertical,
   ChevronLeft,
-  ChevronRight
+  ChevronRight,
+  LogOut
 } from 'lucide-react'
 import { useTheme } from 'next-themes'
 import { cn } from '@/lib/utils'
@@ -41,6 +42,19 @@ export function Sidebar({ user: dbUser, notificationCount = 0 }: { user: any, no
   const { user: clerkUser } = useUser()
   const { theme, setTheme } = useTheme()
   const [isCollapsed, setIsCollapsed] = useState(false)
+  const [menuOpen, setMenuOpen] = useState(false)
+  const menuRef = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    if (!menuOpen) return
+    function handleClickOutside(e: MouseEvent) {
+      if (menuRef.current && !menuRef.current.contains(e.target as Node)) {
+        setMenuOpen(false)
+      }
+    }
+    document.addEventListener('mousedown', handleClickOutside)
+    return () => document.removeEventListener('mousedown', handleClickOutside)
+  }, [menuOpen])
 
   return (
     <aside className={cn(
@@ -182,7 +196,19 @@ export function Sidebar({ user: dbUser, notificationCount = 0 }: { user: any, no
 
         {/* User Profile */}
         <div className={cn("mt-6 pt-4 border-t border-surface-border flex items-center", isCollapsed ? "justify-center" : "")}>
-          <div className="relative cursor-pointer group flex items-center w-full">
+          <div ref={menuRef} className="relative flex items-center w-full">
+            {/* Dropdown Menu */}
+            {menuOpen && (
+              <div className="absolute bottom-full mb-2 left-0 w-48 bg-surface-card border border-surface-border rounded-xl shadow-lg py-1 z-50">
+                <SignOutButton>
+                  <button className="w-full flex items-center gap-3 px-4 py-2.5 text-sm text-red-500 hover:bg-red-500/10 transition-colors font-medium">
+                    <LogOut className="w-4 h-4" />
+                    Sign Out
+                  </button>
+                </SignOutButton>
+              </div>
+            )}
+
             <div className="w-10 h-10 rounded-full bg-surface-border overflow-hidden flex items-center justify-center shrink-0">
               {clerkUser?.imageUrl ? (
                 <img src={clerkUser.imageUrl} alt="Avatar" className="w-full h-full object-cover" />
@@ -205,7 +231,22 @@ export function Sidebar({ user: dbUser, notificationCount = 0 }: { user: any, no
             )}
             
             {!isCollapsed && (
-              <MoreVertical className="w-4 h-4 text-muted-foreground shrink-0 opacity-50 group-hover:opacity-100 transition-opacity ml-2" />
+              <button
+                onClick={() => setMenuOpen(prev => !prev)}
+                className="ml-2 p-1 rounded-lg hover:bg-black/5 dark:hover:bg-white/5 text-muted-foreground hover:text-foreground transition-all"
+              >
+                <MoreVertical className="w-4 h-4" />
+              </button>
+            )}
+
+            {isCollapsed && (
+              <button
+                onClick={() => setMenuOpen(prev => !prev)}
+                className="mt-2 w-10 h-10 rounded-xl flex items-center justify-center text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5 transition-all mx-auto"
+                title="More options"
+              >
+                <MoreVertical className="w-4 h-4" />
+              </button>
             )}
           </div>
         </div>
