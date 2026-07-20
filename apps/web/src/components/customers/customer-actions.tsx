@@ -88,8 +88,9 @@ export function CustomerActions({
       .then((data: OpenInvoice[]) => {
         setOpenInvoices(data)
         if (data.length === 1) {
-          setAllocations([{ invoiceId: data[0].id, amount: String(toNumber(data[0].outstandingAmount)) }])
-          setPayAmount(String(toNumber(data[0].outstandingAmount)))
+          const first = data[0]!
+          setAllocations([{ invoiceId: first.id, amount: String(toNumber(first.outstandingAmount)) }])
+          setPayAmount(String(toNumber(first.outstandingAmount)))
         }
       })
       .catch(() => toast.error('Could not load invoices'))
