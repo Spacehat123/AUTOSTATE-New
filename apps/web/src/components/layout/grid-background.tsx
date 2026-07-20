@@ -30,8 +30,8 @@ export function GridBackground() {
             linear-gradient(to bottom, var(--grid-color) 1px, transparent 1px)
           `,
           backgroundSize: '48px 48px',
-          maskImage: isClient ? `radial-gradient(circle 600px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 100%), linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15))` : 'none',
-          WebkitMaskImage: isClient ? `radial-gradient(circle 600px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 100%), linear-gradient(rgba(0,0,0,0.15), rgba(0,0,0,0.15))` : 'none',
+          maskImage: isClient ? `radial-gradient(circle 600px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 100%), linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 500px)` : 'none',
+          WebkitMaskImage: isClient ? `radial-gradient(circle 600px at ${mousePosition.x}px ${mousePosition.y}px, black 0%, transparent 100%), linear-gradient(to bottom, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.15) 500px)` : 'none',
           maskComposite: 'add',
           WebkitMaskComposite: 'add',
           transition: 'mask-image 0.2s ease-out, -webkit-mask-image 0.2s ease-out'

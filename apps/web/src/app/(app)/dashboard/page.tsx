@@ -17,11 +17,12 @@ export default async function DashboardPage() {
   const todaysCollections = Number(data.todaysCollections) || 0
 
   return (
-    <div className="flex flex-col pb-10 max-w-5xl mx-auto w-full gap-12 pt-8">
+    <div className="flex flex-col pb-10 w-[85%] max-w-[1600px] mx-auto gap-12 pt-8">
       <HeroStats 
         userName={user.name?.split(' ')[0] || 'there'}
         overdueAmount={overdueAmount} 
         expectedCollections={expectedCollections}
+        notificationCount={data.needsAttentionTasks.length}
       />
       
       <MetricsGroup 
@@ -30,8 +31,8 @@ export default async function DashboardPage() {
         recovered={todaysCollections}
       />
       
-      <div className="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-12 lg:gap-16 pt-4">
-        <div className="flex flex-col gap-16">
+      <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 pt-4">
+        <div className="flex flex-col gap-6">
           <NeedsAttention tasks={data.needsAttentionTasks} />
           <TodaysFocus tasks={data.todaysTasks} />
           <MonthlyCollectionsChart data={data.monthlyChartData} />

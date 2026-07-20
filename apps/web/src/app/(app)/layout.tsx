@@ -1,4 +1,5 @@
 import { getCurrentUser } from '@/lib/auth'
+import { prisma } from '@autostate/database'
 import { Sidebar } from '@/components/layout/sidebar'
 import { MobileHeader } from '@/components/layout/mobile-header'
 import { GridBackground } from '@/components/layout/grid-background'
@@ -12,13 +13,17 @@ export default async function AppLayout({
   // If not logged in -> /sign-in, if no db record -> /onboarding
   const user = await getCurrentUser()
 
+  const notificationCount = await prisma.task.count({
+    where: { customer: { companyId: user.companyId }, status: 'PENDING', priority: { gte: 70 } }
+  }).catch(() => 0)
+
   return (
     <>
       <GridBackground />
       <div className="flex h-screen bg-transparent overflow-hidden relative z-10">
         {/* Fixed Sidebar (Hidden on mobile, block on md+) */}
-        <div className="hidden md:flex">
-          <Sidebar user={user} />
+        <div className="hidden md:flex z-20 relative">
+          <Sidebar user={user} notificationCount={notificationCount} />
         </div>
         
         {/* Main Content Area */}
