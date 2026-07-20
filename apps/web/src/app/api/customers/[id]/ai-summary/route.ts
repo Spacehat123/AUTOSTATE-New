@@ -54,7 +54,7 @@ export async function GET(
             status: true,
             createdAt: true,
             dueDate: true,
-            paidDate: true
+            paidAt: true
           }
         },
         messages: {

@@ -208,6 +208,7 @@ export type CompanyWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   users?: Prisma.UserListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
   integrations?: Prisma.CompanyIntegrationListRelationFilter
 }
 
@@ -222,6 +223,7 @@ export type CompanyOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
   customers?: Prisma.CustomerOrderByRelationAggregateInput
+  payments?: Prisma.PaymentOrderByRelationAggregateInput
   integrations?: Prisma.CompanyIntegrationOrderByRelationAggregateInput
 }
 
@@ -239,6 +241,7 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   users?: Prisma.UserListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
+  payments?: Prisma.PaymentListRelationFilter
   integrations?: Prisma.CompanyIntegrationListRelationFilter
 }, "id">
 
@@ -281,6 +284,7 @@ export type CompanyCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
 }
 
@@ -295,6 +299,7 @@ export type CompanyUncheckedCreateInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
@@ -309,6 +314,7 @@ export type CompanyUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
@@ -323,6 +329,7 @@ export type CompanyUncheckedUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
@@ -451,6 +458,20 @@ export type CompanyUpdateOneRequiredWithoutIntegrationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutIntegrationsInput, Prisma.CompanyUpdateWithoutIntegrationsInput>, Prisma.CompanyUncheckedUpdateWithoutIntegrationsInput>
 }
 
+export type CompanyCreateNestedOneWithoutPaymentsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPaymentsInput, Prisma.CompanyUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPaymentsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutPaymentsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutPaymentsInput, Prisma.CompanyUncheckedCreateWithoutPaymentsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutPaymentsInput
+  upsert?: Prisma.CompanyUpsertWithoutPaymentsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutPaymentsInput, Prisma.CompanyUpdateWithoutPaymentsInput>, Prisma.CompanyUncheckedUpdateWithoutPaymentsInput>
+}
+
 export type CompanyCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -461,6 +482,7 @@ export type CompanyCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
 }
 
@@ -474,6 +496,7 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
@@ -503,6 +526,7 @@ export type CompanyUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
@@ -516,6 +540,7 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
@@ -529,6 +554,7 @@ export type CompanyCreateWithoutCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
 }
 
@@ -542,6 +568,7 @@ export type CompanyUncheckedCreateWithoutCustomersInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
@@ -571,6 +598,7 @@ export type CompanyUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
@@ -584,6 +612,7 @@ export type CompanyUncheckedUpdateWithoutCustomersInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
@@ -598,6 +627,7 @@ export type CompanyCreateWithoutIntegrationsInput = {
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutIntegrationsInput = {
@@ -611,6 +641,7 @@ export type CompanyUncheckedCreateWithoutIntegrationsInput = {
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutIntegrationsInput = {
@@ -640,6 +671,7 @@ export type CompanyUpdateWithoutIntegrationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
@@ -653,6 +685,79 @@ export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutPaymentsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutPaymentsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutPaymentsInput, Prisma.CompanyUncheckedCreateWithoutPaymentsInput>
+}
+
+export type CompanyUpsertWithoutPaymentsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutPaymentsInput, Prisma.CompanyUncheckedUpdateWithoutPaymentsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutPaymentsInput, Prisma.CompanyUncheckedCreateWithoutPaymentsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutPaymentsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutPaymentsInput, Prisma.CompanyUncheckedUpdateWithoutPaymentsInput>
+}
+
+export type CompanyUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutPaymentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -663,12 +768,14 @@ export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
 export type CompanyCountOutputType = {
   users: number
   customers: number
+  payments: number
   integrations: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | CompanyCountOutputTypeCountUsersArgs
   customers?: boolean | CompanyCountOutputTypeCountCustomersArgs
+  payments?: boolean | CompanyCountOutputTypeCountPaymentsArgs
   integrations?: boolean | CompanyCountOutputTypeCountIntegrationsArgs
 }
 
@@ -699,6 +806,13 @@ export type CompanyCountOutputTypeCountCustomersArgs<ExtArgs extends runtime.Typ
 /**
  * CompanyCountOutputType without action
  */
+export type CompanyCountOutputTypeCountPaymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PaymentWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
 export type CompanyCountOutputTypeCountIntegrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   where?: Prisma.CompanyIntegrationWhereInput
 }
@@ -715,6 +829,7 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   customers?: boolean | Prisma.Company$customersArgs<ExtArgs>
+  payments?: boolean | Prisma.Company$paymentsArgs<ExtArgs>
   integrations?: boolean | Prisma.Company$integrationsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
@@ -756,6 +871,7 @@ export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   customers?: boolean | Prisma.Company$customersArgs<ExtArgs>
+  payments?: boolean | Prisma.Company$paymentsArgs<ExtArgs>
   integrations?: boolean | Prisma.Company$integrationsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -767,6 +883,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     users: Prisma.$UserPayload<ExtArgs>[]
     customers: Prisma.$CustomerPayload<ExtArgs>[]
+    payments: Prisma.$PaymentPayload<ExtArgs>[]
     integrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1174,6 +1291,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   users<T extends Prisma.Company$usersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$usersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$UserPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   customers<T extends Prisma.Company$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  payments<T extends Prisma.Company$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   integrations<T extends Prisma.Company$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1650,6 +1768,30 @@ export type Company$customersArgs<ExtArgs extends runtime.Types.Extensions.Inter
   take?: number
   skip?: number
   distinct?: Prisma.CustomerScalarFieldEnum | Prisma.CustomerScalarFieldEnum[]
+}
+
+/**
+ * Company.payments
+ */
+export type Company$paymentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Payment
+   */
+  select?: Prisma.PaymentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Payment
+   */
+  omit?: Prisma.PaymentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PaymentInclude<ExtArgs> | null
+  where?: Prisma.PaymentWhereInput
+  orderBy?: Prisma.PaymentOrderByWithRelationInput | Prisma.PaymentOrderByWithRelationInput[]
+  cursor?: Prisma.PaymentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PaymentScalarFieldEnum | Prisma.PaymentScalarFieldEnum[]
 }
 
 /**

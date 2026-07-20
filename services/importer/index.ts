@@ -1,5 +1,18 @@
 import * as xlsx from 'xlsx'
 
+export interface ImportPreviewRow {
+  row: number
+  customerName: string
+  invoiceNumber: string
+  amount: number | null
+  dueDate: string | null
+  issueDate: string
+  phone?: string
+  email?: string
+  gst?: string
+  errors: string[]
+}
+
 export interface ParsedCustomer {
   name: string
   phone?: string
@@ -14,7 +27,7 @@ export interface ParsedInvoice {
   outstandingAmount: number
   issueDate: Date
   dueDate: Date
-  status: string
+  status: 'PENDING' | 'OVERDUE' | 'PARTIAL' | 'PAID' | 'DISPUTED'
 }
 
 export interface ParseError {
@@ -23,120 +36,134 @@ export interface ParseError {
 }
 
 export interface ParsedData {
+  rows: ImportPreviewRow[]
   customers: ParsedCustomer[]
   invoices: ParsedInvoice[]
   errors: ParseError[]
 }
 
-function parseDate(val: any): Date | null {
-  if (val instanceof Date) return val
-  if (typeof val === 'string') {
-    const d = new Date(val)
-    if (!isNaN(d.getTime())) return d
+const columnAliases: Record<string, string[]> = {
+  customerName: ['Customer Name', 'Customer'],
+  invoiceNumber: ['Invoice Number', 'Invoice'],
+  amount: ['Invoice Amount', 'Amount'],
+  dueDate: ['Due Date'],
+  issueDate: ['Issue Date'],
+  outstandingAmount: ['Outstanding Amount'],
+  phone: ['Phone', 'Phone Number'],
+  email: ['Email', 'Email Address'],
+  gst: ['GST', 'GST Number'],
+}
+
+function valueFor(row: Record<string, unknown>, field: keyof typeof columnAliases): unknown {
+  const key = (columnAliases[field] ?? []).find((candidate) => Object.prototype.hasOwnProperty.call(row, candidate))
+  return key ? row[key] : undefined
+}
+
+function parseDate(value: unknown): Date | null {
+  if (value instanceof Date && !Number.isNaN(value.getTime())) return value
+  if (typeof value === 'string' && value.trim()) {
+    const date = new Date(value)
+    if (!Number.isNaN(date.getTime())) return date
   }
-  if (typeof val === 'number') {
-    // Excel date serial
-    // xlsx cellDates usually converts these automatically, but as a fallback:
-    // Excel dates start from 1900-01-01 (1). 25569 is 1970-01-01.
-    const d = new Date((val - 25569) * 86400 * 1000)
-    if (!isNaN(d.getTime())) return d
+  if (typeof value === 'number') {
+    const date = new Date((value - 25569) * 86_400_000)
+    if (!Number.isNaN(date.getTime())) return date
   }
   return null
 }
 
-function parseNumber(val: any): number | null {
-  if (typeof val === 'number') return val
-  if (typeof val === 'string') {
-    const n = parseFloat(val.replace(/,/g, '').trim())
-    if (!isNaN(n)) return n
+function parseNumber(value: unknown): number | null {
+  if (typeof value === 'number' && Number.isFinite(value)) return value
+  if (typeof value === 'string' && value.trim()) {
+    const number = Number(value.replace(/[,$₹\s]/g, ''))
+    if (Number.isFinite(number)) return number
   }
   return null
 }
 
+function text(value: unknown): string {
+  return value === undefined || value === null ? '' : String(value).trim()
+}
+
+function startOfToday() {
+  const today = new Date()
+  today.setHours(0, 0, 0, 0)
+  return today
+}
+
+/** Parses a CSV/XLSX file without persisting anything. */
 export function parseExcelFile(buffer: Buffer): ParsedData {
-  const customersMap = new Map<string, ParsedCustomer>()
-  const invoices: ParsedInvoice[] = []
-  const errors: ParseError[] = []
-
   let workbook: xlsx.WorkBook
   try {
     workbook = xlsx.read(buffer, { type: 'buffer', cellDates: true })
-  } catch (e: any) {
-    return { customers: [], invoices: [], errors: [{ row: 0, message: `Failed to read file: ${e.message}` }] }
+  } catch (error) {
+    return { rows: [], customers: [], invoices: [], errors: [{ row: 0, message: `Could not read file: ${error instanceof Error ? error.message : 'unknown error'}` }] }
   }
 
   const sheetName = workbook.SheetNames[0]
-  if (!sheetName) {
-    return { customers: [], invoices: [], errors: [{ row: 0, message: 'No sheets found in file' }] }
-  }
+  if (!sheetName) return { rows: [], customers: [], invoices: [], errors: [{ row: 0, message: 'No sheets found in file' }] }
 
   const sheet = workbook.Sheets[sheetName]
-  const rows = xlsx.utils.sheet_to_json<any>(sheet!)
+  if (!sheet) return { rows: [], customers: [], invoices: [], errors: [{ row: 0, message: 'Could not read the first sheet' }] }
+  const sourceRows = xlsx.utils.sheet_to_json<Record<string, unknown>>(sheet, { defval: '' })
+  if (sourceRows.length === 0) return { rows: [], customers: [], invoices: [], errors: [{ row: 0, message: 'The first sheet has no invoice rows' }] }
 
-  rows.forEach((row, index) => {
-    const rowNum = index + 2 // 1-based, plus header row
+  const customers = new Map<string, ParsedCustomer>()
+  const invoices: ParsedInvoice[] = []
+  const rows: ImportPreviewRow[] = []
+  const errors: ParseError[] = []
+  const today = startOfToday()
 
-    const customerName = String(row['Customer Name'] || '').trim()
-    if (!customerName || customerName === 'undefined') {
-      errors.push({ row: rowNum, message: 'Missing Customer Name' })
-      return // skip this row for further parsing
+  sourceRows.forEach((source, index) => {
+    const row = index + 2
+    const customerName = text(valueFor(source, 'customerName'))
+    const invoiceNumber = text(valueFor(source, 'invoiceNumber')) || `INV-${row}`
+    const amount = parseNumber(valueFor(source, 'amount'))
+    const dueDate = parseDate(valueFor(source, 'dueDate'))
+    const issueDate = parseDate(valueFor(source, 'issueDate')) || today
+    const rowErrors: string[] = []
+
+    if (!customerName) rowErrors.push('Missing customer name')
+    if (amount === null || amount < 0) rowErrors.push('Invalid amount')
+    if (!dueDate) rowErrors.push('Due date missing or invalid')
+
+    const previewRow: ImportPreviewRow = {
+      row,
+      customerName,
+      invoiceNumber,
+      amount,
+      dueDate: dueDate?.toISOString() ?? null,
+      issueDate: issueDate.toISOString(),
+      phone: text(valueFor(source, 'phone')) || undefined,
+      email: text(valueFor(source, 'email')) || undefined,
+      gst: text(valueFor(source, 'gst')) || undefined,
+      errors: rowErrors,
     }
+    rows.push(previewRow)
+    rowErrors.forEach((message) => errors.push({ row, message }))
 
-    const amount = parseNumber(row['Invoice Amount'])
-    if (amount === null) {
-      errors.push({ row: rowNum, message: 'Invalid or missing Invoice Amount' })
-    }
+    if (rowErrors.length || amount === null || !dueDate) return
 
-    const issueDate = parseDate(row['Issue Date'])
-    if (!issueDate) {
-      errors.push({ row: rowNum, message: 'Invalid or missing Issue Date' })
-    }
-
-    const dueDate = parseDate(row['Due Date'])
-    if (!dueDate) {
-      errors.push({ row: rowNum, message: 'Invalid or missing Due Date' })
-    }
-
-    if (!customersMap.has(customerName)) {
-      customersMap.set(customerName, {
+    const customerKey = customerName.toLocaleLowerCase()
+    if (!customers.has(customerKey)) {
+      customers.set(customerKey, {
         name: customerName,
-        phone: row['Phone'] ? String(row['Phone']).trim() : undefined,
-        email: row['Email'] ? String(row['Email']).trim() : undefined,
-        gst: row['GST'] ? String(row['GST']).trim() : undefined,
+        phone: previewRow.phone,
+        email: previewRow.email,
+        gst: previewRow.gst,
       })
     }
 
-    if (amount !== null && issueDate && dueDate) {
-      const invoiceNumber = String(row['Invoice Number'] || `INV-${rowNum}`).trim()
-      let outstandingAmount = parseNumber(row['Outstanding Amount'])
-      if (outstandingAmount === null) {
-        outstandingAmount = amount // fallback
-      }
-      
-      let status = 'PENDING'
-      if (row['Status']) {
-        const statusRaw = String(row['Status']).trim().toUpperCase()
-        const validStatuses = ['DRAFT', 'PENDING', 'OVERDUE', 'PARTIAL', 'PAID', 'VOID', 'UNCOLLECTIBLE']
-        if (validStatuses.includes(statusRaw)) {
-          status = statusRaw
-        }
-      }
-
-      invoices.push({
-        customerName,
-        invoiceNumber,
-        amount,
-        outstandingAmount,
-        issueDate,
-        dueDate,
-        status,
-      })
-    }
+    invoices.push({
+      customerName,
+      invoiceNumber,
+      amount,
+      outstandingAmount: amount,
+      issueDate,
+      dueDate,
+      status: dueDate < today ? 'OVERDUE' : 'PENDING',
+    })
   })
 
-  return {
-    customers: Array.from(customersMap.values()),
-    invoices,
-    errors
-  }
+  return { rows, customers: [...customers.values()], invoices, errors }
 }

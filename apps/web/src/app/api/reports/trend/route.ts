@@ -19,7 +19,7 @@ export async function GET(request: NextRequest) {
         amount: true,
         outstandingAmount: true,
         createdAt: true,
-        paidDate: true,
+        paidAt: true,
         status: true
       }
     })
@@ -38,9 +38,9 @@ export async function GET(request: NextRequest) {
       // Calculate outstanding balance as it was at the end of 'date'
       for (const inv of invoices) {
         if (new Date(inv.createdAt) <= date) {
-          // If it was paid, and the paidDate is after this date, it was still outstanding
-          if (inv.status === 'PAID' && inv.paidDate) {
-            if (new Date(inv.paidDate) > date) {
+          // If it was paid, and the paidAt is after this date, it was still outstanding
+          if (inv.status === 'PAID' && inv.paidAt) {
+            if (new Date(inv.paidAt) > date) {
               dayOutstanding += typeof inv.amount === 'number' ? inv.amount : inv.amount.toNumber()
             }
           } else {

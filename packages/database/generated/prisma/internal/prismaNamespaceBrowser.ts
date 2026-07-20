@@ -56,6 +56,8 @@ export const ModelName = {
   Customer: 'Customer',
   CompanyIntegration: 'CompanyIntegration',
   Invoice: 'Invoice',
+  Payment: 'Payment',
+  PaymentAllocation: 'PaymentAllocation',
   Message: 'Message',
   Promise: 'Promise',
   Task: 'Task',
@@ -144,7 +146,8 @@ export const InvoiceScalarFieldEnum = {
   issueDate: 'issueDate',
   dueDate: 'dueDate',
   status: 'status',
-  paidDate: 'paidDate',
+  paidAt: 'paidAt',
+  closedAt: 'closedAt',
   outstandingAmount: 'outstandingAmount',
   customerId: 'customerId',
   createdAt: 'createdAt',
@@ -152,6 +155,32 @@ export const InvoiceScalarFieldEnum = {
 } as const
 
 export type InvoiceScalarFieldEnum = (typeof InvoiceScalarFieldEnum)[keyof typeof InvoiceScalarFieldEnum]
+
+
+export const PaymentScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  amount: 'amount',
+  receivedAt: 'receivedAt',
+  reference: 'reference',
+  method: 'method',
+  notes: 'notes',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type PaymentScalarFieldEnum = (typeof PaymentScalarFieldEnum)[keyof typeof PaymentScalarFieldEnum]
+
+
+export const PaymentAllocationScalarFieldEnum = {
+  id: 'id',
+  paymentId: 'paymentId',
+  invoiceId: 'invoiceId',
+  amount: 'amount',
+  createdAt: 'createdAt'
+} as const
+
+export type PaymentAllocationScalarFieldEnum = (typeof PaymentAllocationScalarFieldEnum)[keyof typeof PaymentAllocationScalarFieldEnum]
 
 
 export const MessageScalarFieldEnum = {

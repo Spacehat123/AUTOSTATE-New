@@ -23,8 +23,8 @@ export async function getDashboardData(companyId: string) {
     expectedResult
   ] = await Promise.all([
     // 1. todaysCollections
-    prisma.invoice.aggregate({
-      where: { customer: { companyId }, status: 'PAID', paidDate: { gte: today, lt: tomorrow } },
+    prisma.payment.aggregate({
+      where: { companyId, receivedAt: { gte: today, lt: tomorrow } },
       _sum: { amount: true },
     }),
 
@@ -70,13 +70,9 @@ export async function getDashboardData(companyId: string) {
     }),
 
     // 7. monthlyCollections: All paid invoices this month
-    prisma.invoice.findMany({
-      where: { 
-        customer: { companyId }, 
-        status: 'PAID',
-        paidDate: { gte: new Date(today.getFullYear(), today.getMonth(), 1) } 
-      },
-      select: { amount: true, paidDate: true }
+    prisma.payment.findMany({
+      where: { companyId, receivedAt: { gte: new Date(today.getFullYear(), today.getMonth(), 1) } },
+      select: { amount: true, receivedAt: true }
     }),
 
     // 8. recentMessages
@@ -88,11 +84,11 @@ export async function getDashboardData(companyId: string) {
     }),
 
     // 9. recentPayments
-    prisma.invoice.findMany({
-      where: { customer: { companyId }, status: 'PAID' },
-      orderBy: { paidDate: 'desc' },
+    prisma.payment.findMany({
+      where: { companyId },
+      orderBy: { receivedAt: 'desc' },
       take: 5,
-      include: { customer: true }
+      include: { allocations: { include: { invoice: { include: { customer: true } } } } }
     }),
 
     // 10. expectedResult
@@ -110,17 +106,15 @@ export async function getDashboardData(companyId: string) {
       text: m.direction === 'INCOMING' ? `Message received from ${m.customer.name}` : `Message sent to ${m.customer.name}`,
       date: m.createdAt
     })),
-    ...recentPayments.filter(p => p.paidDate).map(p => ({
+    ...recentPayments.map(p => ({
       id: `pay-${p.id}`,
       type: 'PAYMENT',
-      text: `Payment of ₹${p.amount} recorded for ${p.customer.name}`,
-      date: p.paidDate as Date
+      text: `Payment of ₹${p.amount} recorded${p.allocations[0] ? ` for ${p.allocations[0].invoice.customer.name}` : ''}`,
+      date: p.receivedAt
     }))
   ].sort((a, b) => b.date.getTime() - a.date.getTime()).slice(0, 5)
 
   // Build Monthly Collections Chart Data
-  const currentMonth = today.getMonth()
-  const currentYear = today.getFullYear()
   const monthlyData = [
     { name: 'Week 1', total: 0 },
     { name: 'Week 2', total: 0 },
@@ -129,8 +123,7 @@ export async function getDashboardData(companyId: string) {
   ]
 
   monthlyCollections.forEach(inv => {
-    if (!inv.paidDate) return
-    const day = inv.paidDate.getDate()
+    const day = inv.receivedAt.getDate()
     let weekIdx = Math.floor((day - 1) / 7)
     if (weekIdx > 3) weekIdx = 3 // Put extra days in week 4
     const targetWeek = monthlyData[weekIdx]

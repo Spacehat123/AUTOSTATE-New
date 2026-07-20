@@ -9,8 +9,8 @@ const bodySchema = z.object({
   paidAmount: z.string().refine(val => !isNaN(Number(val)), {
     message: "paidAmount must be a numeric string"
   }),
-  paidDate: z.string().datetime().or(z.string().refine(val => !isNaN(Date.parse(val)), {
-    message: "paidDate must be a valid date string"
+  receivedAt: z.string().datetime().or(z.string().refine(val => !isNaN(Date.parse(val)), {
+    message: "receivedAt must be a valid date string"
   }))
 })
 
@@ -37,12 +37,9 @@ export async function POST(
       )
     }
     
-    const { paidAmount, paidDate } = parsed.data
+    const { paidAmount, receivedAt } = parsed.data
     
-    const invoice = await prisma.invoice.findUnique({
-      where: { id },
-      include: { customer: true }
-    })
+    const invoice = await prisma.invoice.findUnique({ where: { id }, include: { customer: true } })
     
     if (!invoice) {
       return NextResponse.json({ error: 'Invoice not found' }, { status: 404 })
@@ -58,26 +55,36 @@ export async function POST(
     
     let newStatus = invoice.status
     let newOutstanding = currentOutstanding
-    let newPaidDate = invoice.paidDate
-    
     const remaining = currentOutstanding.minus(paidDecimal)
+    if (paidDecimal.lte(0) || paidDecimal.gt(currentOutstanding)) {
+      return NextResponse.json({ error: 'Payment amount must be greater than zero and cannot exceed the outstanding balance' }, { status: 400 })
+    }
     
     if (paidDecimal.gte(currentOutstanding)) {
       newStatus = 'PAID'
       newOutstanding = new Prisma.Decimal(0)
-      newPaidDate = new Date(paidDate)
     } else {
       newStatus = 'PARTIAL'
       newOutstanding = remaining
     }
     
-    const updatedInvoice = await prisma.invoice.update({
-      where: { id },
-      data: {
-        status: newStatus,
-        outstandingAmount: newOutstanding,
-        paidDate: newStatus === 'PAID' ? newPaidDate : invoice.paidDate,
-      }
+    const paymentTimestamp = new Date(receivedAt)
+    const updatedInvoice = await prisma.$transaction(async (tx) => {
+      const payment = await tx.payment.create({
+        data: { companyId: user.companyId, amount: paidDecimal, receivedAt: paymentTimestamp }
+      })
+      await tx.paymentAllocation.create({
+        data: { paymentId: payment.id, invoiceId: invoice.id, amount: paidDecimal }
+      })
+      return tx.invoice.update({
+        where: { id },
+        data: {
+          status: newStatus,
+          outstandingAmount: newOutstanding,
+          paidAt: newStatus === 'PAID' ? paymentTimestamp : null,
+          closedAt: newStatus === 'PAID' ? paymentTimestamp : null,
+        }
+      })
     })
     
     return NextResponse.json(updatedInvoice)

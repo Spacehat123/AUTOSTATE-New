@@ -12,7 +12,7 @@ export interface ScoringInvoice {
   outstandingAmount: number | { toNumber: () => number }
   status: string
   dueDate: Date
-  paidDate: Date | null
+  paidAt: Date | null
   createdAt: Date
 }
 
@@ -84,11 +84,11 @@ export function calculatePriorityScore(
   score += Math.min(30, brokenPromises.length * 10)
 
   // ── Rule 4: Good payer discount (all invoices historically paid < 45 days) ─
-  const paidInvoices = invoices.filter(inv => inv.status === 'PAID' && inv.paidDate)
+  const paidInvoices = invoices.filter(inv => inv.status === 'PAID' && inv.paidAt)
   const hasLatePayments = paidInvoices.some(inv => {
     const msPerDay = 1000 * 60 * 60 * 24
     const daysToPay = Math.floor(
-      (new Date(inv.paidDate!).getTime() - new Date(inv.createdAt).getTime()) / msPerDay
+      (new Date(inv.paidAt!).getTime() - new Date(inv.createdAt).getTime()) / msPerDay
     )
     return daysToPay > 45
   })

@@ -7,7 +7,7 @@ export interface SummaryInvoice {
   status: string
   createdAt: Date
   dueDate: Date
-  paidDate: Date | null
+  paidAt: Date | null
 }
 
 export interface SummaryMessage {
@@ -49,7 +49,7 @@ export async function generateRelationshipSummary(
 
   // Pre-process data into readable text for the LLM
   const invoicesData = invoices.map(inv => {
-    return `- [${inv.status}] Amount: ₹${toNumber(inv.amount).toLocaleString('en-IN')}, Due: ${inv.dueDate.toISOString().split('T')[0]}, Paid: ${inv.paidDate ? inv.paidDate.toISOString().split('T')[0] : 'N/A'}`
+    return `- [${inv.status}] Amount: ₹${toNumber(inv.amount).toLocaleString('en-IN')}, Due: ${inv.dueDate.toISOString().split('T')[0]}, Paid: ${inv.paidAt ? inv.paidAt.toISOString().split('T')[0] : 'N/A'}`
   }).join('\n')
 
   const messagesData = messages.slice(0, 15).map(msg => {

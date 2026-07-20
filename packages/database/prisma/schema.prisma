@@ -24,6 +24,7 @@ model Company {
 
   users        User[]
   customers    Customer[]
+  payments     Payment[]
   integrations CompanyIntegration[]
 }
 
@@ -87,14 +88,47 @@ model Invoice {
   issueDate         DateTime
   dueDate           DateTime
   status            InvoiceStatus @default(PENDING)
-  paidDate          DateTime?
+  paidAt            DateTime?
+  closedAt          DateTime?
   outstandingAmount Decimal       @db.Decimal(18, 2)
   customerId        String
   customer          Customer      @relation(fields: [customerId], references: [id])
+  paymentAllocations PaymentAllocation[]
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
   @@unique([customerId, invoiceNumber])
+}
+
+model Payment {
+  id          String   @id @default(cuid())
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id])
+  amount      Decimal  @db.Decimal(18, 2)
+  receivedAt  DateTime
+  reference   String?
+  method      String?
+  notes       String?  @db.Text
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  allocations PaymentAllocation[]
+
+  @@index([companyId, receivedAt])
+}
+
+model PaymentAllocation {
+  id        String   @id @default(cuid())
+  paymentId String
+  invoiceId String
+  amount    Decimal  @db.Decimal(18, 2)
+  createdAt DateTime @default(now())
+
+  payment Payment @relation(fields: [paymentId], references: [id], onDelete: Cascade)
+  invoice Invoice @relation(fields: [invoiceId], references: [id], onDelete: Restrict)
+
+  @@unique([paymentId, invoiceId])
+  @@index([invoiceId])
 }
 
 enum InvoiceStatus {

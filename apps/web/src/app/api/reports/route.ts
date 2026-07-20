@@ -52,7 +52,7 @@ export async function GET(request: NextRequest) {
 
     // 2. collectedThisPeriod
     const paidThisPeriod = invoices.filter(
-      inv => inv.status === 'PAID' && inv.paidDate && inv.paidDate >= startDate
+      inv => inv.status === 'PAID' && inv.paidAt && inv.paidAt >= startDate
     )
     const collectedThisPeriod = paidThisPeriod.reduce(
       (sum, inv) => sum + (typeof inv.amount === 'number' ? inv.amount : inv.amount.toNumber()),
@@ -63,7 +63,7 @@ export async function GET(request: NextRequest) {
     let averageCollectionDays = 0
     if (paidThisPeriod.length > 0) {
       const totalDays = paidThisPeriod.reduce(
-        (sum, inv) => sum + differenceInDays(new Date(inv.paidDate!), new Date(inv.createdAt)),
+        (sum, inv) => sum + differenceInDays(new Date(inv.paidAt!), new Date(inv.createdAt)),
         0
       )
       averageCollectionDays = Math.round(totalDays / paidThisPeriod.length)

@@ -95,7 +95,7 @@ export async function generateTasksForCompany(companyId: string): Promise<void> 
           outstandingAmount: true,
           status: true,
           dueDate: true,
-          paidDate: true,
+          paidAt: true,
           createdAt: true
         }
       },

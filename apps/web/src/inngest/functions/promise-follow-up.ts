@@ -32,7 +32,7 @@ export const promiseFollowUpCheck = inngest.createFunction(
           where: {
             customerId: promise.customerId,
             status: 'PAID',
-            paidDate: {
+            paidAt: {
               gt: promise.createdAt
             }
           }

@@ -20,7 +20,7 @@ describe('Priority Scoring Engine', () => {
         outstandingAmount: 15_00_000,
         status: 'OVERDUE',
         dueDate: ninetyDaysAgo,
-        paidDate: null,
+        paidAt: null,
         createdAt: ninetyDaysAgo
       }],
       promises: [
@@ -39,7 +39,7 @@ describe('Priority Scoring Engine', () => {
         outstandingAmount: 1000,
         status: 'PENDING', // Not overdue
         dueDate: new Date(now.getTime() + 100000000), // future
-        paidDate: null,
+        paidAt: null,
         createdAt: now
       }],
       promises: [],
@@ -57,7 +57,7 @@ describe('Priority Scoring Engine', () => {
         outstandingAmount: 1000,
         status: 'OVERDUE',
         dueDate: yesterday,
-        paidDate: null,
+        paidAt: null,
         createdAt: yesterday
       }],
       promises: [],
@@ -86,7 +86,7 @@ describe('Priority Scoring Engine', () => {
         outstandingAmount: 100_00_000,
         status: 'OVERDUE',
         dueDate: ninetyDaysAgo, // +40
-        paidDate: null,
+        paidAt: null,
         createdAt: ninetyDaysAgo
       }],
       promises: [ // +30
@@ -108,7 +108,7 @@ describe('Priority Scoring Engine', () => {
         outstandingAmount: 0,
         status: 'PAID', // hasOnlyPaidInvoices = true -> -10 pts
         dueDate: ninetyDaysAgo,
-        paidDate: ninetyDaysAgo, // paid immediately
+        paidAt: ninetyDaysAgo, // paid immediately
         createdAt: ninetyDaysAgo
       }],
       promises: [],
