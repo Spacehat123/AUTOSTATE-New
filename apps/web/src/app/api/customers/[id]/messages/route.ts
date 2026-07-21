@@ -73,7 +73,7 @@ export async function POST(
       let subject = `Payment Reminder for ${customer.name}`
       let emailBody = content
       const subjectMatch = content.match(/^Subject:\s*(.+)$/m)
-      if (subjectMatch) {
+      if (subjectMatch && subjectMatch[1]) {
         subject = subjectMatch[1].trim()
         emailBody = content.replace(/^Subject:\s*.+$\n?/m, '').trim()
       }

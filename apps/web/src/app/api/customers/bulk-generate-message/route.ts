@@ -29,7 +29,7 @@ export async function POST(request: NextRequest) {
       },
       include: {
         invoices: {
-          where: { status: { in: ['OPEN', 'OVERDUE'] } }
+          where: { status: { in: ['PENDING', 'OVERDUE', 'PARTIAL'] } }
         }
       }
     })
@@ -51,15 +51,32 @@ export async function POST(request: NextRequest) {
       }
 
       try {
+        const outstandingAmount = customer.invoices.reduce(
+          (sum: number, inv: any) => sum + Number(inv.outstandingAmount || 0),
+          0
+        )
+        const invoiceNumbers = customer.invoices.map((inv: any) => inv.invoiceNumber)
+
+        let daysOverdue = 0
+        if (customer.invoices.length > 0) {
+          const oldestDue = customer.invoices.reduce(
+            (oldest: Date, inv: any) => inv.dueDate < oldest ? inv.dueDate : oldest,
+            customer.invoices[0]!.dueDate
+          )
+          const msPerDay = 1000 * 60 * 60 * 24
+          const now = new Date()
+          now.setHours(0, 0, 0, 0)
+          daysOverdue = Math.max(0, Math.floor((now.getTime() - new Date(oldestDue).getTime()) / msPerDay))
+        }
+
         const generated = await generateCollectionMessage({
           customerName: customer.name,
-          invoices: customer.invoices.map(inv => ({
-            number: inv.number,
-            amount: Number(inv.outstandingAmount),
-            dueDate: inv.dueDate,
-          })),
-          tone,
-          language
+          outstandingAmount,
+          daysOverdue,
+          invoiceNumbers,
+          language,
+          tone: tone as any,
+          recentMessages: []
         })
         
         results.push({

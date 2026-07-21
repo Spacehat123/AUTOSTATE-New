@@ -114,7 +114,7 @@ export function BulkMessageModal({ open, onOpenChange, customerIds, onComplete }
         
         {!loading && messages.length === 0 && (
           <div className="flex gap-4 mb-4">
-            <Select value={tone} onValueChange={setTone} disabled={loading || sending}>
+            <Select value={tone} onValueChange={(val) => val && setTone(val)} disabled={loading || sending}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Tone" />
               </SelectTrigger>
@@ -124,7 +124,7 @@ export function BulkMessageModal({ open, onOpenChange, customerIds, onComplete }
                 <SelectItem value="friendly">Friendly</SelectItem>
               </SelectContent>
             </Select>
-            <Select value={language} onValueChange={setLanguage} disabled={loading || sending}>
+            <Select value={language} onValueChange={(val) => val && setLanguage(val)} disabled={loading || sending}>
               <SelectTrigger className="w-full">
                 <SelectValue placeholder="Language" />
               </SelectTrigger>

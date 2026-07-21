@@ -5,6 +5,7 @@ import { CheckCircle2, Loader2 } from 'lucide-react'
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs'
 import { TaskCard } from '@/components/tasks/task-card'
 import { EmptyState } from '@/components/shared/empty-state'
+import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { isToday, isPast } from 'date-fns'
 
