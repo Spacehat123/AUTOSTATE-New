@@ -10,6 +10,7 @@ import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from '@
 import { CurrencyDisplay } from '@/components/shared/currency-display'
 import { RiskBadge } from '@/components/shared/risk-badge'
 import { EmptyState } from '@/components/shared/empty-state'
+import { BulkMessageModal } from './bulk-message-modal'
 
 export interface CustomerTableProps {
   initialData: any[]
@@ -21,6 +22,7 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
   const [total, setTotal] = useState(initialTotal)
   const [loading, setLoading] = useState(false)
   const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [showBulkModal, setShowBulkModal] = useState(false)
   const isFirstRender = React.useRef(true)
   
   // URL state
@@ -251,16 +253,22 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
                 variant="secondary" 
                 size="sm" 
                 className="bg-background/10 hover:bg-background/20 text-background border-none rounded-full"
-                onClick={() => {
-                  // Phase 24.3: Hook up bulk generate modal
-                  console.log("Generate messages for", Array.from(selectedIds))
-                }}
+                onClick={() => setShowBulkModal(true)}
               >
                 Generate Messages
               </Button>
             </div>
           </div>
         </div>
+      )}
+
+      {showBulkModal && (
+        <BulkMessageModal 
+          open={showBulkModal} 
+          onOpenChange={setShowBulkModal} 
+          customerIds={Array.from(selectedIds)} 
+          onComplete={() => setSelectedIds(new Set())}
+        />
       )}
     </div>
   )
