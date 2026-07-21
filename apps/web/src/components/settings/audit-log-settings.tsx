@@ -97,7 +97,7 @@ export function AuditLogSettings() {
             <CardDescription>Recent actions performed by team members.</CardDescription>
           </div>
           <div className="flex items-center gap-2">
-            <Select value={entityType} onValueChange={(val) => { setEntityType(val); setPage(1); }}>
+            <Select value={entityType} onValueChange={(val) => { setEntityType(val || 'all'); setPage(1); }}>
               <SelectTrigger className="w-[180px]">
                 <SelectValue placeholder="Filter by Entity" />
               </SelectTrigger>
