@@ -15,6 +15,7 @@
     "@autostate/ai": "workspace:^",
     "@autostate/database": "workspace:^",
     "@autostate/importer": "workspace:^",
+    "@autostate/shared": "workspace:^",
     "@base-ui/react": "^1.6.0",
     "@clerk/nextjs": "^7.5.17",
     "@google/generative-ai": "^0.24.1",

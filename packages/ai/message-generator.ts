@@ -1,5 +1,5 @@
 import { generateText } from 'ai'
-import { getModel } from './models'
+import { fastModel } from './models'
 import { logger } from '@autostate/shared'
 
 export interface MessageGenerationParams {
@@ -61,7 +61,7 @@ INSTRUCTIONS:
 
   try {
     const { text } = await generateText({
-      model: getModel(),
+      model: fastModel as any,
       prompt
     })
 
