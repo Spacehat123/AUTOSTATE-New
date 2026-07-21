@@ -1,5 +1,4 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -8,12 +7,7 @@ export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
 
   try {
-    if (user.role !== 'OWNER') {
-      return NextResponse.json({ error: 'Access Denied. Only owners can manage users.' }, { status: 403 })
-    }
-
-    const users = await prisma.user.findMany({
-      where: { companyId: user.companyId },
+    const users = await user.db.user.findMany({
       select: {
         id: true,
         name: true,
@@ -26,7 +20,7 @@ export async function GET(request: NextRequest) {
 
     return NextResponse.json(users)
   } catch (error) {
-    console.error('[SETTINGS_USERS_GET]', error)
+    console.error('[TEAM_GET]', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

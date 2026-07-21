@@ -1,8 +1,19 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Loader2, Users, AlertTriangle } from 'lucide-react'
+import { Loader2, Users, AlertTriangle, Trash2, UserPlus } from 'lucide-react'
 import { toast } from 'sonner'
+import { Button } from '@/components/ui/button'
+import { Input } from '@/components/ui/input'
+import {
+  Dialog,
+  DialogContent,
+  DialogHeader,
+  DialogTitle,
+  DialogTrigger,
+  DialogFooter,
+  DialogDescription,
+} from '@/components/ui/dialog'
 import {
   Select,
   SelectContent,
@@ -23,6 +34,11 @@ export function UsersSettings() {
   const [loading, setLoading] = useState(true)
   const [users, setUsers] = useState<User[]>([])
   const [accessDenied, setAccessDenied] = useState(false)
+  
+  const [inviteOpen, setInviteOpen] = useState(false)
+  const [inviteEmail, setInviteEmail] = useState('')
+  const [inviteRole, setInviteRole] = useState<'ADMIN' | 'MEMBER'>('MEMBER')
+  const [isInviting, setIsInviting] = useState(false)
 
   useEffect(() => {
     fetchUsers()
@@ -30,7 +46,7 @@ export function UsersSettings() {
 
   async function fetchUsers() {
     try {
-      const res = await fetch('/api/settings/users')
+      const res = await fetch('/api/team')
       if (res.status === 403) {
         setAccessDenied(true)
         setLoading(false)
@@ -52,7 +68,7 @@ export function UsersSettings() {
     setUsers(prev => prev.map(u => u.id === userId ? { ...u, role: newRole as User['role'] } : u))
     
     try {
-      const res = await fetch(`/api/settings/users/${userId}`, {
+      const res = await fetch(`/api/team/${userId}`, {
         method: 'PATCH',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ role: newRole })
@@ -71,6 +87,50 @@ export function UsersSettings() {
     }
   }
 
+  const handleDelete = async (userId: string) => {
+    if (!confirm('Are you sure you want to remove this user from the company?')) return
+    
+    try {
+      const res = await fetch(`/api/team/${userId}`, { method: 'DELETE' })
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Failed to remove user')
+      }
+      
+      toast.success('User removed')
+      fetchUsers()
+    } catch (error: any) {
+      toast.error(error.message)
+    }
+  }
+
+  const handleInvite = async (e: React.FormEvent) => {
+    e.preventDefault()
+    setIsInviting(true)
+    
+    try {
+      const res = await fetch('/api/team/invite', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ email: inviteEmail, role: inviteRole })
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Failed to invite user')
+      }
+      
+      toast.success('Invitation sent!')
+      setInviteOpen(false)
+      setInviteEmail('')
+      fetchUsers()
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setIsInviting(false)
+    }
+  }
+
   if (loading) {
     return (
       <div className="flex items-center justify-center h-48 text-zinc-500">
@@ -86,7 +146,7 @@ export function UsersSettings() {
           <AlertTriangle className="w-6 h-6" />
         </div>
         <div>
-          <h3 className="text-lg font-medium text-white mb-2">Access Denied</h3>
+          <h3 className="text-lg font-medium text-foreground mb-2">Access Denied</h3>
           <p className="text-zinc-400">You must be the company OWNER to manage team members.</p>
         </div>
       </div>
@@ -95,16 +155,64 @@ export function UsersSettings() {
 
   return (
     <div className="bg-surface-card border border-surface-border rounded-xl overflow-hidden max-w-4xl">
-      <div className="p-6 border-b border-surface-border">
+      <div className="p-6 border-b border-surface-border flex items-center justify-between">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-brand-500/20 flex items-center justify-center">
             <Users className="w-5 h-5 text-brand-400" />
           </div>
           <div>
-            <h2 className="text-lg font-medium text-white">Team Members</h2>
+            <h2 className="text-lg font-medium text-foreground">Team Members</h2>
             <p className="text-sm text-zinc-400">Manage user roles and access to your company account.</p>
           </div>
         </div>
+
+        <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
+          <DialogTrigger asChild>
+            <Button className="bg-brand-500 text-white hover:bg-brand-600 gap-2">
+              <UserPlus className="w-4 h-4" />
+              Invite Member
+            </Button>
+          </DialogTrigger>
+          <DialogContent className="sm:max-w-md">
+            <DialogHeader>
+              <DialogTitle>Invite to Team</DialogTitle>
+              <DialogDescription>
+                Send an invitation email to add someone to your company.
+              </DialogDescription>
+            </DialogHeader>
+            <form onSubmit={handleInvite} className="space-y-4 py-4">
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Email Address</label>
+                <Input 
+                  type="email" 
+                  required 
+                  value={inviteEmail}
+                  onChange={e => setInviteEmail(e.target.value)}
+                  placeholder="colleague@example.com"
+                  autoFocus
+                />
+              </div>
+              <div className="space-y-2">
+                <label className="text-sm font-medium text-zinc-300">Role</label>
+                <Select value={inviteRole} onValueChange={(v: any) => setInviteRole(v)}>
+                  <SelectTrigger>
+                    <SelectValue />
+                  </SelectTrigger>
+                  <SelectContent>
+                    <SelectItem value="ADMIN">Admin</SelectItem>
+                    <SelectItem value="MEMBER">Member</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+              <DialogFooter className="pt-4">
+                <Button type="submit" className="w-full bg-brand-500 text-white hover:bg-brand-600" disabled={isInviting}>
+                  {isInviting ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
+                  Send Invitation
+                </Button>
+              </DialogFooter>
+            </form>
+          </DialogContent>
+        </Dialog>
       </div>
 
       <div className="divide-y divide-surface-border">
@@ -123,7 +231,7 @@ export function UsersSettings() {
             <div className="col-span-3 text-sm text-zinc-400">
               {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' })}
             </div>
-            <div className="col-span-5 flex justify-end">
+            <div className="col-span-5 flex justify-end items-center gap-3">
               <Select
                 value={user.role}
                 onValueChange={(val) => handleRoleChange(user.id, val || 'MEMBER')}
@@ -137,6 +245,15 @@ export function UsersSettings() {
                   <SelectItem value="MEMBER">Member</SelectItem>
                 </SelectContent>
               </Select>
+              
+              <Button 
+                variant="ghost" 
+                size="icon" 
+                className="text-zinc-500 hover:text-rose-500 hover:bg-rose-500/10 h-9 w-9"
+                onClick={() => handleDelete(user.id)}
+              >
+                <Trash2 className="w-4 h-4" />
+              </Button>
             </div>
           </div>
         ))}
