@@ -26,6 +26,7 @@ model Company {
   customers    Customer[]
   payments     Payment[]
   integrations CompanyIntegration[]
+  subscription Subscription?
 }
 
 model User {
@@ -290,4 +291,25 @@ model AuditLog {
   createdAt  DateTime @default(now())
 
   @@index([companyId, createdAt])
+}
+
+model Subscription {
+  id                   String             @id @default(cuid())
+  companyId            String             @unique
+  company              Company            @relation(fields: [companyId], references: [id])
+  provider             String             @default("LEMON_SQUEEZY")
+  providerCustomerId     String?            @unique
+  providerSubscriptionId String?            @unique
+  plan                 String             @default("FREE")
+  status               SubscriptionStatus @default(TRIALING)
+  currentPeriodEnd     DateTime?
+  createdAt            DateTime           @default(now())
+  updatedAt            DateTime           @updatedAt
+}
+
+enum SubscriptionStatus {
+  TRIALING
+  ACTIVE
+  PAST_DUE
+  CANCELED
 }

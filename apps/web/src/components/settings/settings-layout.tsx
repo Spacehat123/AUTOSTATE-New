@@ -8,6 +8,7 @@ import { WhatsappSettings } from './whatsapp-settings'
 import { EmailSettings } from './email-settings'
 import { ImportSettings } from './import-settings'
 import { AuditLogSettings } from './audit-log-settings'
+import { BillingSettings } from './billing-settings'
 
 export function SettingsLayout() {
   return (
@@ -18,6 +19,7 @@ export function SettingsLayout() {
         <TabsTrigger value="whatsapp" className="px-4 py-2">WhatsApp</TabsTrigger>
         <TabsTrigger value="email" className="px-4 py-2">Email</TabsTrigger>
         <TabsTrigger value="import" className="px-4 py-2">Data Import</TabsTrigger>
+        <TabsTrigger value="billing" className="px-4 py-2">Billing</TabsTrigger>
         <TabsTrigger value="audit-log" className="px-4 py-2">Audit Log</TabsTrigger>
       </TabsList>
 
@@ -39,6 +41,10 @@ export function SettingsLayout() {
 
       <TabsContent value="import" className="mt-0">
         <ImportSettings />
+      </TabsContent>
+
+      <TabsContent value="billing" className="mt-0">
+        <BillingSettings />
       </TabsContent>
 
       <TabsContent value="audit-log" className="mt-0">

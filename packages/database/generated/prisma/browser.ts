@@ -82,3 +82,8 @@ export type InboxEvent = Prisma.InboxEventModel
  * 
  */
 export type AuditLog = Prisma.AuditLogModel
+/**
+ * Model Subscription
+ * 
+ */
+export type Subscription = Prisma.SubscriptionModel
