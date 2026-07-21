@@ -4,6 +4,7 @@ import { getCurrentUser } from '@/lib/auth'
 import { logAction } from '@autostate/database'
 import { ratelimit } from '@autostate/shared'
 import { sendTextMessage } from '@/lib/whatsapp'
+import { sendEmail } from '@autostate/email'
 
 export const dynamic = 'force-dynamic'
 
@@ -47,8 +48,9 @@ export async function POST(
     }
 
     let whatsappId: string | undefined
+    let providerId: string | undefined
 
-    // 2. Send the message via WhatsApp if applicable
+    // 2. Send the message via WhatsApp or Email
     if (type === 'WHATSAPP') {
       if (!customer.phone) {
         return NextResponse.json(
@@ -59,6 +61,29 @@ export async function POST(
 
       const result = await sendTextMessage(customer.phone, content)
       whatsappId = result.whatsappId
+    } else if (type === 'EMAIL') {
+      if (!customer.email) {
+        return NextResponse.json(
+          { error: 'Customer has no email address on record' },
+          { status: 422 }
+        )
+      }
+
+      // Extract subject line if present (e.g. "Subject: ...")
+      let subject = `Payment Reminder for ${customer.name}`
+      let emailBody = content
+      const subjectMatch = content.match(/^Subject:\s*(.+)$/m)
+      if (subjectMatch) {
+        subject = subjectMatch[1].trim()
+        emailBody = content.replace(/^Subject:\s*.+$\n?/m, '').trim()
+      }
+
+      const result = await sendEmail({
+        to: customer.email,
+        subject,
+        body: emailBody
+      })
+      providerId = result.providerId
     }
 
     // 3. Persist the outgoing message to the DB

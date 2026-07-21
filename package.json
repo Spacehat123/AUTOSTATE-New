@@ -16,6 +16,7 @@
   },
   "packageManager": "pnpm@9.6.0",
   "dependencies": {
-    "@prisma/client": "^7.8.0"
+    "@prisma/client": "^7.8.0",
+    "openai": "^6.48.0"
   }
 }

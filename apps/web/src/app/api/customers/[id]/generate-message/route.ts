@@ -15,7 +15,8 @@ async function handleGenerate(
   customerId: string,
   db: any,
   tone: 'formal' | 'friendly' | 'firm',
-  language: string
+  language: string,
+  channel: 'WHATSAPP' | 'EMAIL' = 'WHATSAPP'
 ) {
   // 1. Fetch customer and verify company
   const customer = await db.customer.findUnique({
@@ -72,7 +73,8 @@ async function handleGenerate(
     invoiceNumbers,
     language,
     tone,
-    recentMessages
+    recentMessages,
+    channel
   })
 
   return NextResponse.json({ message })
@@ -86,7 +88,9 @@ export async function GET(
   const user = await getCurrentUser()
   try {
     const { id: customerId } = await params
-    return await handleGenerate(customerId, user.db, 'friendly', 'English')
+    const channelParam = request.nextUrl.searchParams.get('channel')
+    const channel = channelParam === 'EMAIL' ? 'EMAIL' : 'WHATSAPP'
+    return await handleGenerate(customerId, user.db, 'friendly', 'English', channel)
   } catch (error) {
     console.error('[GENERATE_MESSAGE_GET]', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })

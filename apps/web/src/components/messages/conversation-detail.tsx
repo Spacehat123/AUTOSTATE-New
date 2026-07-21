@@ -25,6 +25,7 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
   const [sending, setSending] = useState(false)
   const [generating, setGenerating] = useState(false)
   const [messageText, setMessageText] = useState('')
+  const [channel, setChannel] = useState<'WHATSAPP' | 'EMAIL'>('WHATSAPP')
   const [parsedReply, setParsedReply] = useState<ParsedReply | null>(null)
   const [savingPromise, setSavingPromise] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
@@ -34,7 +35,15 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
       const res = await fetch(`/api/customers/${customerId}`)
       if (res.ok) {
         const data = await res.json()
-        setMessages(data.messages || [])
+        const msgs = data.messages || []
+        setMessages(msgs)
+        // Default to whichever channel the customer last used if available
+        if (msgs.length > 0) {
+          const lastMsg = msgs[msgs.length - 1]
+          if (lastMsg.type === 'EMAIL' || lastMsg.type === 'WHATSAPP') {
+            setChannel(lastMsg.type)
+          }
+        }
       }
     } catch (e) {
       toast.error('Failed to load messages')
@@ -63,7 +72,7 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
       const res = await fetch(`/api/customers/${customerId}/messages`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ content: messageText })
+        body: JSON.stringify({ content: messageText, type: channel })
       })
       if (res.ok) {
         setMessageText('')
@@ -82,7 +91,7 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
   const handleGenerate = async () => {
     setGenerating(true)
     try {
-      const res = await fetch(`/api/customers/${customerId}/generate-message`)
+      const res = await fetch(`/api/customers/${customerId}/generate-message?channel=${channel}`)
       if (res.ok) {
         const data = await res.json()
         setMessageText(data.message || '')
@@ -139,7 +148,7 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
         </div>
         <div>
           <div className="font-semibold text-foreground">{customerName}</div>
-          <div className="text-xs text-zinc-500">WhatsApp conversation</div>
+          <div className="text-xs text-zinc-500">{channel === 'EMAIL' ? 'Email conversation' : 'WhatsApp conversation'}</div>
         </div>
       </div>
 
@@ -240,20 +249,38 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
             }
             Generate AI Message
           </Button>
-          <Button
-            size="sm"
-            onClick={handleSend}
-            disabled={sending || !messageText.trim()}
-            className="bg-brand-500 hover:bg-brand-600 text-white h-8 text-xs shadow-[0_0_10px_rgba(59,130,246,0.3)] disabled:opacity-40"
-          >
-            {sending
-              ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
-              : <Send className="w-3.5 h-3.5 mr-1.5" />
-            }
-            Send
-          </Button>
+          <div className="flex items-center gap-2">
+            <div className="flex items-center bg-black/20 p-0.5 rounded-lg border border-surface-border">
+              <button
+                type="button"
+                onClick={() => setChannel('WHATSAPP')}
+                className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${channel === 'WHATSAPP' ? 'bg-brand-500 text-white' : 'text-zinc-400 hover:text-white'}`}
+              >
+                WhatsApp
+              </button>
+              <button
+                type="button"
+                onClick={() => setChannel('EMAIL')}
+                className={`text-xs px-2.5 py-1 rounded-md font-medium transition-colors ${channel === 'EMAIL' ? 'bg-brand-500 text-white' : 'text-zinc-400 hover:text-white'}`}
+              >
+                Email
+              </button>
+            </div>
+            <Button
+              size="sm"
+              onClick={handleSend}
+              disabled={sending || !messageText.trim()}
+              className="bg-brand-500 hover:bg-brand-600 text-white h-8 text-xs shadow-[0_0_10px_rgba(59,130,246,0.3)] disabled:opacity-40"
+            >
+              {sending
+                ? <Loader2 className="w-3.5 h-3.5 mr-1.5 animate-spin" />
+                : <Send className="w-3.5 h-3.5 mr-1.5" />
+              }
+              Send via {channel === 'EMAIL' ? 'Email' : 'WhatsApp'}
+            </Button>
+          </div>
         </div>
-        <p className="text-[10px] text-zinc-600">Ctrl+Enter to send · Messages are sent via WhatsApp</p>
+        <p className="text-[10px] text-zinc-600">Ctrl+Enter to send · Sending via {channel}</p>
       </div>
     </div>
   )

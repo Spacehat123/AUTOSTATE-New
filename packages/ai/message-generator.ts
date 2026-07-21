@@ -10,6 +10,7 @@ export interface MessageGenerationParams {
   language: string
   tone: 'formal' | 'friendly' | 'firm'
   recentMessages: string[]
+  channel?: 'WHATSAPP' | 'EMAIL'
 }
 
 /**
@@ -26,7 +27,8 @@ export async function generateCollectionMessage(
     invoiceNumbers,
     language,
     tone,
-    recentMessages
+    recentMessages,
+    channel = 'WHATSAPP'
   } = params
 
   const formattedAmount = `₹${outstandingAmount.toLocaleString('en-IN')}`
@@ -34,7 +36,7 @@ export async function generateCollectionMessage(
     ? `invoice #${invoiceNumbers[0]}`
     : `invoices ${invoiceNumbers.map(n => `#${n}`).join(', ')}`
 
-  let prompt = `You are an accounts receivable assistant drafting a WhatsApp message to a customer.
+  let prompt = `You are an accounts receivable assistant drafting a ${channel === 'EMAIL' ? 'Email' : 'WhatsApp'} message to a customer.
 
 CUSTOMER DETAILS:
 - Name: ${customerName}
@@ -43,13 +45,12 @@ CUSTOMER DETAILS:
 - Invoices: ${invoicesStr}
 
 INSTRUCTIONS:
-1. Write a short, professional WhatsApp message asking for payment.
+1. Write a ${channel === 'EMAIL' ? 'detailed, professional email' : 'short, professional WhatsApp message'} asking for payment.
 2. The tone must be **${tone}**.
 3. Write the message in **${language}**.
 4. Mention the customer's name, the amount owed (${formattedAmount}), and the invoices.
-5. Keep it under 300 characters. Keep it concise, suitable for WhatsApp.
-6. Do NOT include placeholders like [Your Name] or [Company Name].
-7. Do NOT include subject lines or greetings like "Dear". Just start the message naturally.`
+5. ${channel === 'EMAIL' ? 'Include a clear Subject: header line at the beginning.' : 'Keep it under 300 characters. Keep it concise, suitable for WhatsApp.'}
+6. Do NOT include placeholders like [Your Name] or [Company Name].`
 
   if (recentMessages.length > 0) {
     prompt += `\n\nRECENT CONVERSATION HISTORY (for context):\n`

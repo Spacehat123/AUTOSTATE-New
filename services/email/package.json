@@ -1,0 +1,16 @@
+{
+  "name": "@autostate/email",
+  "version": "1.0.0",
+  "description": "Email service module for Autostate using Resend",
+  "main": "index.ts",
+  "scripts": {
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "resend": "^4.1.2"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "typescript": "^5.0.0"
+  }
+}

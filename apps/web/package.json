@@ -14,6 +14,7 @@
   "dependencies": {
     "@autostate/ai": "workspace:^",
     "@autostate/database": "workspace:^",
+    "@autostate/email": "workspace:^",
     "@autostate/importer": "workspace:^",
     "@autostate/shared": "workspace:^",
     "@base-ui/react": "^1.6.0",
