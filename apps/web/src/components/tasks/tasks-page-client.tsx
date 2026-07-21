@@ -12,6 +12,8 @@ export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
   const [tasks, setTasks] = useState<any[]>(initialTasks)
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('today')
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
+  const [bulkLoading, setBulkLoading] = useState(false)
   const isFirstRender = React.useRef(true)
 
   const fetchTasks = useCallback(async (tab: string) => {
@@ -40,6 +42,7 @@ export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
 
   useEffect(() => {
     fetchTasks(activeTab)
+    setSelectedIds(new Set())
   }, [activeTab, fetchTasks])
 
   // Compute filtered tasks
@@ -79,6 +82,29 @@ export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
     }
   }
 
+  const handleBulkUpdate = async (newStatus: string) => {
+    if (selectedIds.size === 0) return
+    setBulkLoading(true)
+    try {
+      const res = await fetch('/api/tasks/bulk', {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          taskIds: Array.from(selectedIds),
+          status: newStatus
+        })
+      })
+      if (!res.ok) throw new Error('Failed')
+      toast.success(`Updated ${selectedIds.size} tasks`)
+      setSelectedIds(new Set())
+      fetchTasks(activeTab)
+    } catch (e) {
+      toast.error('Failed to update tasks')
+    } finally {
+      setBulkLoading(false)
+    }
+  }
+
   return (
     <div className="flex flex-col gap-6">
       <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full max-w-md">
@@ -111,8 +137,39 @@ export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
               task={task}
               onComplete={() => handleUpdateStatus(task.id, 'COMPLETED')}
               onSnooze={() => handleUpdateStatus(task.id, 'SNOOZED')}
+              selected={selectedIds.has(task.id)}
+              onSelect={(checked) => {
+                const next = new Set(selectedIds)
+                if (checked) next.add(task.id)
+                else next.delete(task.id)
+                setSelectedIds(next)
+              }}
             />
           ))}
+        </div>
+      )}
+
+      {/* Floating Action Bar */}
+      {selectedIds.size > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-10 fade-in duration-200">
+          <div className="bg-foreground text-background px-6 py-3 rounded-full shadow-2xl flex items-center gap-6">
+            <span className="text-sm font-semibold whitespace-nowrap">
+              {selectedIds.size} selected
+            </span>
+            <div className="w-px h-4 bg-background/20" />
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="secondary" 
+                size="sm" 
+                className="bg-emerald-500 hover:bg-emerald-600 text-white border-none rounded-full"
+                onClick={() => handleBulkUpdate('COMPLETED')}
+                disabled={bulkLoading}
+              >
+                {bulkLoading ? <Loader2 className="w-4 h-4 animate-spin mr-1" /> : <CheckCircle2 className="w-4 h-4 mr-1" />}
+                Mark Done
+              </Button>
+            </div>
+          </div>
         </div>
       )}
     </div>

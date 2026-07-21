@@ -20,6 +20,7 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
   const [data, setData] = useState<any[]>(initialData)
   const [total, setTotal] = useState(initialTotal)
   const [loading, setLoading] = useState(false)
+  const [selectedIds, setSelectedIds] = useState<Set<string>>(new Set())
   const isFirstRender = React.useRef(true)
   
   // URL state
@@ -61,6 +62,7 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
         const json = await res.json()
         setData(json.data)
         setTotal(json.total)
+        setSelectedIds(new Set()) // clear selection on page change
       }
     } catch (error) {
       console.error('Failed to fetch customers:', error)
@@ -93,6 +95,21 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
     </Button>
   )
 
+  const toggleAll = () => {
+    if (selectedIds.size === data.length) {
+      setSelectedIds(new Set())
+    } else {
+      setSelectedIds(new Set(data.map(d => d.id)))
+    }
+  }
+
+  const toggleOne = (id: string) => {
+    const next = new Set(selectedIds)
+    if (next.has(id)) next.delete(id)
+    else next.add(id)
+    setSelectedIds(next)
+  }
+
   return (
     <div className="flex flex-col space-y-6">
       {/* Top Bar */}
@@ -113,7 +130,15 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
         <Table>
           <TableHeader className="bg-surface-border/20 border-b border-surface-border">
             <TableRow className="hover:bg-transparent border-none">
-              <TableHead className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground pl-6 h-12">Customer</TableHead>
+              <TableHead className="w-12 pl-6">
+                <input 
+                  type="checkbox" 
+                  checked={data.length > 0 && selectedIds.size === data.length}
+                  onChange={toggleAll}
+                  className="rounded border-surface-border bg-surface-card w-4 h-4 text-brand-600 focus:ring-brand-500"
+                />
+              </TableHead>
+              <TableHead className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground h-12">Customer</TableHead>
               <TableHead className="h-12"><SortHeader label="Paid Amount" field="totalPaid" /></TableHead>
               <TableHead className="h-12"><SortHeader label="Outstanding" field="totalOutstanding" /></TableHead>
               <TableHead className="h-12"><SortHeader label="Oldest Invoice" field="oldestInvoiceDays" /></TableHead>
@@ -143,7 +168,15 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
             ) : (
               data.map((customer) => (
                 <TableRow key={customer.id} className="border-b border-surface-border/50 hover:bg-black/5 dark:hover:bg-white/5 transition-colors group last:border-0">
-                  <TableCell className="font-semibold text-foreground pl-6 py-4">{customer.name}</TableCell>
+                  <TableCell className="pl-6 w-12">
+                    <input 
+                      type="checkbox" 
+                      checked={selectedIds.has(customer.id)}
+                      onChange={() => toggleOne(customer.id)}
+                      className="rounded border-surface-border bg-surface-card w-4 h-4 text-brand-600 focus:ring-brand-500"
+                    />
+                  </TableCell>
+                  <TableCell className="font-semibold text-foreground py-4">{customer.name}</TableCell>
                   <TableCell className="py-4">
                     <CurrencyDisplay value={customer.totalPaid || 0} compact className="text-emerald-500 font-semibold" />
                   </TableCell>
@@ -204,6 +237,31 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
           </Button>
         </div>
       </div>
+
+      {/* Floating Action Bar */}
+      {selectedIds.size > 0 && (
+        <div className="fixed bottom-6 left-1/2 -translate-x-1/2 z-50 animate-in slide-in-from-bottom-10 fade-in duration-200">
+          <div className="bg-foreground text-background px-6 py-3 rounded-full shadow-2xl flex items-center gap-6">
+            <span className="text-sm font-semibold whitespace-nowrap">
+              {selectedIds.size} selected
+            </span>
+            <div className="w-px h-4 bg-background/20" />
+            <div className="flex items-center gap-2">
+              <Button 
+                variant="secondary" 
+                size="sm" 
+                className="bg-background/10 hover:bg-background/20 text-background border-none rounded-full"
+                onClick={() => {
+                  // Phase 24.3: Hook up bulk generate modal
+                  console.log("Generate messages for", Array.from(selectedIds))
+                }}
+              >
+                Generate Messages
+              </Button>
+            </div>
+          </div>
+        </div>
+      )}
     </div>
   )
 }

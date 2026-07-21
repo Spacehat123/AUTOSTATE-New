@@ -11,6 +11,8 @@ export interface TaskCardProps {
   task: any
   onComplete: () => void
   onSnooze: () => void
+  selected?: boolean
+  onSelect?: (checked: boolean) => void
 }
 
 const TYPE_LABELS: Record<string, string> = {
@@ -21,7 +23,7 @@ const TYPE_LABELS: Record<string, string> = {
   RECORD_PAYMENT: 'Record Payment'
 }
 
-export function TaskCard({ task, onComplete, onSnooze }: TaskCardProps) {
+export function TaskCard({ task, onComplete, onSnooze, selected = false, onSelect }: TaskCardProps) {
   const isHighPriority = task.priority > 70
   const amount = task.amount || 0
   const daysOverdue = task.daysOverdue || 0
@@ -61,10 +63,20 @@ export function TaskCard({ task, onComplete, onSnooze }: TaskCardProps) {
 
   return (
     <Card className={`bg-surface-card border-surface-border transition-all hover:border-brand-500/30 overflow-hidden ${isHighPriority ? 'border-l-4 border-l-rose-500' : ''}`}>
-      <CardContent className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-5">
+      <CardContent className="p-4 sm:p-5 flex flex-col sm:flex-row sm:items-center justify-between gap-5 relative">
+        {onSelect && (
+          <div className="absolute top-4 left-4">
+            <input
+              type="checkbox"
+              checked={selected}
+              onChange={(e) => onSelect(e.target.checked)}
+              className="rounded border-surface-border bg-surface-card w-4 h-4 text-brand-600 focus:ring-brand-500"
+            />
+          </div>
+        )}
         
         {/* Left Side: Context */}
-        <div className="flex flex-col flex-1">
+        <div className={`flex flex-col flex-1 ${onSelect ? 'pl-8' : ''}`}>
           <div className="flex items-center gap-2 mb-1.5">
             <span className={`text-[10px] font-bold uppercase tracking-wider px-2 py-0.5 rounded-full ${isHighPriority ? 'bg-rose-500/10 text-rose-400' : 'bg-brand-500/10 text-brand-400'}`}>
               {TYPE_LABELS[task.taskType] || task.taskType}
