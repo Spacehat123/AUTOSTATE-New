@@ -11,6 +11,7 @@
   "dependencies": {
     "@ai-sdk/gateway": "^1.0.41",
     "@autostate/database": "workspace:*",
+    "@autostate/shared": "workspace:*",
     "ai": "^4.3.19",
     "zod": "^3.23.8"
   },

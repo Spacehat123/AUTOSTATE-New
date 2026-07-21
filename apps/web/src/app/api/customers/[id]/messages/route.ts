@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getCurrentUser } from '@/lib/auth'
 import { logAction } from '@autostate/database'
+import { ratelimit } from '@autostate/shared'
 import { sendTextMessage } from '@/lib/whatsapp'
 
 export const dynamic = 'force-dynamic'
@@ -16,6 +17,11 @@ export async function POST(
   { params }: { params: Promise<{ id: string }> }
 ) {
   const user = await getCurrentUser()
+
+  const { success } = await ratelimit.api.limit(user.id)
+  if (!success) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
 
   try {
     const { id: customerId } = await params

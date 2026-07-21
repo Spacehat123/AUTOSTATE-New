@@ -3,6 +3,7 @@ import { z } from 'zod'
 import { getCurrentUser } from '@/lib/auth'
 import { logAction } from '@autostate/database'
 import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
+import { ratelimit } from '@autostate/shared'
 
 export const dynamic = 'force-dynamic'
 
@@ -23,6 +24,11 @@ export async function PATCH(
   { params }: { params: Promise<{ id: string }> },
 ) {
   const user = await getCurrentUser()
+
+  const { success } = await ratelimit.api.limit(user.id)
+  if (!success) {
+    return NextResponse.json({ error: 'Too many requests' }, { status: 429 })
+  }
 
   try {
     requireRole(user, 'ADMIN')

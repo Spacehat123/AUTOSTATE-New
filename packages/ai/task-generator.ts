@@ -1,4 +1,5 @@
 import { prisma } from '@autostate/database'
+import { logger } from '@autostate/shared'
 import { calculatePriorityScore, ScoringInvoice, ScoringPromise, ScoringMessage } from './prioritization'
 
 // ─────────────────────────────────────────────────────────────────────────────
@@ -180,8 +181,9 @@ export async function generateTasksForCompany(companyId: string): Promise<void> 
     })
   }
 
-  console.log(
-    `[TaskGenerator] Company ${companyId}: upserted ${processedCustomerIds.length} tasks, ` +
-    `cleaned up ${staleCustomerIds.length} stale tasks`
-  )
+  logger.info({
+    companyId,
+    processedCount: processedCustomerIds.length,
+    staleCount: staleCustomerIds.length
+  }, '[TaskGenerator] Task generation completed')
 }

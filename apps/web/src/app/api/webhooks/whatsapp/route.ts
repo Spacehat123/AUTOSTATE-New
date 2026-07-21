@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@autostate/database'
 import { inngest } from '@/lib/inngest'
+import { logger, ratelimit } from '@autostate/shared'
 
 export const dynamic = 'force-dynamic'
 
@@ -20,11 +21,11 @@ export async function GET(request: NextRequest) {
   const expectedToken = process.env.WHATSAPP_VERIFY_TOKEN
 
   if (mode === 'subscribe' && token === expectedToken && challenge) {
-    console.log('[WHATSAPP_WEBHOOK] Verification successful')
+    logger.info('WhatsApp webhook verification successful')
     return new NextResponse(challenge, { status: 200 })
   }
 
-  console.warn('[WHATSAPP_WEBHOOK] Verification failed — bad token or mode')
+  logger.warn('WhatsApp webhook verification failed — bad token or mode')
   return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
 }
 
@@ -40,6 +41,14 @@ export async function POST(request: NextRequest) {
   try {
     const body = await request.json()
     const headers = Object.fromEntries(request.headers.entries())
+
+    const ip = headers['x-forwarded-for'] ?? 'unknown'
+    const { success, limit, reset, remaining } = await ratelimit.webhook.limit(`wa_${ip}`)
+    
+    if (!success) {
+      logger.warn({ ip, limit, reset, remaining }, 'Rate limit exceeded for WhatsApp webhook')
+      return respond() // Still return 200 so Meta doesn't retry
+    }
 
     // 1. Durably store the exact raw payload first.
     // We do NO parsing, NO customer lookups, NO AI processing here.
@@ -66,7 +75,7 @@ export async function POST(request: NextRequest) {
     return respond()
   } catch (error) {
     // Log but still return 200 so Meta doesn't retry and flood us
-    console.error('[WHATSAPP_WEBHOOK] Error processing payload:', error)
+    logger.error({ error }, 'Error processing WhatsApp payload')
     return respond()
   }
 }

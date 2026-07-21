@@ -1,5 +1,6 @@
 import { generateText } from 'ai'
-import { fastModel } from './models'
+import { getModel } from './models'
+import { logger } from '@autostate/shared'
 
 export interface MessageGenerationParams {
   customerName: string
@@ -60,13 +61,13 @@ INSTRUCTIONS:
 
   try {
     const { text } = await generateText({
-      model: fastModel as any,
+      model: getModel(),
       prompt
     })
 
     return text.trim()
   } catch (error) {
-    console.error('[AI Message Generator] Failed to generate message:', error)
+    logger.error({ error }, 'Failed to generate message')
     // Fallback message if AI generation fails
     return `Hi ${customerName}, this is a reminder regarding your outstanding balance of ${formattedAmount} for ${invoicesStr} which is ${daysOverdue} days overdue. Please arrange payment at your earliest convenience.`
   }

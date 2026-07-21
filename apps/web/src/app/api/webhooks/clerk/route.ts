@@ -2,12 +2,22 @@ import { Webhook } from 'svix'
 import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { prisma } from '@autostate/database'
+import { logger, ratelimit } from '@autostate/shared'
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
 
   if (!WEBHOOK_SECRET) {
     throw new Error('Please add CLERK_WEBHOOK_SECRET from Clerk Dashboard to .env or .env.local')
+  }
+
+  // Rate Limiting
+  const ip = req.headers.get('x-forwarded-for') ?? 'unknown'
+  const { success, limit, reset, remaining } = await ratelimit.webhook.limit(`clerk_${ip}`)
+  
+  if (!success) {
+    logger.warn({ ip, limit, reset, remaining }, 'Rate limit exceeded for Clerk webhook')
+    return new Response('Too many requests', { status: 429 })
   }
 
   // Get the headers
@@ -40,7 +50,7 @@ export async function POST(req: Request) {
       'svix-signature': svix_signature,
     }) as WebhookEvent
   } catch (err) {
-    console.error('Error verifying webhook:', err)
+    logger.error({ err }, 'Error verifying webhook')
     return new Response('Error occurred', {
       status: 400,
     })
@@ -57,9 +67,9 @@ export async function POST(req: Request) {
         await prisma.user.delete({
           where: { clerkId: id }
         })
-        console.log(`User ${id} deleted from database`)
+        logger.info({ userId: id }, 'User deleted from database')
       } catch (error) {
-        console.error('Error deleting user from database:', error)
+        logger.error({ error, userId: id }, 'Error deleting user from database')
       }
     }
   }

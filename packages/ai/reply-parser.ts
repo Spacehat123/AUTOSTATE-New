@@ -1,4 +1,5 @@
 import { generateText } from 'ai'
+import { logger } from '@autostate/shared'
 import { fastModel } from './models'
 
 export interface ParsedReply {
@@ -47,7 +48,7 @@ Today's date is ${today}. If the customer mentions relative dates like "next Tue
       confidence: parsed.confidence ?? 0
     }
   } catch (error) {
-    console.error('[AI Reply Parser] Failed to parse reply:', error)
+    logger.error({ error }, 'Failed to parse reply')
     // Always fall back safely if JSON parse fails or model hallucinates
     return {
       intent: 'other',

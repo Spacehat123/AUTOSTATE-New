@@ -1,5 +1,6 @@
 import { generateText } from 'ai'
 import { summaryModel } from './models'
+import { logger } from '@autostate/shared'
 
 // Simplified types since we only need string representations for the AI prompt
 export interface SummaryInvoice {
@@ -89,7 +90,7 @@ INSTRUCTIONS:
 
     return text.trim()
   } catch (error) {
-    console.error('[AI Summary Generator] Failed to generate summary:', error)
+    logger.error({ error }, 'Failed to generate summary')
     return 'AI summary is temporarily unavailable due to a service error.'
   }
 }
