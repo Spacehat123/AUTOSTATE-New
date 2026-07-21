@@ -14,7 +14,7 @@ export async function GET(request: NextRequest) {
 
   try {
     const result = await getTasks({
-      companyId: user.companyId,
+      db: user.db,
       status,
       type
     })

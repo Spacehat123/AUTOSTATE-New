@@ -17,7 +17,7 @@ export async function GET(request: NextRequest) {
     const sortOrder = (searchParams.get('sortOrder') || 'asc') as 'asc' | 'desc'
 
     const data = await getCustomers({
-      companyId: user.companyId,
+      db: user.db,
       search,
       page,
       limit,

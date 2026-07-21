@@ -1,11 +1,10 @@
-import { prisma } from '@autostate/database'
+// Prisma client passed directly to methods
 
-export async function getMessageInbox(companyId: string) {
+export async function getMessageInbox(db: any) {
   // Fetch all customers in this company that have at least one message,
   // ordered by the most recent message timestamp descending.
-  const customers = await prisma.customer.findMany({
+  const customers = await db.customer.findMany({
     where: {
-      companyId,
       messages: {
         some: {}
       }
@@ -32,10 +31,9 @@ export async function getMessageInbox(companyId: string) {
   })
 
   // Count unread (INCOMING) per customer in one query
-  const unreadCounts = await prisma.message.groupBy({
+  const unreadCounts = await db.message.groupBy({
     by: ['customerId'],
     where: {
-      customer: { companyId },
       direction: 'INCOMING'
     },
     _count: { id: true }

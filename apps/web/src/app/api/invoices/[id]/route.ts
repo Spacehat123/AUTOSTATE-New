@@ -1,7 +1,8 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@autostate/database'
+// db is fetched from user
 import { getCurrentUser } from '@/lib/auth'
+import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 export const dynamic = 'force-dynamic'
 
@@ -24,6 +25,15 @@ export async function PATCH(
   const user = await getCurrentUser()
 
   try {
+    requireRole(user, 'ADMIN')
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) {
+      return roleErrorResponse()
+    }
+    throw error
+  }
+
+  try {
     const { id } = await params
     const body = await request.json()
 
@@ -37,7 +47,7 @@ export async function PATCH(
 
     const { dueDate } = parsed.data
 
-    const invoice = await prisma.invoice.findUnique({
+    const invoice = await user.db.invoice.findUnique({
       where: { id },
       include: { customer: true },
     })
@@ -46,15 +56,11 @@ export async function PATCH(
       return NextResponse.json({ error: 'Invoice not found' }, { status: 404 })
     }
 
-    if (invoice.customer.companyId !== user.companyId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
     if (!dueDate) {
       return NextResponse.json(invoice)
     }
 
-    const updatedInvoice = await prisma.invoice.update({
+    const updatedInvoice = await user.db.invoice.update({
       where: { id },
       data: { dueDate: new Date(dueDate) },
     })

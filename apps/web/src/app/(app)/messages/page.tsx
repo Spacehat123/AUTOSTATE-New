@@ -5,7 +5,7 @@ import { MessagesPageClient } from '@/components/messages/messages-page-client'
 
 export default async function MessagesPage() {
   const user = await getCurrentUser()
-  const { data: conversations } = await getMessageInbox(user.companyId)
+  const { data: conversations } = await getMessageInbox(user.db)
 
   return (
     <div className="flex flex-col gap-4 pb-4">

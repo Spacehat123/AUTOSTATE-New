@@ -1,15 +1,13 @@
-import { prisma } from '@autostate/database'
-
+// Prisma client passed directly to methods
 /**
  * Fetches all open (non-PAID, non-DISPUTED) invoices for a customer,
  * ordered by due date ascending so oldest debts are allocated first by default.
  * Used to populate the allocation selector in the Record Payment dialog.
  */
-export async function getOpenInvoicesForCustomer(customerId: string, companyId: string) {
-  return prisma.invoice.findMany({
+export async function getOpenInvoicesForCustomer(customerId: string, db: any) {
+  return db.invoice.findMany({
     where: {
       customerId,
-      customer: { companyId },
       status: { in: ['PENDING', 'OVERDUE', 'PARTIAL'] },
     },
     orderBy: { dueDate: 'asc' },
@@ -28,9 +26,8 @@ export async function getOpenInvoicesForCustomer(customerId: string, companyId: 
  * Returns all Payment records for a given company, newest first,
  * each hydrated with its allocations and a snapshot of the related invoice + customer.
  */
-export async function getPaymentsByCompany(companyId: string) {
-  return prisma.payment.findMany({
-    where: { companyId },
+export async function getPaymentsByCompany(db: any) {
+  return db.payment.findMany({
     orderBy: { receivedAt: 'desc' },
     include: {
       allocations: {

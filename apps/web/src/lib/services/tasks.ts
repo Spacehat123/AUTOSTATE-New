@@ -1,18 +1,15 @@
-import { prisma } from '@autostate/database'
+// Prisma client passed directly to methods
 import type { TaskStatus, TaskType } from '@autostate/database'
 
 export interface GetTasksParams {
-  companyId: string
+  db: any
   status?: TaskStatus
   type?: TaskType
 }
 
-export async function getTasks({ companyId, status = 'PENDING', type }: GetTasksParams) {
-  const tasks = await prisma.task.findMany({
+export async function getTasks({ db, status = 'PENDING', type }: GetTasksParams) {
+  const tasks = await db.task.findMany({
     where: {
-      customer: {
-        companyId
-      },
       status,
       ...(type ? { taskType: type } : {})
     },

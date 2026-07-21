@@ -1,7 +1,6 @@
-import { prisma } from '@autostate/database'
-
+// Prisma client passed directly to methods
 export interface GetCustomersParams {
-  companyId: string
+  db: any
   search?: string
   page?: number
   limit?: number
@@ -10,7 +9,7 @@ export interface GetCustomersParams {
 }
 
 export async function getCustomers({
-  companyId,
+  db,
   search = '',
   page = 1,
   limit = 20,
@@ -19,33 +18,29 @@ export async function getCustomers({
 }: GetCustomersParams) {
   const skip = (page - 1) * limit
 
-  const validSortFields = ['name', 'riskScore', 'createdAt', 'updatedAt', 'totalOutstanding', 'oldestInvoiceDays']
+  const validSortFields = ['name', 'riskScore', 'createdAt', 'updatedAt', 'totalOutstanding', 'totalPaid', 'oldestInvoiceDays']
   const actualSortBy = validSortFields.includes(sortBy) ? sortBy : 'name'
   const isPrismaSort = ['name', 'riskScore', 'createdAt', 'updatedAt'].includes(actualSortBy)
 
-  const where = {
-    companyId,
-    ...(search ? { name: { contains: search, mode: 'insensitive' as const } } : {})
-  }
+  const where = search ? { name: { contains: search, mode: 'insensitive' as const } } : {}
 
   // 1. Get total count
-  const total = await prisma.customer.count({ where })
+  const total = await db.customer.count({ where })
 
   // 2. Fetch customers. If not sorting by a Prisma field, we must fetch all matching to sort in memory!
   // In a real prod app with millions of rows, we'd use a raw SQL view or precomputed DB columns.
-  const customers = await prisma.customer.findMany({
+  const customers = await db.customer.findMany({
     where,
     skip: isPrismaSort ? skip : undefined,
     take: isPrismaSort ? limit : undefined,
     orderBy: isPrismaSort ? { [actualSortBy]: sortOrder } : undefined,
     include: {
       invoices: {
-        where: {
-          status: 'OVERDUE'
-        },
         select: {
+          amount: true,
           outstandingAmount: true,
-          dueDate: true
+          dueDate: true,
+          status: true
         }
       },
       messages: {
@@ -64,24 +59,29 @@ export async function getCustomers({
   const now = new Date()
   let data = customers.map(customer => {
     let totalOutstanding = 0
+    let totalPaid = 0
     let oldestInvoiceDays = 0
 
     if (customer.invoices.length > 0) {
-      totalOutstanding = customer.invoices.reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0)
+      const openInvoices = customer.invoices.filter(inv => Number(inv.outstandingAmount) > 0)
       
-      const oldestDate = new Date(Math.min(...customer.invoices.map(inv => inv.dueDate.getTime())))
-      const diffTime = now.getTime() - oldestDate.getTime()
-      if (diffTime > 0) {
-        oldestInvoiceDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+      totalOutstanding = openInvoices.reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0)
+      totalPaid = customer.invoices.reduce((sum, inv) => sum + (Number(inv.amount) - Number(inv.outstandingAmount)), 0)
+      
+      if (openInvoices.length > 0) {
+        const oldestDate = new Date(Math.min(...openInvoices.map(inv => inv.dueDate.getTime())))
+        const diffTime = now.getTime() - oldestDate.getTime()
+        if (diffTime > 0) {
+          oldestInvoiceDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
+        }
       }
     }
 
     const lastContact = customer.messages.length > 0 ? customer.messages[0]?.timestamp ?? null : null
-    const { invoices, messages, ...rest } = customer
-
     return {
-      ...rest,
+      ...customer,
       totalOutstanding,
+      totalPaid,
       oldestInvoiceDays,
       lastContact
     }
@@ -110,8 +110,8 @@ export async function getCustomers({
   }
 }
 
-export async function getCustomerById(id: string, companyId: string) {
-  const customer = await prisma.customer.findUnique({
+export async function getCustomerById(id: string, db: any) {
+  const customer = await db.customer.findUnique({
     where: { id },
     include: {
       invoices: {
@@ -141,10 +141,6 @@ export async function getCustomerById(id: string, companyId: string) {
 
   if (!customer) {
     return { error: 'Customer not found', status: 404 }
-  }
-
-  if (customer.companyId !== companyId) {
-    return { error: 'Forbidden', status: 403 }
   }
 
   return { data: customer }

@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@autostate/database'
+// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -29,8 +29,8 @@ export async function PATCH(
     
     const { status } = parsed.data
     
-    // 1. Fetch task and eagerly load customer to verify multi-tenant boundaries
-    const task = await prisma.task.findUnique({
+    // 1. Fetch task and verify multi-tenant boundaries (handled by user.db)
+    const task = await user.db.task.findUnique({
       where: { id },
       include: { customer: true }
     })
@@ -39,13 +39,10 @@ export async function PATCH(
       return NextResponse.json({ error: 'Task not found' }, { status: 404 })
     }
     
-    // 2. Tenant isolation check
-    if (task.customer.companyId !== user.companyId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
+    // 2. Tenant isolation check is implicit with user.db
     
     // 3. Perform mutation
-    const updatedTask = await prisma.task.update({
+    const updatedTask = await user.db.task.update({
       where: { id },
       data: { status: status === 'COMPLETED' ? 'DONE' : status }
     })

@@ -1,5 +1,5 @@
 import { auth } from '@clerk/nextjs/server'
-import { prisma } from '@autostate/database'
+import { prisma, getTenantDb } from '@autostate/database'
 import { redirect } from 'next/navigation'
 
 export async function getCurrentUser() {
@@ -12,5 +12,8 @@ export async function getCurrentUser() {
   })
 
   if (!user) redirect('/onboarding')
-  return user
+  
+  const db = getTenantDb(user.companyId)
+  
+  return { ...user, db }
 }

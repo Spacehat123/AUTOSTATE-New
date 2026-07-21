@@ -8,7 +8,7 @@ export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
 
   try {
-    const result = await getMessageInbox(user.companyId)
+    const result = await getMessageInbox(user.db)
     return NextResponse.json(result)
   } catch (error) {
     console.error('[MESSAGES_GET]', error)

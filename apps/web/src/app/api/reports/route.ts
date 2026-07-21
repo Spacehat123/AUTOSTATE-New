@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@autostate/database'
+// db is passed via user
 import { getCurrentUser } from '@/lib/auth'
 import { startOfMonth, startOfQuarter, startOfYear, differenceInDays } from 'date-fns'
 
@@ -30,12 +30,8 @@ export async function GET(request: NextRequest) {
 
     // Fetch all invoices for the company to compute metrics
     // We fetch them in memory to safely handle Prisma.Decimal math
-    const invoices = await prisma.invoice.findMany({
-      where: {
-        customer: {
-          companyId: user.companyId
-        }
-      },
+    const invoices = await user.db.invoice.findMany({
+      where: {},
       include: {
         customer: {
           select: { id: true, name: true }

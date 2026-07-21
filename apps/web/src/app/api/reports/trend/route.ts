@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@autostate/database'
+// db is passed via user
 import { getCurrentUser } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -9,12 +9,8 @@ export async function GET(request: NextRequest) {
 
   try {
     // 1. Fetch all invoices for the company
-    const invoices = await prisma.invoice.findMany({
-      where: {
-        customer: {
-          companyId: user.companyId
-        }
-      },
+    const invoices = await user.db.invoice.findMany({
+      where: {},
       select: {
         amount: true,
         outstandingAmount: true,

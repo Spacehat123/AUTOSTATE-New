@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@autostate/database'
+// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -29,7 +29,7 @@ export async function POST(
     
     const { content } = parsed.data
     
-    const customer = await prisma.customer.findUnique({
+    const customer = await user.db.customer.findUnique({
       where: { id: customerId }
     })
     
@@ -37,11 +37,7 @@ export async function POST(
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
     }
     
-    if (customer.companyId !== user.companyId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-    
-    const message = await prisma.message.create({
+    const message = await user.db.message.create({
       data: {
         customerId,
         type: 'NOTE',

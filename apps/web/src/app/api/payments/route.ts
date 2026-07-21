@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { Prisma, prisma } from '@autostate/database'
 import { z } from 'zod'
 import { getCurrentUser } from '@/lib/auth'
+import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 export const dynamic = 'force-dynamic'
 
@@ -71,6 +72,15 @@ export async function GET() {
  */
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireRole(user, 'MEMBER')
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) {
+      return roleErrorResponse()
+    }
+    throw error
+  }
 
   const parsed = paymentSchema.safeParse(await request.json())
   if (!parsed.success) {

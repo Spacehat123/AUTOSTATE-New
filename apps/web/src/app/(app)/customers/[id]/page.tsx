@@ -18,8 +18,8 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
   const { id } = await params
   
   const [result, openInvoices] = await Promise.all([
-    getCustomerById(id, user.companyId),
-    getOpenInvoicesForCustomer(id, user.companyId),
+    getCustomerById(id, user.db),
+    getOpenInvoicesForCustomer(id, user.db),
   ])
   
   if (result.error === 'Customer not found' || result.status === 404) {
@@ -42,7 +42,7 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
       <div>
         <Link 
           href="/customers" 
-          className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+          className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-foreground transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Customers
@@ -53,7 +53,7 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
       <div className="flex flex-col md:flex-row md:items-end justify-between gap-4">
         <div>
           <div className="flex items-center gap-3 mb-2">
-            <h1 className="text-3xl font-bold text-white tracking-tight">{customer.name}</h1>
+            <h1 className="text-3xl font-bold text-foreground tracking-tight">{customer.name}</h1>
             <RiskBadge score={customer.riskScore} />
           </div>
           <div className="flex items-center gap-2 text-zinc-400">

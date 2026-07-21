@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@autostate/database'
+// db is now passed down from user
 import { getCurrentUser } from '@/lib/auth'
 import { generateCollectionMessage } from '@autostate/ai'
 
@@ -13,12 +13,12 @@ const bodySchema = z.object({
 
 async function handleGenerate(
   customerId: string,
-  userCompanyId: string,
+  db: any,
   tone: 'formal' | 'friendly' | 'firm',
   language: string
 ) {
   // 1. Fetch customer and verify company
-  const customer = await prisma.customer.findUnique({
+  const customer = await db.customer.findUnique({
     where: { id: customerId },
     include: {
       invoices: {
@@ -39,10 +39,6 @@ async function handleGenerate(
 
   if (!customer) {
     return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
-  }
-
-  if (customer.companyId !== userCompanyId) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
   }
 
   // 2. Calculate aggregates for the prompt
@@ -90,7 +86,7 @@ export async function GET(
   const user = await getCurrentUser()
   try {
     const { id: customerId } = await params
-    return await handleGenerate(customerId, user.companyId, 'friendly', 'English')
+    return await handleGenerate(customerId, user.db, 'friendly', 'English')
   } catch (error) {
     console.error('[GENERATE_MESSAGE_GET]', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
@@ -119,7 +115,7 @@ export async function POST(
       return NextResponse.json({ error: 'Invalid input', details: parsed.error.format() }, { status: 400 })
     }
 
-    return await handleGenerate(customerId, user.companyId, parsed.data.tone, parsed.data.language)
+    return await handleGenerate(customerId, user.db, parsed.data.tone, parsed.data.language)
   } catch (error) {
     console.error('[GENERATE_MESSAGE_POST]', error)
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })

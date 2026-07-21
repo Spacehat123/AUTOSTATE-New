@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server'
-import { prisma } from '@autostate/database'
+// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
 
 export const dynamic = 'force-dynamic'
@@ -16,20 +16,7 @@ export async function GET(
   const user = await getCurrentUser()
   const { id: customerId } = await params
 
-  // Verify the customer belongs to this company
-  const customer = await prisma.customer.findUnique({
-    where: { id: customerId },
-    select: { companyId: true },
-  })
-
-  if (!customer) {
-    return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
-  }
-  if (customer.companyId !== user.companyId) {
-    return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-  }
-
-  const invoices = await prisma.invoice.findMany({
+  const invoices = await user.db.invoice.findMany({
     where: {
       customerId,
       status: { in: ['PENDING', 'OVERDUE', 'PARTIAL'] },

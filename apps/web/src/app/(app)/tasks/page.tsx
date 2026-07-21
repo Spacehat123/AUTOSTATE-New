@@ -8,7 +8,7 @@ export default async function TasksPage() {
   
   // Eagerly pre-fetch pending tasks for instant first paint
   const { data: initialTasks } = await getTasks({
-    companyId: user.companyId,
+    db: user.db,
     status: 'PENDING'
   })
 

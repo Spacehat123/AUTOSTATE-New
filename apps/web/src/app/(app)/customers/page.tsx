@@ -6,7 +6,7 @@ import { getCustomers } from '@/lib/services/customers'
 export default async function CustomersPage() {
   const user = await getCurrentUser()
   const initialData = await getCustomers({
-    companyId: user.companyId,
+    db: user.db,
     page: 1,
     limit: 20,
     sortBy: 'name',

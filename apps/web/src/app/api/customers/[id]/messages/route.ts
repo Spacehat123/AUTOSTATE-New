@@ -1,6 +1,6 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@autostate/database'
+// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
 import { sendTextMessage } from '@/lib/whatsapp'
 
@@ -31,17 +31,13 @@ export async function POST(
 
     const { content, type } = parsed.data
 
-    // 1. Fetch customer and verify company ownership
-    const customer = await prisma.customer.findUnique({
+    // 1. Fetch customer and verify company ownership (handled by db)
+    const customer = await user.db.customer.findUnique({
       where: { id: customerId }
     })
 
     if (!customer) {
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
-    }
-
-    if (customer.companyId !== user.companyId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     let whatsappId: string | undefined
@@ -60,7 +56,7 @@ export async function POST(
     }
 
     // 3. Persist the outgoing message to the DB
-    const message = await prisma.message.create({
+    const message = await user.db.message.create({
       data: {
         customerId,
         direction: 'OUTGOING',

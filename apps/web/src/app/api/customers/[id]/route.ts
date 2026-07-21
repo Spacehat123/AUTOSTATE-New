@@ -12,7 +12,7 @@ export async function GET(
 
   try {
     const { id } = await params
-    const result = await getCustomerById(id, user.companyId)
+    const result = await getCustomerById(id, user.db)
 
     if (result.error) {
       return NextResponse.json(

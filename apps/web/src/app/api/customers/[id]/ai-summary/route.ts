@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { prisma } from '@autostate/database'
+// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
 import { generateRelationshipSummary } from '@autostate/ai'
 
@@ -15,16 +15,12 @@ export async function GET(
     const { id: customerId } = await params
 
     // 1. Fetch customer with current cache state
-    const customer = await prisma.customer.findUnique({
+    const customer = await user.db.customer.findUnique({
       where: { id: customerId }
     })
 
     if (!customer) {
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
-    }
-
-    if (customer.companyId !== user.companyId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
     }
 
     // 2. Check if the cached summary is fresh (< 24 hours old)
@@ -44,7 +40,7 @@ export async function GET(
 
     // 3. Stale or null: we need to generate a new summary.
     // Fetch all related data required by the AI prompt.
-    const customerWithRelations = await prisma.customer.findUniqueOrThrow({
+    const customerWithRelations = await user.db.customer.findUniqueOrThrow({
       where: { id: customerId },
       include: {
         invoices: {
@@ -87,7 +83,7 @@ export async function GET(
     })
 
     // 5. Cache the new summary in the DB
-    await prisma.customer.update({
+    await user.db.customer.update({
       where: { id: customerId },
       data: {
         aiSummary: newSummary,
