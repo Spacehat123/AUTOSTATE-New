@@ -23,7 +23,7 @@ export default async function AppLayout({
       <div className="flex h-screen bg-transparent overflow-hidden relative z-10">
         {/* Fixed Sidebar (Hidden on mobile, block on md+) */}
         <div className="hidden md:flex z-20 relative">
-          <Sidebar user={user} notificationCount={notificationCount} />
+          <Sidebar companyName={user.company?.name} notificationCount={notificationCount} />
         </div>
         
         {/* Main Content Area */}

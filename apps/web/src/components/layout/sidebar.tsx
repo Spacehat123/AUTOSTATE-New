@@ -37,7 +37,7 @@ const NAV_ITEMS = [
   { name: 'Reports', icon: BarChart2, href: '/reports' },
 ]
 
-export function Sidebar({ user: dbUser, notificationCount = 0 }: { user: any, notificationCount?: number }) {
+export function Sidebar({ companyName, notificationCount = 0 }: { companyName?: string, notificationCount?: number }) {
   const pathname = usePathname()
   const { user: clerkUser } = useUser()
   const { theme, setTheme } = useTheme()
@@ -121,14 +121,14 @@ export function Sidebar({ user: dbUser, notificationCount = 0 }: { user: any, no
                   <div className="w-8 h-8 rounded-lg bg-purple-100 flex items-center justify-center shrink-0 text-purple-600">
                     <Building2 className="w-4 h-4" />
                   </div>
-                  <span className="text-sm font-semibold text-foreground truncate">{dbUser?.company?.name || 'Example Corp'}</span>
+                  <span className="text-sm font-semibold text-foreground truncate">{companyName || 'Example Corp'}</span>
                 </div>
                 <ChevronDown className="w-4 h-4 text-muted-foreground shrink-0" />
               </button>
             </div>
 
             {/* Upgrade Card */}
-            <div className="mt-2 mb-6 bg-brand-50 dark:bg-brand-500/10 rounded-2xl p-4 border border-brand-100 dark:border-brand-500/20">
+            <Link href="/pricing" className="mt-2 mb-6 bg-brand-50 dark:bg-brand-500/10 rounded-2xl p-4 border border-brand-100 dark:border-brand-500/20 block hover:border-brand-500/50 transition-colors group">
               <div className="flex items-center gap-2 text-brand-600 dark:text-brand-400 font-semibold text-sm mb-2">
                 <Star className="w-4 h-4" />
                 <span>Upgrade to Pro</span>
@@ -136,10 +136,10 @@ export function Sidebar({ user: dbUser, notificationCount = 0 }: { user: any, no
               <p className="text-xs text-brand-600/70 dark:text-brand-400/70 font-medium leading-relaxed mb-4">
                 Unlock advanced insights and automation.
               </p>
-              <button className="w-6 h-6 rounded-full bg-white dark:bg-brand-500 flex items-center justify-center shadow-sm ml-auto text-brand-600 dark:text-white hover:scale-105 transition-transform">
+              <div className="w-6 h-6 rounded-full bg-white dark:bg-brand-500 flex items-center justify-center shadow-sm ml-auto text-brand-600 dark:text-white group-hover:scale-110 transition-transform">
                 <ArrowRight className="w-3.5 h-3.5" />
-              </button>
-            </div>
+              </div>
+            </Link>
           </>
         )}
 

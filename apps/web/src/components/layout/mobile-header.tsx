@@ -36,11 +36,11 @@ export function MobileHeader() {
       </div>
       
       <Sheet open={open} onOpenChange={setOpen}>
-        <SheetTrigger>
-          <Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground">
-            <Menu className="w-6 h-6" />
-            <span className="sr-only">Toggle menu</span>
-          </Button>
+        <SheetTrigger 
+          render={<Button variant="ghost" size="icon" className="text-muted-foreground hover:text-foreground" />}
+        >
+          <Menu className="w-6 h-6" />
+          <span className="sr-only">Toggle menu</span>
         </SheetTrigger>
         <SheetContent side="left" className="w-[280px] bg-surface-sidebar border-r border-surface-border p-0 flex flex-col text-foreground">
           <SheetTitle className="sr-only">Navigation Menu</SheetTitle>

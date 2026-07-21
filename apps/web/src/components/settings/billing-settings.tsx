@@ -4,9 +4,10 @@ import React, { useEffect, useState } from 'react'
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Progress } from '@/components/ui/progress'
-import { Loader2 } from 'lucide-react'
 import { toast } from 'sonner'
 import { Badge } from '@/components/ui/badge'
+import { Loader2 } from 'lucide-react'
+import Link from 'next/link'
 
 export function BillingSettings() {
   const [loading, setLoading] = useState(true)
@@ -85,14 +86,11 @@ export function BillingSettings() {
               )}
             </div>
             {subscription.plan === 'FREE' && (
-              <Button 
-                onClick={() => handleUpgrade('1933245')}
-                disabled={checkoutLoading}
-                className="bg-brand-primary text-white"
-              >
-                {checkoutLoading ? <Loader2 className="w-4 h-4 animate-spin mr-2" /> : null}
-                Upgrade to Pro
-              </Button>
+              <Link href="/pricing">
+                <Button className="bg-brand-primary text-white">
+                  Upgrade to Pro
+                </Button>
+              </Link>
             )}
           </div>
         </CardContent>
