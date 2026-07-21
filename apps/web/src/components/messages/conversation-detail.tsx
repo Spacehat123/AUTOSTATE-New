@@ -138,7 +138,7 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
           {customerName.charAt(0).toUpperCase()}
         </div>
         <div>
-          <div className="font-semibold text-white">{customerName}</div>
+          <div className="font-semibold text-foreground">{customerName}</div>
           <div className="text-xs text-zinc-500">WhatsApp conversation</div>
         </div>
       </div>

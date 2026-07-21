@@ -42,7 +42,7 @@ export async function GET(request: NextRequest) {
     // 1. totalOutstanding (all time, not just this period)
     const outstandingInvoices = invoices.filter(inv => inv.status !== 'PAID')
     const totalOutstanding = outstandingInvoices.reduce(
-      (sum, inv) => sum + (typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : inv.outstandingAmount.toNumber()),
+      (sum: number, inv: any) => sum + (typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : (inv.outstandingAmount as any).toNumber()),
       0
     )
 
@@ -51,7 +51,7 @@ export async function GET(request: NextRequest) {
       inv => inv.status === 'PAID' && inv.paidAt && inv.paidAt >= startDate
     )
     const collectedThisPeriod = paidThisPeriod.reduce(
-      (sum, inv) => sum + (typeof inv.amount === 'number' ? inv.amount : inv.amount.toNumber()),
+      (sum: number, inv: any) => sum + (typeof inv.amount === 'number' ? inv.amount : (inv.amount as any).toNumber()),
       0
     )
 
@@ -59,7 +59,7 @@ export async function GET(request: NextRequest) {
     let averageCollectionDays = 0
     if (paidThisPeriod.length > 0) {
       const totalDays = paidThisPeriod.reduce(
-        (sum, inv) => sum + differenceInDays(new Date(inv.paidAt!), new Date(inv.createdAt)),
+        (sum: number, inv: any) => sum + differenceInDays(new Date(inv.paidAt!), new Date(inv.createdAt)),
         0
       )
       averageCollectionDays = Math.round(totalDays / paidThisPeriod.length)
@@ -69,7 +69,7 @@ export async function GET(request: NextRequest) {
     // totalBilledThisPeriod = invoices created in this period
     const billedThisPeriod = invoices.filter(inv => new Date(inv.createdAt) >= startDate)
     const totalBilledThisPeriod = billedThisPeriod.reduce(
-      (sum, inv) => sum + (typeof inv.amount === 'number' ? inv.amount : inv.amount.toNumber()),
+      (sum: number, inv: any) => sum + (typeof inv.amount === 'number' ? inv.amount : (inv.amount as any).toNumber()),
       0
     )
     
@@ -89,7 +89,7 @@ export async function GET(request: NextRequest) {
           outstanding: 0
         }
       }
-      const amt = typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : inv.outstandingAmount.toNumber()
+      const amt = typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : (inv.outstandingAmount as any).toNumber()
       customerBalances[inv.customerId]!.outstanding += amt
     }
 

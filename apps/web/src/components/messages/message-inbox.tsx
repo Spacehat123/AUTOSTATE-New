@@ -77,7 +77,7 @@ export function MessageInbox({ conversations, selectedId, onSelect }: MessageInb
           >
             {/* Avatar */}
             <div className="relative flex-shrink-0">
-              <div className={`w-11 h-11 rounded-full ${avatarColor} flex items-center justify-center text-white font-bold text-lg shadow-md`}>
+              <div className={`w-11 h-11 rounded-full ${avatarColor} flex items-center justify-center text-foreground font-bold text-lg shadow-md`}>
                 {initial}
               </div>
               {conv.unreadCount > 0 && (
@@ -90,7 +90,7 @@ export function MessageInbox({ conversations, selectedId, onSelect }: MessageInb
             {/* Content */}
             <div className="flex-1 min-w-0">
               <div className="flex items-center justify-between gap-2 mb-0.5">
-                <span className={`font-semibold truncate ${isSelected ? 'text-white' : 'text-zinc-200'} ${conv.unreadCount > 0 ? 'font-bold' : ''}`}>
+                <span className={`font-semibold truncate ${isSelected ? 'text-foreground' : 'text-zinc-200'} ${conv.unreadCount > 0 ? 'font-bold' : ''}`}>
                   {conv.customerName}
                 </span>
                 <span className="text-[10px] text-zinc-500 flex-shrink-0">

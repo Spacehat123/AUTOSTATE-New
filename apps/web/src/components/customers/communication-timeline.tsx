@@ -29,7 +29,7 @@ export function CommunicationTimeline({ messages }: { messages: any[] }) {
     return (
       <Card className="bg-surface-card border-surface-border">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-white">Timeline</CardTitle>
+          <CardTitle className="text-lg font-semibold text-foreground">Timeline</CardTitle>
         </CardHeader>
         <CardContent className="h-48 flex items-center justify-center">
           <EmptyState 
@@ -57,7 +57,7 @@ export function CommunicationTimeline({ messages }: { messages: any[] }) {
   return (
     <Card className="bg-surface-card border-surface-border h-full max-h-[800px] flex flex-col">
       <CardHeader className="flex-shrink-0 border-b border-surface-border/50 pb-4">
-        <CardTitle className="text-lg font-semibold text-white">Timeline</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground">Timeline</CardTitle>
       </CardHeader>
       <CardContent className="flex-1 overflow-y-auto p-4 space-y-6">
         {groups.map((group, groupIdx) => (

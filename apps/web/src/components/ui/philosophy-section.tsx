@@ -23,7 +23,7 @@ export function PhilosophySection() {
             
             {/* WhatsApp */}
             <div className="absolute top-0 left-4 z-10 -rotate-[8deg] transition-transform hover:scale-105 hover:z-[60] shadow-md rounded-2xl">
-              <div className="bg-[#25D366] text-white rounded-2xl rounded-tr-none px-5 py-3 shadow-sm font-medium text-[15px] w-48 text-center flex items-center justify-center gap-2">
+              <div className="bg-[#25D366] text-foreground rounded-2xl rounded-tr-none px-5 py-3 shadow-sm font-medium text-[15px] w-48 text-center flex items-center justify-center gap-2">
                 <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"></path></svg>
                 WhatsApp
               </div>
@@ -32,7 +32,7 @@ export function PhilosophySection() {
             {/* Excel */}
             <div className="absolute top-[60px] left-[40px] z-20 -rotate-[3deg] transition-transform hover:scale-105 hover:z-[60] shadow-lg rounded-xl">
               <div className="bg-white border border-green-600/20 shadow-sm rounded-xl overflow-hidden w-48 text-left">
-                <div className="bg-[#107C41] text-white text-[11px] font-bold px-3 py-1.5 flex items-center gap-1.5">
+                <div className="bg-[#107C41] text-foreground text-[11px] font-bold px-3 py-1.5 flex items-center gap-1.5">
                   <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><line x1="9" y1="9" x2="15" y2="15"></line><line x1="15" y1="9" x2="9" y2="15"></line></svg>
                   Spreadsheet
                 </div>

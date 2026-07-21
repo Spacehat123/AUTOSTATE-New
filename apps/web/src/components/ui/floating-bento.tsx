@@ -48,10 +48,10 @@ export function FloatingBento() {
         >
           <div className="w-[280px] sm:w-[320px] p-6 bg-[#18181b] rounded-[24px] shadow-[0_24px_48px_-12px_rgba(0,0,0,0.25)] animate-[float_7s_ease-in-out_1s_infinite]">
             <div className="flex items-center gap-3 mb-4">
-              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-white/10 text-white">
+              <div className="flex items-center justify-center w-7 h-7 rounded-full bg-white/10 text-foreground">
                 <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5"><path d="M12 2v4m0 12v4M4.93 4.93l2.83 2.83m8.48 8.48l2.83 2.83M2 12h4m12 0h4M4.93 19.07l2.83-2.83m8.48-8.48l2.83-2.83" /></svg>
               </div>
-              <div className="text-xs font-semibold text-white tracking-wide">AutoState AI</div>
+              <div className="text-xs font-semibold text-foreground tracking-wide">AutoState AI</div>
             </div>
             <div className="text-[13px] text-zinc-400 leading-relaxed font-medium">
               <span className="text-zinc-100">Invoice #1042 paid.</span> I've updated the CRM to Active, marked the task complete, and drafted a thank you note.

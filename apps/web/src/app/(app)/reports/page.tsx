@@ -72,7 +72,7 @@ export default function ReportsPage() {
       return (
         <div className="bg-[#0f172a] p-3 rounded-lg shadow-lg border-none">
           <p className="text-sm text-zinc-400 mb-1">{label}</p>
-          <p className="text-sm font-semibold text-white">
+          <p className="text-sm font-semibold text-foreground">
             ₹{payload[0].value.toLocaleString('en-IN')}
           </p>
         </div>

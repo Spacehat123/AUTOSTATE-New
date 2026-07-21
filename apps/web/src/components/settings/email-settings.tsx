@@ -106,7 +106,7 @@ export function EmailSettings() {
             <Mail className="w-5 h-5 text-blue-400" />
           </div>
           <div>
-            <h2 className="text-lg font-medium text-white">Email Integration</h2>
+            <h2 className="text-lg font-medium text-foreground">Email Integration</h2>
             <p className="text-sm text-zinc-400">Configure Resend API to send automated emails.</p>
           </div>
         </div>
@@ -163,7 +163,7 @@ export function EmailSettings() {
               variant="outline"
               onClick={handleTestConnection} 
               disabled={testing || !isConfigured}
-              className="border-surface-border text-zinc-300 hover:text-white"
+              className="border-surface-border text-zinc-300 hover:text-foreground"
             >
               {testing ? (
                 <Loader2 className="w-4 h-4 mr-2 animate-spin" />

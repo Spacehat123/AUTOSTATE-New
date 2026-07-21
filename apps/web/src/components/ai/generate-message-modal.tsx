@@ -100,7 +100,7 @@ export function GenerateMessageModal({
 
   return (
     <Dialog open={open} onOpenChange={(val) => !val && handleClose()}>
-      <DialogContent className="sm:max-w-[500px] bg-surface-card border-surface-border text-white">
+      <DialogContent className="sm:max-w-[500px] bg-surface-card border-surface-border text-foreground">
         <DialogHeader>
           <DialogTitle className="flex items-center gap-2">
             <Sparkles className="w-5 h-5 text-brand-400" />

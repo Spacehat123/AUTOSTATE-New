@@ -60,7 +60,7 @@ export function MessagesPageClient({ initialConversations }: MessagesPageClientP
               variant="ghost"
               size="sm"
               onClick={handleBack}
-              className="text-zinc-400 hover:text-white -ml-2"
+              className="text-zinc-400 hover:text-foreground -ml-2"
             >
               <ArrowLeft className="w-4 h-4 mr-2" />
               Back

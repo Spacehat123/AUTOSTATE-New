@@ -56,11 +56,11 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
             
             return (
               <TableRow key={inv.id} className="border-surface-border hover:bg-white/5 transition-colors">
-                <TableCell className="font-medium text-white pl-6">
+                <TableCell className="font-medium text-foreground pl-6">
                   {inv.invoiceNumber}
                 </TableCell>
                 <TableCell>
-                  <CurrencyDisplay value={inv.amount} compact className="text-white font-medium" />
+                  <CurrencyDisplay value={inv.amount} compact className="text-foreground font-medium" />
                   {Number(inv.outstandingAmount) < Number(inv.amount) && Number(inv.outstandingAmount) > 0 && (
                     <div className="text-xs text-zinc-500 mt-0.5">
                       Bal: <CurrencyDisplay value={inv.outstandingAmount} compact />

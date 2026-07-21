@@ -52,7 +52,8 @@ export async function POST(request: NextRequest) {
         clerkId: `invite_${invitation.id}`,
         email,
         role,
-        name: null
+        name: null,
+        companyId: currentUser.companyId
       }
     })
 

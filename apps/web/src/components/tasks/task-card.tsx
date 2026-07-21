@@ -51,7 +51,7 @@ export function TaskCard({ task, onComplete, onSnooze }: TaskCardProps) {
         )
       default:
         return (
-          <Button variant="outline" className="border-surface-border text-white hover:bg-white/5 w-full">
+          <Button variant="outline" className="border-surface-border text-foreground hover:bg-white/5 w-full">
             Take Action
             <ArrowRight className="w-4 h-4 ml-2" />
           </Button>
@@ -84,7 +84,7 @@ export function TaskCard({ task, onComplete, onSnooze }: TaskCardProps) {
           <div className="flex items-baseline gap-2 truncate mt-1">
             <Link 
               href={`/customers/${task.customer?.id}`}
-              className="text-lg font-bold text-white hover:text-brand-400 transition-colors truncate"
+              className="text-lg font-bold text-foreground hover:text-brand-400 transition-colors truncate"
             >
               {task.customer?.name || 'Unknown Customer'}
             </Link>

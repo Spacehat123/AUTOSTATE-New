@@ -12,7 +12,7 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
     return (
       <Card className="bg-surface-card border-surface-border">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-white">Invoices</CardTitle>
+          <CardTitle className="text-lg font-semibold text-foreground">Invoices</CardTitle>
         </CardHeader>
         <CardContent className="text-zinc-400 text-sm">No invoices found.</CardContent>
       </Card>
@@ -22,7 +22,7 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
   return (
     <Card className="bg-surface-card border-surface-border">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-white flex justify-between items-center">
+        <CardTitle className="text-lg font-semibold text-foreground flex justify-between items-center">
           Invoices
           <span className="text-xs font-medium text-zinc-400 bg-surface-border/30 px-2.5 py-1 rounded-full">
             {invoices.length}
@@ -34,14 +34,14 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
           {invoices.map((inv) => (
             <div key={inv.id} className="flex justify-between items-center p-3 rounded-lg border border-surface-border/50 bg-white/5 hover:bg-white/10 transition-colors group">
               <div>
-                <div className="font-medium text-white flex items-center gap-2">
+                <div className="font-medium text-foreground flex items-center gap-2">
                   <FileText className="h-4 w-4 text-brand-500" />
                   {inv.invoiceNumber}
                 </div>
                 <div className="text-xs text-zinc-400 mt-1">Due: {format(new Date(inv.dueDate), 'MMM d, yyyy')}</div>
               </div>
               <div className="text-right">
-                <div className="font-bold text-white">
+                <div className="font-bold text-foreground">
                   <CurrencyDisplay value={inv.outstandingAmount} compact />
                 </div>
                 <div className={`text-[10px] uppercase font-bold tracking-wider mt-1 ${inv.status === 'OVERDUE' ? 'text-rose-500' : 'text-emerald-500'}`}>
@@ -60,22 +60,22 @@ export function CustomerActions({ customerId }: { customerId: string }) {
   return (
     <Card className="bg-surface-card border-surface-border border-brand-500/20 shadow-[0_0_15px_rgba(59,130,246,0.05)]">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-white">Quick Actions</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-3">
         <Button className="w-full bg-brand-500 hover:bg-brand-600 text-white shadow-[0_0_15px_rgba(59,130,246,0.3)]">
           <MessageCircle className="w-4 h-4 mr-2" />
           Message
         </Button>
-        <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-white hover:bg-white/5">
+        <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-foreground hover:bg-white/5">
           <Phone className="w-4 h-4 mr-2" />
           Log Call
         </Button>
-        <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-white hover:bg-white/5">
+        <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-foreground hover:bg-white/5">
           <AlertCircle className="w-4 h-4 mr-2" />
           Escalate
         </Button>
-        <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-white hover:bg-white/5">
+        <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-foreground hover:bg-white/5">
           Record Pay
         </Button>
       </CardContent>
@@ -88,7 +88,7 @@ export function CommunicationTimeline({ messages }: { messages: any[] }) {
     return (
       <Card className="bg-surface-card border-surface-border">
         <CardHeader>
-          <CardTitle className="text-lg font-semibold text-white">Timeline</CardTitle>
+          <CardTitle className="text-lg font-semibold text-foreground">Timeline</CardTitle>
         </CardHeader>
         <CardContent className="text-zinc-400 text-sm">No communication history found.</CardContent>
       </Card>
@@ -98,7 +98,7 @@ export function CommunicationTimeline({ messages }: { messages: any[] }) {
   return (
     <Card className="bg-surface-card border-surface-border overflow-hidden">
       <CardHeader>
-        <CardTitle className="text-lg font-semibold text-white">Timeline</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground">Timeline</CardTitle>
       </CardHeader>
       <CardContent>
         <div className="relative border-l border-surface-border/50 ml-3 space-y-6 pb-4">

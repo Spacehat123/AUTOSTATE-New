@@ -43,17 +43,17 @@ async function handleGenerate(
 
   // 2. Calculate aggregates for the prompt
   const outstandingAmount = customer.invoices.reduce(
-    (sum, inv) => sum + (typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : inv.outstandingAmount.toNumber()),
+    (sum: number, inv: any) => sum + (typeof inv.outstandingAmount === 'number' ? inv.outstandingAmount : (inv.outstandingAmount as any).toNumber()),
     0
   )
 
-  const invoiceNumbers = customer.invoices.map(inv => inv.invoiceNumber)
+  const invoiceNumbers = customer.invoices.map((inv: any) => inv.invoiceNumber)
 
   // Calculate days overdue based on the oldest overdue invoice
   let daysOverdue = 0
   if (customer.invoices.length > 0) {
     const oldestDue = customer.invoices.reduce(
-      (oldest, inv) => inv.dueDate < oldest ? inv.dueDate : oldest,
+      (oldest: Date, inv: any) => inv.dueDate < oldest ? inv.dueDate : oldest,
       customer.invoices[0]!.dueDate
     )
     const msPerDay = 1000 * 60 * 60 * 24
@@ -62,7 +62,7 @@ async function handleGenerate(
     daysOverdue = Math.max(0, Math.floor((now.getTime() - new Date(oldestDue).getTime()) / msPerDay))
   }
 
-  const recentMessages = customer.messages.map(m => m.content).reverse()
+  const recentMessages = customer.messages.map((m: any) => m.content).reverse()
 
   // 3. Call the AI model
   const message = await generateCollectionMessage({

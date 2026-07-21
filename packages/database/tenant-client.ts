@@ -20,12 +20,12 @@ export function withTenant(companyId: string) {
           const uniqueOperations = ['findUnique', 'findUniqueOrThrow', 'update', 'delete']
 
           if (listOperations.includes(operation)) {
-            args.where = { ...args.where, ...filter }
+            (args as any).where = { ...(args as any).where, ...filter }
           } 
           else if (uniqueOperations.includes(operation)) {
             // Verify ownership before proceeding
             const record = await (prisma as any)[model].findFirst({
-              where: { ...args.where, ...filter },
+              where: { ...(args as any).where, ...filter },
               select: { id: true }
             })
             if (!record) {
@@ -34,12 +34,12 @@ export function withTenant(companyId: string) {
           }
 
           if (operation === 'create' && hasDirectCompanyId) {
-            args.data = { ...args.data, companyId }
+            (args as any).data = { ...(args as any).data, companyId }
           } else if (operation === 'createMany' && hasDirectCompanyId) {
-            if (Array.isArray(args.data)) {
-              args.data = args.data.map((d: any) => ({ ...d, companyId }))
-            } else if (args.data) {
-              args.data.companyId = companyId
+            if (Array.isArray((args as any).data)) {
+              (args as any).data = (args as any).data.map((d: any) => ({ ...d, companyId }))
+            } else if ((args as any).data) {
+              (args as any).data.companyId = companyId
             }
           }
 

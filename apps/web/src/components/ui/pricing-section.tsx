@@ -73,16 +73,16 @@ export function PricingSection() {
               {/* Hover Glow */}
               <div className="absolute inset-0 bg-gradient-to-br from-blue-500/10 via-transparent to-purple-500/10 opacity-0 group-hover:opacity-100 transition-opacity duration-500 pointer-events-none"></div>
               
-              <h3 className="text-xl sm:text-2xl font-bold text-white mb-1 sm:mb-2 relative z-10">Pro</h3>
+              <h3 className="text-xl sm:text-2xl font-bold text-foreground mb-1 sm:mb-2 relative z-10">Pro</h3>
               <p className="text-zinc-400 text-xs sm:text-sm mb-4 sm:mb-8 relative z-10">For growing agencies & consultancies.</p>
               
               <div className="relative h-[40px] sm:h-[60px] mb-4 sm:mb-8 z-10">
                 <div className={`absolute top-0 left-0 transition-opacity duration-500 flex items-end gap-1 ${annual ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  <span className="text-3xl sm:text-5xl font-serif font-bold text-white">$79</span>
+                  <span className="text-3xl sm:text-5xl font-serif font-bold text-foreground">$79</span>
                   <span className="text-sm sm:text-lg font-sans font-medium text-zinc-500 mb-0.5 sm:mb-1">/mo</span>
                 </div>
                 <div className={`absolute top-0 left-0 transition-opacity duration-500 flex items-end gap-1 ${!annual ? 'opacity-100' : 'opacity-0 pointer-events-none'}`}>
-                  <span className="text-3xl sm:text-5xl font-serif font-bold text-white">$99</span>
+                  <span className="text-3xl sm:text-5xl font-serif font-bold text-foreground">$99</span>
                   <span className="text-sm sm:text-lg font-sans font-medium text-zinc-500 mb-0.5 sm:mb-1">/mo</span>
                 </div>
               </div>

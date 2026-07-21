@@ -45,7 +45,7 @@ export async function getMessageInbox(db: any) {
 
   // Shape and sort by most recent message timestamp
   const inbox = customers
-    .map(customer => {
+    .map((customer: any) => {
       const latest = customer.messages[0]
       if (!latest) return null
 
@@ -61,7 +61,7 @@ export async function getMessageInbox(db: any) {
       }
     })
     .filter(Boolean)
-    .sort((a, b) => new Date(b!.latestMessageAt).getTime() - new Date(a!.latestMessageAt).getTime())
+    .sort((a: any, b: any) => new Date(b!.latestMessageAt).getTime() - new Date(a!.latestMessageAt).getTime())
 
   return { data: inbox }
 }

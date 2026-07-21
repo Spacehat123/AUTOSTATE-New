@@ -57,19 +57,19 @@ export async function getCustomers({
 
   // 3. Compute virtual fields
   const now = new Date()
-  let data = customers.map(customer => {
+  let data = customers.map((customer: any) => {
     let totalOutstanding = 0
     let totalPaid = 0
     let oldestInvoiceDays = 0
 
     if (customer.invoices.length > 0) {
-      const openInvoices = customer.invoices.filter(inv => Number(inv.outstandingAmount) > 0)
+      const openInvoices = customer.invoices.filter((inv: any) => Number(inv.outstandingAmount) > 0)
       
-      totalOutstanding = openInvoices.reduce((sum, inv) => sum + Number(inv.outstandingAmount), 0)
-      totalPaid = customer.invoices.reduce((sum, inv) => sum + (Number(inv.amount) - Number(inv.outstandingAmount)), 0)
+      totalOutstanding = openInvoices.reduce((sum: number, inv: any) => sum + Number(inv.outstandingAmount), 0)
+      totalPaid = customer.invoices.reduce((sum: number, inv: any) => sum + (Number(inv.amount) - Number(inv.outstandingAmount)), 0)
       
       if (openInvoices.length > 0) {
-        const oldestDate = new Date(Math.min(...openInvoices.map(inv => inv.dueDate.getTime())))
+        const oldestDate = new Date(Math.min(...openInvoices.map((inv: any) => inv.dueDate.getTime())))
         const diffTime = now.getTime() - oldestDate.getTime()
         if (diffTime > 0) {
           oldestInvoiceDays = Math.ceil(diffTime / (1000 * 60 * 60 * 24))
@@ -89,7 +89,7 @@ export async function getCustomers({
 
   // 4. In-memory sort if needed
   if (!isPrismaSort) {
-    data.sort((a, b) => {
+    data.sort((a: any, b: any) => {
       const aVal = a[actualSortBy as keyof typeof a] as number
       const bVal = b[actualSortBy as keyof typeof b] as number
       if (sortOrder === 'desc') {

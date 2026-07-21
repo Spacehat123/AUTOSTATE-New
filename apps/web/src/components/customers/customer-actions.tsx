@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
 import { MessageCircle, DollarSign, StickyNote, Calendar, Loader2, Plus, Minus } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
@@ -70,32 +70,12 @@ export function CustomerActions({
   const [payRef, setPayRef] = useState('')
   const [payMethod, setPayMethod] = useState('')
   const [allocations, setAllocations] = useState<Allocation[]>([{ invoiceId: '', amount: '' }])
-  const [openInvoices, setOpenInvoices] = useState<OpenInvoice[]>(initialOpenInvoices ?? [])
-  const [loadingInvoices, setLoadingInvoices] = useState(false)
+  const openInvoices = initialOpenInvoices ?? []
 
   // --- Note / reminder state ---
   const [noteContent, setNoteContent] = useState('')
   const [remDate, setRemDate] = useState('')
   const [remType, setRemType] = useState('CALL')
-
-  // Fetch open invoices when the payment dialog opens
-  useEffect(() => {
-    if (!payOpen) return
-    if (openInvoices.length > 0) return // already loaded from SSR prop
-    setLoadingInvoices(true)
-    fetch(`/api/customers/${customerId}/open-invoices`)
-      .then((r) => r.json())
-      .then((data: OpenInvoice[]) => {
-        setOpenInvoices(data)
-        if (data.length === 1) {
-          const first = data[0]!
-          setAllocations([{ invoiceId: first.id, amount: String(toNumber(first.outstandingAmount)) }])
-          setPayAmount(String(toNumber(first.outstandingAmount)))
-        }
-      })
-      .catch(() => toast.error('Could not load invoices'))
-      .finally(() => setLoadingInvoices(false))
-  }, [payOpen, customerId, openInvoices.length])
 
   // Derived: allocated total
   const allocatedTotal = allocations.reduce((sum, a) => sum + (parseFloat(a.amount) || 0), 0)
@@ -129,6 +109,16 @@ export function CustomerActions({
   // Recalculate total from allocations
   const handleSyncTotal = () => {
     setPayAmount(allocatedTotal > 0 ? String(allocatedTotal.toFixed(2)) : '')
+  }
+
+  // For a single selected invoice, the received amount is the allocation.
+  // This makes a partial payment retain the unpaid balance by default instead
+  // of leaving the selector at the invoice's full outstanding amount.
+  const handlePaymentAmountChange = (value: string) => {
+    setPayAmount(value)
+    if (allocations.length === 1 && allocations[0]?.invoiceId) {
+      setAllocations([{ invoiceId: allocations[0].invoiceId, amount: value }])
+    }
   }
 
   // ----- Handlers -----------------------------------------------------------
@@ -178,7 +168,6 @@ export function CustomerActions({
         setPayRef('')
         setPayMethod('')
         setAllocations([{ invoiceId: '', amount: '' }])
-        setOpenInvoices([]) // force re-fetch next time
         router.refresh()
       } else {
         const body = await res.json().catch(() => ({}))
@@ -243,7 +232,7 @@ export function CustomerActions({
   return (
     <Card className="bg-surface-card border-surface-border border-brand-500/20 shadow-[0_0_15px_rgba(59,130,246,0.05)]">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-white">Quick Actions</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground">Quick Actions</CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-3">
 
@@ -255,7 +244,7 @@ export function CustomerActions({
               WhatsApp
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-surface-card border-surface-border text-white">
+          <DialogContent className="bg-surface-card border-surface-border text-foreground">
             <DialogHeader>
               <DialogTitle>Generate WhatsApp Message</DialogTitle>
               <DialogDescription className="text-zinc-400">
@@ -268,7 +257,7 @@ export function CustomerActions({
               </p>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setWaOpen(false)} className="border-surface-border hover:bg-white/5 hover:text-white">Cancel</Button>
+              <Button variant="outline" onClick={() => setWaOpen(false)} className="border-surface-border hover:bg-white/5 hover:text-foreground">Cancel</Button>
               <Button onClick={handleGenerateWA} className="bg-brand-500 hover:bg-brand-600 text-white">Got it</Button>
             </DialogFooter>
           </DialogContent>
@@ -282,7 +271,7 @@ export function CustomerActions({
               Payment
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-surface-card border-surface-border text-white max-w-lg">
+          <DialogContent className="bg-surface-card border-surface-border text-foreground max-w-lg">
             <DialogHeader>
               <DialogTitle>Record Payment Received</DialogTitle>
               <DialogDescription className="text-zinc-400">
@@ -299,7 +288,7 @@ export function CustomerActions({
                   <Input
                     type="number"
                     value={payAmount}
-                    onChange={(e) => setPayAmount(e.target.value)}
+                    onChange={(e) => handlePaymentAmountChange(e.target.value)}
                     placeholder="0.00"
                     className="bg-black/20 border-surface-border"
                   />
@@ -328,7 +317,7 @@ export function CustomerActions({
                     <SelectTrigger className="bg-black/20 border-surface-border">
                       <SelectValue placeholder="Select method" />
                     </SelectTrigger>
-                    <SelectContent className="bg-surface-card border-surface-border text-white">
+                    <SelectContent className="bg-surface-card border-surface-border text-foreground">
                       <SelectItem value="BANK_TRANSFER" className="focus:bg-brand-500/20 focus:text-white">Bank Transfer / NEFT</SelectItem>
                       <SelectItem value="UPI" className="focus:bg-brand-500/20 focus:text-white">UPI</SelectItem>
                       <SelectItem value="CHEQUE" className="focus:bg-brand-500/20 focus:text-white">Cheque</SelectItem>
@@ -348,18 +337,13 @@ export function CustomerActions({
                     variant="ghost"
                     size="sm"
                     onClick={handleSyncTotal}
-                    className="text-xs text-zinc-500 hover:text-white h-6 px-2"
+                    className="text-xs text-zinc-500 hover:text-foreground h-6 px-2"
                   >
                     Sync total from allocations
                   </Button>
                 </div>
 
-                {loadingInvoices ? (
-                  <div className="flex items-center gap-2 text-zinc-500 text-sm py-3">
-                    <Loader2 className="w-4 h-4 animate-spin" />
-                    Loading invoices…
-                  </div>
-                ) : openInvoices.length === 0 ? (
+                {openInvoices.length === 0 ? (
                   <p className="text-sm text-zinc-500 italic py-2">No open invoices found for this customer.</p>
                 ) : (
                   <div className="space-y-2">
@@ -377,7 +361,7 @@ export function CustomerActions({
                               <SelectTrigger className="bg-black/20 border-surface-border text-sm h-9">
                                 <SelectValue placeholder="Select invoice" />
                               </SelectTrigger>
-                              <SelectContent className="bg-surface-card border-surface-border text-white">
+                              <SelectContent className="bg-surface-card border-surface-border text-foreground">
                                 {available.map((inv) => (
                                   <SelectItem
                                     key={inv.id}
@@ -426,7 +410,7 @@ export function CustomerActions({
                         variant="ghost"
                         size="sm"
                         onClick={addAllocation}
-                        className="text-xs text-zinc-500 hover:text-white h-7 px-2 gap-1"
+                        className="text-xs text-zinc-500 hover:text-foreground h-7 px-2 gap-1"
                       >
                         <Plus className="w-3 h-3" />
                         Add another invoice
@@ -452,7 +436,7 @@ export function CustomerActions({
               <Button
                 variant="outline"
                 onClick={() => setPayOpen(false)}
-                className="border-surface-border hover:bg-white/5 hover:text-white"
+                className="border-surface-border hover:bg-white/5 hover:text-foreground"
                 disabled={loading}
               >
                 Cancel
@@ -477,7 +461,7 @@ export function CustomerActions({
               Add Note
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-surface-card border-surface-border text-white">
+          <DialogContent className="bg-surface-card border-surface-border text-foreground">
             <DialogHeader>
               <DialogTitle>Add Internal Note</DialogTitle>
               <DialogDescription className="text-zinc-400">
@@ -496,7 +480,7 @@ export function CustomerActions({
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setNoteOpen(false)} className="border-surface-border hover:bg-white/5 hover:text-white" disabled={loading}>Cancel</Button>
+              <Button variant="outline" onClick={() => setNoteOpen(false)} className="border-surface-border hover:bg-white/5 hover:text-foreground" disabled={loading}>Cancel</Button>
               <Button onClick={handleAddNote} className="bg-amber-500 hover:bg-amber-600 text-white" disabled={loading}>
                 {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 Save Note
@@ -508,12 +492,12 @@ export function CustomerActions({
         {/* Create Reminder Dialog */}
         <Dialog open={remOpen} onOpenChange={setRemOpen}>
           <DialogTrigger>
-            <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-white hover:bg-white/5">
+            <Button variant="outline" className="w-full border-surface-border text-zinc-300 hover:text-foreground hover:bg-white/5">
               <Calendar className="w-4 h-4 mr-2" />
               Reminder
             </Button>
           </DialogTrigger>
-          <DialogContent className="bg-surface-card border-surface-border text-white">
+          <DialogContent className="bg-surface-card border-surface-border text-foreground">
             <DialogHeader>
               <DialogTitle>Create Task / Reminder</DialogTitle>
               <DialogDescription className="text-zinc-400">
@@ -527,7 +511,7 @@ export function CustomerActions({
                   <SelectTrigger className="bg-black/20 border-surface-border">
                     <SelectValue placeholder="Select type" />
                   </SelectTrigger>
-                  <SelectContent className="bg-surface-card border-surface-border text-white">
+                  <SelectContent className="bg-surface-card border-surface-border text-foreground">
                     <SelectItem value="CALL" className="focus:bg-brand-500/20 focus:text-white">Call Customer</SelectItem>
                     <SelectItem value="SEND_REMINDER" className="focus:bg-brand-500/20 focus:text-white">Send Reminder</SelectItem>
                     <SelectItem value="ESCALATE" className="focus:bg-brand-500/20 focus:text-white">Escalate to Owner</SelectItem>
@@ -546,7 +530,7 @@ export function CustomerActions({
               </div>
             </div>
             <DialogFooter>
-              <Button variant="outline" onClick={() => setRemOpen(false)} className="border-surface-border hover:bg-white/5 hover:text-white" disabled={loading}>Cancel</Button>
+              <Button variant="outline" onClick={() => setRemOpen(false)} className="border-surface-border hover:bg-white/5 hover:text-foreground" disabled={loading}>Cancel</Button>
               <Button onClick={handleCreateReminder} className="bg-brand-500 hover:bg-brand-600 text-white" disabled={loading}>
                 {loading && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}
                 Create Reminder

@@ -167,12 +167,14 @@ export function UsersSettings() {
         </div>
 
         <Dialog open={inviteOpen} onOpenChange={setInviteOpen}>
-          <DialogTrigger asChild>
-            <Button className="bg-brand-500 text-white hover:bg-brand-600 gap-2">
-              <UserPlus className="w-4 h-4" />
-              Invite Member
-            </Button>
-          </DialogTrigger>
+          <DialogTrigger 
+            render={
+              <Button className="bg-brand-500 text-white hover:bg-brand-600 gap-2">
+                <UserPlus className="w-4 h-4" />
+                Invite Member
+              </Button>
+            }
+          />
           <DialogContent className="sm:max-w-md">
             <DialogHeader>
               <DialogTitle>Invite to Team</DialogTitle>

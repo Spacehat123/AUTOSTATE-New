@@ -152,7 +152,7 @@ export function ImportSettings() {
       <div className="p-6 border-b border-surface-border">
         <div className="flex items-center gap-3">
           <div className="w-10 h-10 rounded-full bg-indigo-500/20 flex items-center justify-center"><FileSpreadsheet className="w-5 h-5 text-indigo-400" /></div>
-          <div><h2 className="text-lg font-medium text-white">Invoice import</h2><p className="text-sm text-zinc-400">Preview and validate CSV or Excel invoices before anything is saved.</p></div>
+          <div><h2 className="text-lg font-medium text-foreground">Invoice import</h2><p className="text-sm text-zinc-400">Preview and validate CSV or Excel invoices before anything is saved.</p></div>
         </div>
       </div>
 
@@ -165,14 +165,14 @@ export function ImportSettings() {
         >
           <input ref={fileInputRef} type="file" className="hidden" accept=".csv,.xlsx" onChange={(event) => { const file = event.target.files?.[0]; if (file) void previewFile(file) }} />
           <div className="w-16 h-16 bg-surface-background rounded-full flex items-center justify-center mx-auto mb-4">{parsing ? <Loader2 className="w-8 h-8 text-indigo-400 animate-spin" /> : <UploadCloud className="w-8 h-8 text-indigo-400" />}</div>
-          <h3 className="text-lg font-medium text-white mb-2">Drop an invoice file here or click to browse</h3>
+          <h3 className="text-lg font-medium text-foreground mb-2">Drop an invoice file here or click to browse</h3>
           <p className="text-sm text-zinc-400">Accepts .csv and .xlsx · Required columns: Customer, Amount, Due Date</p>
         </div>
 
         {preview && (
           <section className="border border-surface-border rounded-xl overflow-hidden">
             <div className="p-4 border-b border-surface-border flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between">
-              <div><h3 className="font-medium text-white">Review {preview.fileName}</h3><p className="text-sm text-zinc-400">{preview.rows.length} rows found</p></div>
+              <div><h3 className="font-medium text-foreground">Review {preview.fileName}</h3><p className="text-sm text-zinc-400">{preview.rows.length} rows found</p></div>
               <Button onClick={() => void importPreview()} disabled={importing || readyRows === 0}>{importing && <Loader2 className="w-4 h-4 mr-2 animate-spin" />}{`Import ${readyRows} ready invoice${readyRows === 1 ? '' : 's'}`}</Button>
             </div>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-3 p-4 text-sm"><div className="rounded-lg bg-emerald-500/10 p-3 text-emerald-300"><strong>{readyRows}</strong> ready to import</div><div className="rounded-lg bg-amber-500/10 p-3 text-amber-300"><strong>{existingRows}</strong> already exists</div><div className="rounded-lg bg-amber-500/10 p-3 text-amber-300"><strong>{duplicateRows}</strong> duplicate in file</div><div className="rounded-lg bg-rose-500/10 p-3 text-rose-300"><strong>{preview.errors.length}</strong> invalid</div></div>

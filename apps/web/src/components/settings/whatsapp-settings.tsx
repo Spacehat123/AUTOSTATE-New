@@ -66,7 +66,7 @@ export function WhatsappSettings() {
             <MessageCircle className="w-5 h-5 text-[#25D366]" />
           </div>
           <div>
-            <h2 className="text-lg font-medium text-white">WhatsApp Cloud API</h2>
+            <h2 className="text-lg font-medium text-foreground">WhatsApp Cloud API</h2>
             <p className="text-sm text-zinc-400">Manage your connection to the Meta Developer Platform.</p>
           </div>
         </div>
@@ -141,7 +141,7 @@ export function WhatsappSettings() {
           <Button 
             onClick={handleTestConnection} 
             disabled={testing || !isConfigured}
-            className="bg-[#25D366] hover:bg-[#20bd5a] text-white shadow-[0_0_15px_rgba(37,211,102,0.2)]"
+            className="bg-[#25D366] hover:bg-[#20bd5a] text-foreground shadow-[0_0_15px_rgba(37,211,102,0.2)]"
           >
             {testing ? (
               <Loader2 className="w-4 h-4 mr-2 animate-spin" />

@@ -79,7 +79,7 @@ export function CompanySettings() {
           <Building2 className="w-5 h-5 text-brand-400" />
         </div>
         <div>
-          <h2 className="text-lg font-medium text-white">Company Profile</h2>
+          <h2 className="text-lg font-medium text-foreground">Company Profile</h2>
           <p className="text-sm text-zinc-400">Manage your business details and contact info.</p>
         </div>
       </div>

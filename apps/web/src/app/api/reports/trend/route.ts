@@ -37,14 +37,14 @@ export async function GET(request: NextRequest) {
           // If it was paid, and the paidAt is after this date, it was still outstanding
           if (inv.status === 'PAID' && inv.paidAt) {
             if (new Date(inv.paidAt) > date) {
-              dayOutstanding += typeof inv.amount === 'number' ? inv.amount : inv.amount.toNumber()
+              dayOutstanding += typeof inv.amount === 'number' ? inv.amount : (inv.amount as any).toNumber()
             }
           } else {
             // If it's currently OVERDUE or PARTIAL or PENDING, it was outstanding on this date
             // For simplicity in MVP without a payment ledger, we use current outstanding amount
             dayOutstanding += typeof inv.outstandingAmount === 'number' 
               ? inv.outstandingAmount 
-              : inv.outstandingAmount.toNumber()
+              : (inv.outstandingAmount as any).toNumber()
           }
         }
       }

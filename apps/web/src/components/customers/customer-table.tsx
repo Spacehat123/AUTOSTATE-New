@@ -114,6 +114,7 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
           <TableHeader className="bg-surface-border/20 border-b border-surface-border">
             <TableRow className="hover:bg-transparent border-none">
               <TableHead className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground pl-6 h-12">Customer</TableHead>
+              <TableHead className="h-12"><SortHeader label="Paid Amount" field="totalPaid" /></TableHead>
               <TableHead className="h-12"><SortHeader label="Outstanding" field="totalOutstanding" /></TableHead>
               <TableHead className="h-12"><SortHeader label="Oldest Invoice" field="oldestInvoiceDays" /></TableHead>
               <TableHead className="font-bold text-[11px] uppercase tracking-wider text-muted-foreground h-12">Risk</TableHead>
@@ -124,13 +125,13 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
           <TableBody>
             {loading && data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-32 text-center">
+                <TableCell colSpan={7} className="h-32 text-center">
                   <Loader2 className="h-6 w-6 animate-spin mx-auto text-brand-500" />
                 </TableCell>
               </TableRow>
             ) : data.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={6} className="h-48 text-center border-none">
+                <TableCell colSpan={7} className="h-48 text-center border-none">
                   <EmptyState 
                     icon={<Search />} 
                     title="No customers found" 
@@ -144,7 +145,10 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
                 <TableRow key={customer.id} className="border-b border-surface-border/50 hover:bg-black/5 dark:hover:bg-white/5 transition-colors group last:border-0">
                   <TableCell className="font-semibold text-foreground pl-6 py-4">{customer.name}</TableCell>
                   <TableCell className="py-4">
-                    <CurrencyDisplay value={customer.totalOutstanding} compact className="text-foreground font-semibold" />
+                    <CurrencyDisplay value={customer.totalPaid || 0} compact className="text-emerald-500 font-semibold" />
+                  </TableCell>
+                  <TableCell className="py-4">
+                    <CurrencyDisplay value={customer.totalOutstanding} compact className="text-rose-500 font-semibold" />
                   </TableCell>
                   <TableCell className="text-muted-foreground font-medium py-4 text-sm">
                     {customer.oldestInvoiceDays > 0 ? `${customer.oldestInvoiceDays} days` : '-'}

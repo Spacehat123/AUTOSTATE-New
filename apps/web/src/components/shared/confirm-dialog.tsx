@@ -39,7 +39,7 @@ export function ConfirmDialog({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleOpenChange}>
-      <DialogContent className="sm:max-w-[425px] bg-surface-card border-surface-border text-white shadow-2xl">
+      <DialogContent className="sm:max-w-[425px] bg-surface-card border-surface-border text-foreground shadow-2xl">
         <DialogHeader>
           <DialogTitle className="text-xl tracking-tight">{title}</DialogTitle>
           <DialogDescription className="text-zinc-400 pt-2">
@@ -50,7 +50,7 @@ export function ConfirmDialog({
           <Button 
             variant="outline" 
             onClick={onCancel} 
-            className="border-surface-border text-zinc-300 hover:bg-white/5 hover:text-white transition-colors"
+            className="border-surface-border text-zinc-300 hover:bg-white/5 hover:text-foreground transition-colors"
           >
             {cancelText}
           </Button>

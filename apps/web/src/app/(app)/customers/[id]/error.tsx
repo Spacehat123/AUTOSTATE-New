@@ -21,7 +21,7 @@ export default function CustomerProfileError({
       <div>
         <Link 
           href="/customers" 
-          className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-white transition-colors"
+          className="inline-flex items-center text-sm font-medium text-zinc-400 hover:text-foreground transition-colors"
         >
           <ArrowLeft className="w-4 h-4 mr-2" />
           Back to Customers

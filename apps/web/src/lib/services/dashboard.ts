@@ -30,18 +30,18 @@ export async function getDashboardData(companyId: string) {
 
     // 2. totalOverdue
     prisma.invoice.aggregate({
-      where: { customer: { companyId }, status: 'OVERDUE' },
+      where: { customer: { companyId }, outstandingAmount: { gt: 0 }, dueDate: { lt: today } },
       _sum: { outstandingAmount: true },
     }),
 
     // 3. overdueCustomersCount
     prisma.customer.count({
-      where: { companyId, invoices: { some: { status: 'OVERDUE' } } },
+      where: { companyId, invoices: { some: { outstandingAmount: { gt: 0 }, dueDate: { lt: today } } } },
     }),
 
     // 4. overdueInvoicesCount
     prisma.invoice.count({
-      where: { customer: { companyId }, status: 'OVERDUE' },
+      where: { customer: { companyId }, outstandingAmount: { gt: 0 }, dueDate: { lt: today } },
     }),
 
     // 5. needsAttentionTasks (High priority tasks)
@@ -61,7 +61,7 @@ export async function getDashboardData(companyId: string) {
         customer: {
           include: {
             invoices: {
-              where: { status: 'OVERDUE' },
+              where: { outstandingAmount: { gt: 0 }, dueDate: { lt: today } },
               select: { outstandingAmount: true }
             }
           }
