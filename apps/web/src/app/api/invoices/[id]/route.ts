@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-// db is fetched from user
 import { getCurrentUser } from '@/lib/auth'
+import { logAction } from '@autostate/database'
 import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 export const dynamic = 'force-dynamic'
@@ -63,6 +63,10 @@ export async function PATCH(
     const updatedInvoice = await user.db.invoice.update({
       where: { id },
       data: { dueDate: new Date(dueDate) },
+    })
+
+    logAction(user.companyId, user.id, 'invoice.update', 'invoice', updatedInvoice.id, {
+      dueDate
     })
 
     return NextResponse.json(updatedInvoice)

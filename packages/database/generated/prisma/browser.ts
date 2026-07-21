@@ -77,3 +77,8 @@ export type ImportJob = Prisma.ImportJobModel
  * 
  */
 export type InboxEvent = Prisma.InboxEventModel
+/**
+ * Model AuditLog
+ * 
+ */
+export type AuditLog = Prisma.AuditLogModel

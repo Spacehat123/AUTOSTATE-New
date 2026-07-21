@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getCurrentUser } from '@/lib/auth'
+import { logAction } from '@autostate/database'
 import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 const roleSchema = z.object({
@@ -50,6 +51,10 @@ export async function PATCH(
       select: { id: true, name: true, email: true, role: true, createdAt: true }
     })
 
+    logAction(currentUser.companyId, currentUser.id, 'team.role_changed', 'user', updatedUser.id, {
+      newRole: updatedUser.role
+    })
+
     return NextResponse.json(updatedUser)
   } catch (error) {
     console.error('[TEAM_PATCH]', error)
@@ -88,6 +93,8 @@ export async function DELETE(
     await currentUser.db.user.delete({
       where: { id: targetUserId }
     })
+
+    logAction(currentUser.companyId, currentUser.id, 'team.user_removed', 'user', targetUserId)
 
     return NextResponse.json({ success: true })
   } catch (error) {

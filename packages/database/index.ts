@@ -31,3 +31,4 @@ if (process.env.NODE_ENV !== 'production') globalForPrisma.prisma = prisma
 
 export * from './generated/prisma/client'
 export * from './tenant-client'
+export * from './audit'

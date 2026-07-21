@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
+import { logAction } from '@autostate/database'
 import { sendTextMessage } from '@/lib/whatsapp'
 
 export const dynamic = 'force-dynamic'
@@ -65,6 +65,11 @@ export async function POST(
         timestamp: new Date(),
         ...(whatsappId ? { whatsappId } : {})
       }
+    })
+
+    logAction(user.companyId, user.id, 'message.send', 'message', message.id, {
+      customerId,
+      type
     })
 
     return NextResponse.json(message)

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
+import { logAction } from '@autostate/database'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,6 +45,10 @@ export async function PATCH(
     const updatedTask = await user.db.task.update({
       where: { id },
       data: { status: status === 'COMPLETED' ? 'DONE' : status }
+    })
+    
+    logAction(user.companyId, user.id, 'task.status_change', 'task', updatedTask.id, {
+      status
     })
     
     return NextResponse.json(updatedTask)

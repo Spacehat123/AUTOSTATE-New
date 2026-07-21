@@ -278,3 +278,16 @@ enum InboxEventStatus {
   FAILED_PERMANENT // Poison messages that hit retry ceiling
   IGNORED
 }
+
+model AuditLog {
+  id         String   @id @default(cuid())
+  companyId  String
+  userId     String
+  action     String   // e.g. "invoice.mark_paid", "team.role_changed"
+  entityType String
+  entityId   String
+  metadata   Json?
+  createdAt  DateTime @default(now())
+
+  @@index([companyId, createdAt])
+}

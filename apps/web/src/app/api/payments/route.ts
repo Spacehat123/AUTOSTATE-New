@@ -1,5 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server'
-import { Prisma, prisma } from '@autostate/database'
+import { Prisma, prisma, logAction } from '@autostate/database'
 import { z } from 'zod'
 import { getCurrentUser } from '@/lib/auth'
 import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
@@ -183,6 +183,12 @@ export async function POST(request: NextRequest) {
             paidAt: fullySettled ? new Date(input.receivedAt) : null,
             closedAt: fullySettled ? new Date(input.receivedAt) : null,
           },
+        })
+
+        // Fire-and-forget audit log
+        logAction(user.companyId, user.id, fullySettled ? 'invoice.mark_paid' : 'invoice.payment_allocated', 'invoice', inv.id, {
+          paymentId: createdPayment.id,
+          amount: alloc.amount
         })
       }
 

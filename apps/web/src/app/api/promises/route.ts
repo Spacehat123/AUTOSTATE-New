@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
+import { logAction, prisma } from '@autostate/database'
 
 const promiseSchema = z.object({
   customerId: z.string(),
@@ -71,6 +71,11 @@ export async function POST(request: NextRequest) {
       })
 
       return newPromise
+    })
+
+    logAction(user.companyId, user.id, createdByAI ? 'promise.created_by_ai' : 'promise.create', 'promise', result.id, {
+      customerId,
+      amount
     })
 
     return NextResponse.json(result, { status: 201 })

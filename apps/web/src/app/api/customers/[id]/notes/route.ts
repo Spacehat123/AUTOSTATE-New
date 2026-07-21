@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
-// db is now fetched from user
 import { getCurrentUser } from '@/lib/auth'
+import { logAction } from '@autostate/database'
 
 export const dynamic = 'force-dynamic'
 
@@ -45,6 +45,10 @@ export async function POST(
         content,
         timestamp: new Date()
       }
+    })
+    
+    logAction(user.companyId, user.id, 'customer.add_note', 'message', message.id, {
+      customerId
     })
     
     return NextResponse.json(message)
