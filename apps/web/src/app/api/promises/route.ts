@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { getCurrentUser } from '@/lib/auth'
-import { logAction, prisma } from '@autostate/database'
+import { logAction } from '@autostate/database'
 
 const promiseSchema = z.object({
   customerId: z.string(),
@@ -28,8 +28,8 @@ export async function POST(request: NextRequest) {
 
     const { customerId, messageId, expectedDate, amount, aiConfidence, createdByAI } = parsed.data
 
-    // 1. Verify customer belongs to this user's company
-    const customer = await prisma.customer.findUnique({
+    // 1. Verify customer belongs to this user's company via the tenant-scoped client
+    const customer = await user.db.customer.findFirst({
       where: { id: customerId },
       select: { companyId: true, name: true }
     })
@@ -38,40 +38,34 @@ export async function POST(request: NextRequest) {
       return NextResponse.json({ error: 'Customer not found' }, { status: 404 })
     }
 
-    if (customer.companyId !== user.companyId) {
-      return NextResponse.json({ error: 'Forbidden' }, { status: 403 })
-    }
-
-    // 2. Create the Promise AND the Follow-up Task in a transaction
-    const result = await prisma.$transaction(async (tx) => {
-      const newPromise = await tx.promise.create({
-        data: {
-          customerId,
-          messageId,
-          expectedDate: new Date(expectedDate),
-          amount,
-          aiConfidence,
-          createdByAI,
-          status: 'PENDING'
-        }
-      })
-
-      const dueDate = new Date(expectedDate)
-      dueDate.setDate(dueDate.getDate() + 1) // Follow up the day after the promise date
-
-      const newTask = await tx.task.create({
-        data: {
-          customerId,
-          taskType: 'FOLLOW_UP',
-          priority: 80, // High priority for checking kept promises
-          status: 'PENDING',
-          reason: `Follow up on payment promise made for ${new Date(expectedDate).toLocaleDateString()}.`,
-          // Add metadata/links to the task if schema supports it, for now reason is enough
-        }
-      })
-
-      return newPromise
+    // 2. Create the Promise AND the Follow-up Task using the tenant-scoped client
+    // user.db automatically enforces companyId on every write via the Prisma extension
+    const newPromise = await user.db.promise.create({
+      data: {
+        customerId,
+        messageId,
+        expectedDate: new Date(expectedDate),
+        amount,
+        aiConfidence,
+        createdByAI,
+        status: 'PENDING'
+      }
     })
+
+    const dueDate = new Date(expectedDate)
+    dueDate.setDate(dueDate.getDate() + 1) // Follow up the day after the promise date
+
+    await user.db.task.create({
+      data: {
+        customerId,
+        taskType: 'FOLLOW_UP',
+        priority: 80, // High priority for checking kept promises
+        status: 'PENDING',
+        reason: `Follow up on payment promise made for ${new Date(expectedDate).toLocaleDateString()}.`,
+      }
+    })
+
+    const result = newPromise
 
     logAction(user.companyId, user.id, createdByAI ? 'promise.created_by_ai' : 'promise.create', 'promise', result.id, {
       customerId,

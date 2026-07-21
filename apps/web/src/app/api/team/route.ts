@@ -1,10 +1,18 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { getCurrentUser } from '@/lib/auth'
+import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 export const dynamic = 'force-dynamic'
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireRole(user, 'ADMIN')
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
 
   try {
     const users = await user.db.user.findMany({

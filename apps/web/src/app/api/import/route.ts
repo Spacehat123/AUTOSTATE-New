@@ -30,8 +30,8 @@ function isPreviewRow(value: unknown): value is ImportPreviewRow {
 export async function GET() {
   const user = await getCurrentUser()
   try {
-    const jobs = await prisma.importJob.findMany({
-      where: { companyId: user.companyId },
+    // user.db is the tenant-scoped client — automatically filters by companyId
+    const jobs = await user.db.importJob.findMany({
       orderBy: { createdAt: 'desc' },
       take: 20,
     })
