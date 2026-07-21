@@ -19,7 +19,7 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
   
   const [result, openInvoices] = await Promise.all([
     getCustomerById(id, user.db),
-    getOpenInvoicesForCustomer(id, user.db),
+    getOpenInvoicesForCustomer(id),
   ])
   
   if (result.error === 'Customer not found' || result.status === 404) {
