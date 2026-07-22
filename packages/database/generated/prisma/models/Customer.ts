@@ -44,6 +44,7 @@ export type CustomerMinAggregateOutputType = {
   riskScore: number | null
   aiSummary: string | null
   aiSummaryUpdatedAt: Date | null
+  preferredLanguage: string | null
   companyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -59,6 +60,7 @@ export type CustomerMaxAggregateOutputType = {
   riskScore: number | null
   aiSummary: string | null
   aiSummaryUpdatedAt: Date | null
+  preferredLanguage: string | null
   companyId: string | null
   createdAt: Date | null
   updatedAt: Date | null
@@ -74,6 +76,7 @@ export type CustomerCountAggregateOutputType = {
   riskScore: number
   aiSummary: number
   aiSummaryUpdatedAt: number
+  preferredLanguage: number
   companyId: number
   createdAt: number
   updatedAt: number
@@ -99,6 +102,7 @@ export type CustomerMinAggregateInputType = {
   riskScore?: true
   aiSummary?: true
   aiSummaryUpdatedAt?: true
+  preferredLanguage?: true
   companyId?: true
   createdAt?: true
   updatedAt?: true
@@ -114,6 +118,7 @@ export type CustomerMaxAggregateInputType = {
   riskScore?: true
   aiSummary?: true
   aiSummaryUpdatedAt?: true
+  preferredLanguage?: true
   companyId?: true
   createdAt?: true
   updatedAt?: true
@@ -129,6 +134,7 @@ export type CustomerCountAggregateInputType = {
   riskScore?: true
   aiSummary?: true
   aiSummaryUpdatedAt?: true
+  preferredLanguage?: true
   companyId?: true
   createdAt?: true
   updatedAt?: true
@@ -231,6 +237,7 @@ export type CustomerGroupByOutputType = {
   riskScore: number
   aiSummary: string | null
   aiSummaryUpdatedAt: Date | null
+  preferredLanguage: string | null
   companyId: string
   createdAt: Date
   updatedAt: Date
@@ -269,6 +276,7 @@ export type CustomerWhereInput = {
   riskScore?: Prisma.IntFilter<"Customer"> | number
   aiSummary?: Prisma.StringNullableFilter<"Customer"> | string | null
   aiSummaryUpdatedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  preferredLanguage?: Prisma.StringNullableFilter<"Customer"> | string | null
   companyId?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -289,6 +297,7 @@ export type CustomerOrderByWithRelationInput = {
   riskScore?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrderInput | Prisma.SortOrder
   aiSummaryUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredLanguage?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -312,6 +321,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   riskScore?: Prisma.IntFilter<"Customer"> | number
   aiSummary?: Prisma.StringNullableFilter<"Customer"> | string | null
   aiSummaryUpdatedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  preferredLanguage?: Prisma.StringNullableFilter<"Customer"> | string | null
   companyId?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -332,6 +342,7 @@ export type CustomerOrderByWithAggregationInput = {
   riskScore?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrderInput | Prisma.SortOrder
   aiSummaryUpdatedAt?: Prisma.SortOrderInput | Prisma.SortOrder
+  preferredLanguage?: Prisma.SortOrderInput | Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -355,6 +366,7 @@ export type CustomerScalarWhereWithAggregatesInput = {
   riskScore?: Prisma.IntWithAggregatesFilter<"Customer"> | number
   aiSummary?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   aiSummaryUpdatedAt?: Prisma.DateTimeNullableWithAggregatesFilter<"Customer"> | Date | string | null
+  preferredLanguage?: Prisma.StringNullableWithAggregatesFilter<"Customer"> | string | null
   companyId?: Prisma.StringWithAggregatesFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Customer"> | Date | string
@@ -370,6 +382,7 @@ export type CustomerCreateInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutCustomersInput
@@ -389,6 +402,7 @@ export type CustomerUncheckedCreateInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -408,6 +422,7 @@ export type CustomerUpdateInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutCustomersNestedInput
@@ -427,6 +442,7 @@ export type CustomerUncheckedUpdateInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -446,6 +462,7 @@ export type CustomerCreateManyInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -461,6 +478,7 @@ export type CustomerUpdateManyMutationInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -475,6 +493,7 @@ export type CustomerUncheckedUpdateManyInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -500,6 +519,7 @@ export type CustomerCountOrderByAggregateInput = {
   riskScore?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrder
   aiSummaryUpdatedAt?: Prisma.SortOrder
+  preferredLanguage?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -519,6 +539,7 @@ export type CustomerMaxOrderByAggregateInput = {
   riskScore?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrder
   aiSummaryUpdatedAt?: Prisma.SortOrder
+  preferredLanguage?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -534,6 +555,7 @@ export type CustomerMinOrderByAggregateInput = {
   riskScore?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrder
   aiSummaryUpdatedAt?: Prisma.SortOrder
+  preferredLanguage?: Prisma.SortOrder
   companyId?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
@@ -668,6 +690,7 @@ export type CustomerCreateWithoutCompanyInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
@@ -686,6 +709,7 @@ export type CustomerUncheckedCreateWithoutCompanyInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
@@ -733,6 +757,7 @@ export type CustomerScalarWhereInput = {
   riskScore?: Prisma.IntFilter<"Customer"> | number
   aiSummary?: Prisma.StringNullableFilter<"Customer"> | string | null
   aiSummaryUpdatedAt?: Prisma.DateTimeNullableFilter<"Customer"> | Date | string | null
+  preferredLanguage?: Prisma.StringNullableFilter<"Customer"> | string | null
   companyId?: Prisma.StringFilter<"Customer"> | string
   createdAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
@@ -748,6 +773,7 @@ export type CustomerCreateWithoutInvoicesInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutCustomersInput
@@ -766,6 +792,7 @@ export type CustomerUncheckedCreateWithoutInvoicesInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -800,6 +827,7 @@ export type CustomerUpdateWithoutInvoicesInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutCustomersNestedInput
@@ -818,6 +846,7 @@ export type CustomerUncheckedUpdateWithoutInvoicesInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -836,6 +865,7 @@ export type CustomerCreateWithoutMessagesInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutCustomersInput
@@ -854,6 +884,7 @@ export type CustomerUncheckedCreateWithoutMessagesInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -888,6 +919,7 @@ export type CustomerUpdateWithoutMessagesInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutCustomersNestedInput
@@ -906,6 +938,7 @@ export type CustomerUncheckedUpdateWithoutMessagesInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -924,6 +957,7 @@ export type CustomerCreateWithoutPromisesInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutCustomersInput
@@ -942,6 +976,7 @@ export type CustomerUncheckedCreateWithoutPromisesInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -976,6 +1011,7 @@ export type CustomerUpdateWithoutPromisesInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutCustomersNestedInput
@@ -994,6 +1030,7 @@ export type CustomerUncheckedUpdateWithoutPromisesInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1012,6 +1049,7 @@ export type CustomerCreateWithoutTasksInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
   company: Prisma.CompanyCreateNestedOneWithoutCustomersInput
@@ -1030,6 +1068,7 @@ export type CustomerUncheckedCreateWithoutTasksInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   companyId: string
   createdAt?: Date | string
   updatedAt?: Date | string
@@ -1064,6 +1103,7 @@ export type CustomerUpdateWithoutTasksInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   company?: Prisma.CompanyUpdateOneRequiredWithoutCustomersNestedInput
@@ -1082,6 +1122,7 @@ export type CustomerUncheckedUpdateWithoutTasksInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -1100,6 +1141,7 @@ export type CustomerCreateManyCompanyInput = {
   riskScore?: number
   aiSummary?: string | null
   aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -1114,6 +1156,7 @@ export type CustomerUpdateWithoutCompanyInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
@@ -1132,6 +1175,7 @@ export type CustomerUncheckedUpdateWithoutCompanyInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
@@ -1150,6 +1194,7 @@ export type CustomerUncheckedUpdateManyWithoutCompanyInput = {
   riskScore?: Prisma.IntFieldUpdateOperationsInput | number
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -1222,6 +1267,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   riskScore?: boolean
   aiSummary?: boolean
   aiSummaryUpdatedAt?: boolean
+  preferredLanguage?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1243,6 +1289,7 @@ export type CustomerSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exte
   riskScore?: boolean
   aiSummary?: boolean
   aiSummaryUpdatedAt?: boolean
+  preferredLanguage?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1259,6 +1306,7 @@ export type CustomerSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exte
   riskScore?: boolean
   aiSummary?: boolean
   aiSummaryUpdatedAt?: boolean
+  preferredLanguage?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
@@ -1275,12 +1323,13 @@ export type CustomerSelectScalar = {
   riskScore?: boolean
   aiSummary?: boolean
   aiSummaryUpdatedAt?: boolean
+  preferredLanguage?: boolean
   companyId?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "email" | "gstNumber" | "industry" | "riskScore" | "aiSummary" | "aiSummaryUpdatedAt" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
+export type CustomerOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "phone" | "email" | "gstNumber" | "industry" | "riskScore" | "aiSummary" | "aiSummaryUpdatedAt" | "preferredLanguage" | "companyId" | "createdAt" | "updatedAt", ExtArgs["result"]["customer"]>
 export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   invoices?: boolean | Prisma.Customer$invoicesArgs<ExtArgs>
@@ -1315,6 +1364,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     riskScore: number
     aiSummary: string | null
     aiSummaryUpdatedAt: Date | null
+    preferredLanguage: string | null
     companyId: string
     createdAt: Date
     updatedAt: Date
@@ -1755,6 +1805,7 @@ export interface CustomerFieldRefs {
   readonly riskScore: Prisma.FieldRef<"Customer", 'Int'>
   readonly aiSummary: Prisma.FieldRef<"Customer", 'String'>
   readonly aiSummaryUpdatedAt: Prisma.FieldRef<"Customer", 'DateTime'>
+  readonly preferredLanguage: Prisma.FieldRef<"Customer", 'String'>
   readonly companyId: Prisma.FieldRef<"Customer", 'String'>
   readonly createdAt: Prisma.FieldRef<"Customer", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Customer", 'DateTime'>

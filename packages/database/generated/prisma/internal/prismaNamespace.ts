@@ -1530,6 +1530,7 @@ export const CustomerScalarFieldEnum = {
   riskScore: 'riskScore',
   aiSummary: 'aiSummary',
   aiSummaryUpdatedAt: 'aiSummaryUpdatedAt',
+  preferredLanguage: 'preferredLanguage',
   companyId: 'companyId',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'

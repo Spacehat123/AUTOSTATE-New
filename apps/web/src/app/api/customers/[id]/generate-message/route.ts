@@ -15,7 +15,7 @@ async function handleGenerate(
   customerId: string,
   db: any,
   tone: 'formal' | 'friendly' | 'firm',
-  language: string,
+  language?: string,
   channel: 'WHATSAPP' | 'EMAIL' = 'WHATSAPP'
 ) {
   // 1. Fetch customer and verify company

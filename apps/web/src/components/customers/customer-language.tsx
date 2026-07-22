@@ -46,11 +46,9 @@ export function CustomerLanguage({ customerId, initialLanguage }: { customerId: 
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      <DialogTrigger asChild>
-        <button className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1 rounded-md border border-surface-border">
-          <Globe className="w-3.5 h-3.5" />
-          {initialLanguage || 'Language'}
-        </button>
+      <DialogTrigger className="flex items-center gap-1.5 text-xs text-zinc-400 hover:text-white transition-colors bg-white/5 hover:bg-white/10 px-2 py-1 rounded-md border border-surface-border">
+        <Globe className="w-3.5 h-3.5" />
+        {initialLanguage || 'Language'}
       </DialogTrigger>
       <DialogContent className="bg-surface-card border-surface-border text-foreground max-w-sm">
         <DialogHeader>
@@ -60,7 +58,7 @@ export function CustomerLanguage({ customerId, initialLanguage }: { customerId: 
           </DialogDescription>
         </DialogHeader>
         <div className="py-4">
-          <Select value={language} onValueChange={setLanguage}>
+          <Select value={language} onValueChange={(val) => val && setLanguage(val)}>
             <SelectTrigger className="bg-black/20 border-surface-border">
               <SelectValue placeholder="Select language" />
             </SelectTrigger>
