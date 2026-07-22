@@ -11,6 +11,7 @@
 export type * from './models/Company'
 export type * from './models/User'
 export type * from './models/Customer'
+export type * from './models/PortalAccessToken'
 export type * from './models/CompanyIntegration'
 export type * from './models/Invoice'
 export type * from './models/Payment'

@@ -285,6 +285,7 @@ export type CustomerWhereInput = {
   messages?: Prisma.MessageListRelationFilter
   promises?: Prisma.PromiseListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
+  portalTokens?: Prisma.PortalAccessTokenListRelationFilter
 }
 
 export type CustomerOrderByWithRelationInput = {
@@ -306,6 +307,7 @@ export type CustomerOrderByWithRelationInput = {
   messages?: Prisma.MessageOrderByRelationAggregateInput
   promises?: Prisma.PromiseOrderByRelationAggregateInput
   tasks?: Prisma.TaskOrderByRelationAggregateInput
+  portalTokens?: Prisma.PortalAccessTokenOrderByRelationAggregateInput
 }
 
 export type CustomerWhereUniqueInput = Prisma.AtLeast<{
@@ -330,6 +332,7 @@ export type CustomerWhereUniqueInput = Prisma.AtLeast<{
   messages?: Prisma.MessageListRelationFilter
   promises?: Prisma.PromiseListRelationFilter
   tasks?: Prisma.TaskListRelationFilter
+  portalTokens?: Prisma.PortalAccessTokenListRelationFilter
 }, "id">
 
 export type CustomerOrderByWithAggregationInput = {
@@ -390,6 +393,7 @@ export type CustomerCreateInput = {
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateInput = {
@@ -410,6 +414,7 @@ export type CustomerUncheckedCreateInput = {
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseUncheckedCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUpdateInput = {
@@ -430,6 +435,7 @@ export type CustomerUpdateInput = {
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateInput = {
@@ -450,6 +456,7 @@ export type CustomerUncheckedUpdateInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUncheckedUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyInput = {
@@ -624,6 +631,20 @@ export type NullableDateTimeFieldUpdateOperationsInput = {
   set?: Date | string | null
 }
 
+export type CustomerCreateNestedOneWithoutPortalTokensInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutPortalTokensInput, Prisma.CustomerUncheckedCreateWithoutPortalTokensInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutPortalTokensInput
+  connect?: Prisma.CustomerWhereUniqueInput
+}
+
+export type CustomerUpdateOneRequiredWithoutPortalTokensNestedInput = {
+  create?: Prisma.XOR<Prisma.CustomerCreateWithoutPortalTokensInput, Prisma.CustomerUncheckedCreateWithoutPortalTokensInput>
+  connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutPortalTokensInput
+  upsert?: Prisma.CustomerUpsertWithoutPortalTokensInput
+  connect?: Prisma.CustomerWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CustomerUpdateToOneWithWhereWithoutPortalTokensInput, Prisma.CustomerUpdateWithoutPortalTokensInput>, Prisma.CustomerUncheckedUpdateWithoutPortalTokensInput>
+}
+
 export type CustomerCreateNestedOneWithoutInvoicesInput = {
   create?: Prisma.XOR<Prisma.CustomerCreateWithoutInvoicesInput, Prisma.CustomerUncheckedCreateWithoutInvoicesInput>
   connectOrCreate?: Prisma.CustomerCreateOrConnectWithoutInvoicesInput
@@ -697,6 +718,7 @@ export type CustomerCreateWithoutCompanyInput = {
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutCompanyInput = {
@@ -716,6 +738,7 @@ export type CustomerUncheckedCreateWithoutCompanyInput = {
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseUncheckedCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutCompanyInput = {
@@ -763,6 +786,102 @@ export type CustomerScalarWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Customer"> | Date | string
 }
 
+export type CustomerCreateWithoutPortalTokensInput = {
+  id?: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  gstNumber?: string | null
+  industry?: string | null
+  riskScore?: number
+  aiSummary?: string | null
+  aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  company: Prisma.CompanyCreateNestedOneWithoutCustomersInput
+  invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
+  messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
+  promises?: Prisma.PromiseCreateNestedManyWithoutCustomerInput
+  tasks?: Prisma.TaskCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerUncheckedCreateWithoutPortalTokensInput = {
+  id?: string
+  name: string
+  phone?: string | null
+  email?: string | null
+  gstNumber?: string | null
+  industry?: string | null
+  riskScore?: number
+  aiSummary?: string | null
+  aiSummaryUpdatedAt?: Date | string | null
+  preferredLanguage?: string | null
+  companyId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
+  messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
+  promises?: Prisma.PromiseUncheckedCreateNestedManyWithoutCustomerInput
+  tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCustomerInput
+}
+
+export type CustomerCreateOrConnectWithoutPortalTokensInput = {
+  where: Prisma.CustomerWhereUniqueInput
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutPortalTokensInput, Prisma.CustomerUncheckedCreateWithoutPortalTokensInput>
+}
+
+export type CustomerUpsertWithoutPortalTokensInput = {
+  update: Prisma.XOR<Prisma.CustomerUpdateWithoutPortalTokensInput, Prisma.CustomerUncheckedUpdateWithoutPortalTokensInput>
+  create: Prisma.XOR<Prisma.CustomerCreateWithoutPortalTokensInput, Prisma.CustomerUncheckedCreateWithoutPortalTokensInput>
+  where?: Prisma.CustomerWhereInput
+}
+
+export type CustomerUpdateToOneWithWhereWithoutPortalTokensInput = {
+  where?: Prisma.CustomerWhereInput
+  data: Prisma.XOR<Prisma.CustomerUpdateWithoutPortalTokensInput, Prisma.CustomerUncheckedUpdateWithoutPortalTokensInput>
+}
+
+export type CustomerUpdateWithoutPortalTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  riskScore?: Prisma.IntFieldUpdateOperationsInput | number
+  aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  company?: Prisma.CompanyUpdateOneRequiredWithoutCustomersNestedInput
+  invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
+  messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
+  promises?: Prisma.PromiseUpdateManyWithoutCustomerNestedInput
+  tasks?: Prisma.TaskUpdateManyWithoutCustomerNestedInput
+}
+
+export type CustomerUncheckedUpdateWithoutPortalTokensInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  industry?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  riskScore?: Prisma.IntFieldUpdateOperationsInput | number
+  aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiSummaryUpdatedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  preferredLanguage?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  companyId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
+  messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
+  promises?: Prisma.PromiseUncheckedUpdateManyWithoutCustomerNestedInput
+  tasks?: Prisma.TaskUncheckedUpdateManyWithoutCustomerNestedInput
+}
+
 export type CustomerCreateWithoutInvoicesInput = {
   id?: string
   name: string
@@ -780,6 +899,7 @@ export type CustomerCreateWithoutInvoicesInput = {
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutInvoicesInput = {
@@ -799,6 +919,7 @@ export type CustomerUncheckedCreateWithoutInvoicesInput = {
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseUncheckedCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutInvoicesInput = {
@@ -834,6 +955,7 @@ export type CustomerUpdateWithoutInvoicesInput = {
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutInvoicesInput = {
@@ -853,6 +975,7 @@ export type CustomerUncheckedUpdateWithoutInvoicesInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUncheckedUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutMessagesInput = {
@@ -872,6 +995,7 @@ export type CustomerCreateWithoutMessagesInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutMessagesInput = {
@@ -891,6 +1015,7 @@ export type CustomerUncheckedCreateWithoutMessagesInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseUncheckedCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutMessagesInput = {
@@ -926,6 +1051,7 @@ export type CustomerUpdateWithoutMessagesInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutMessagesInput = {
@@ -945,6 +1071,7 @@ export type CustomerUncheckedUpdateWithoutMessagesInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUncheckedUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutPromisesInput = {
@@ -964,6 +1091,7 @@ export type CustomerCreateWithoutPromisesInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutPromisesInput = {
@@ -983,6 +1111,7 @@ export type CustomerUncheckedCreateWithoutPromisesInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
   tasks?: Prisma.TaskUncheckedCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutPromisesInput = {
@@ -1018,6 +1147,7 @@ export type CustomerUpdateWithoutPromisesInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutPromisesInput = {
@@ -1037,6 +1167,7 @@ export type CustomerUncheckedUpdateWithoutPromisesInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateWithoutTasksInput = {
@@ -1056,6 +1187,7 @@ export type CustomerCreateWithoutTasksInput = {
   invoices?: Prisma.InvoiceCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerUncheckedCreateWithoutTasksInput = {
@@ -1075,6 +1207,7 @@ export type CustomerUncheckedCreateWithoutTasksInput = {
   invoices?: Prisma.InvoiceUncheckedCreateNestedManyWithoutCustomerInput
   messages?: Prisma.MessageUncheckedCreateNestedManyWithoutCustomerInput
   promises?: Prisma.PromiseUncheckedCreateNestedManyWithoutCustomerInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedCreateNestedManyWithoutCustomerInput
 }
 
 export type CustomerCreateOrConnectWithoutTasksInput = {
@@ -1110,6 +1243,7 @@ export type CustomerUpdateWithoutTasksInput = {
   invoices?: Prisma.InvoiceUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutTasksInput = {
@@ -1129,6 +1263,7 @@ export type CustomerUncheckedUpdateWithoutTasksInput = {
   invoices?: Prisma.InvoiceUncheckedUpdateManyWithoutCustomerNestedInput
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUncheckedUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerCreateManyCompanyInput = {
@@ -1163,6 +1298,7 @@ export type CustomerUpdateWithoutCompanyInput = {
   messages?: Prisma.MessageUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateWithoutCompanyInput = {
@@ -1182,6 +1318,7 @@ export type CustomerUncheckedUpdateWithoutCompanyInput = {
   messages?: Prisma.MessageUncheckedUpdateManyWithoutCustomerNestedInput
   promises?: Prisma.PromiseUncheckedUpdateManyWithoutCustomerNestedInput
   tasks?: Prisma.TaskUncheckedUpdateManyWithoutCustomerNestedInput
+  portalTokens?: Prisma.PortalAccessTokenUncheckedUpdateManyWithoutCustomerNestedInput
 }
 
 export type CustomerUncheckedUpdateManyWithoutCompanyInput = {
@@ -1209,6 +1346,7 @@ export type CustomerCountOutputType = {
   messages: number
   promises: number
   tasks: number
+  portalTokens: number
 }
 
 export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1216,6 +1354,7 @@ export type CustomerCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensio
   messages?: boolean | CustomerCountOutputTypeCountMessagesArgs
   promises?: boolean | CustomerCountOutputTypeCountPromisesArgs
   tasks?: boolean | CustomerCountOutputTypeCountTasksArgs
+  portalTokens?: boolean | CustomerCountOutputTypeCountPortalTokensArgs
 }
 
 /**
@@ -1256,6 +1395,13 @@ export type CustomerCountOutputTypeCountTasksArgs<ExtArgs extends runtime.Types.
   where?: Prisma.TaskWhereInput
 }
 
+/**
+ * CustomerCountOutputType without action
+ */
+export type CustomerCountOutputTypeCountPortalTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.PortalAccessTokenWhereInput
+}
+
 
 export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1276,6 +1422,7 @@ export type CustomerSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs
   messages?: boolean | Prisma.Customer$messagesArgs<ExtArgs>
   promises?: boolean | Prisma.Customer$promisesArgs<ExtArgs>
   tasks?: boolean | Prisma.Customer$tasksArgs<ExtArgs>
+  portalTokens?: boolean | Prisma.Customer$portalTokensArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["customer"]>
 
@@ -1336,6 +1483,7 @@ export type CustomerInclude<ExtArgs extends runtime.Types.Extensions.InternalArg
   messages?: boolean | Prisma.Customer$messagesArgs<ExtArgs>
   promises?: boolean | Prisma.Customer$promisesArgs<ExtArgs>
   tasks?: boolean | Prisma.Customer$tasksArgs<ExtArgs>
+  portalTokens?: boolean | Prisma.Customer$portalTokensArgs<ExtArgs>
   _count?: boolean | Prisma.CustomerCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CustomerIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1353,6 +1501,7 @@ export type $CustomerPayload<ExtArgs extends runtime.Types.Extensions.InternalAr
     messages: Prisma.$MessagePayload<ExtArgs>[]
     promises: Prisma.$PromisePayload<ExtArgs>[]
     tasks: Prisma.$TaskPayload<ExtArgs>[]
+    portalTokens: Prisma.$PortalAccessTokenPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1767,6 +1916,7 @@ export interface Prisma__CustomerClient<T, Null = never, ExtArgs extends runtime
   messages<T extends Prisma.Customer$messagesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$messagesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$MessagePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   promises<T extends Prisma.Customer$promisesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$promisesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PromisePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   tasks<T extends Prisma.Customer$tasksArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$tasksArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$TaskPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  portalTokens<T extends Prisma.Customer$portalTokensArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Customer$portalTokensArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PortalAccessTokenPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2303,6 +2453,30 @@ export type Customer$tasksArgs<ExtArgs extends runtime.Types.Extensions.Internal
   take?: number
   skip?: number
   distinct?: Prisma.TaskScalarFieldEnum | Prisma.TaskScalarFieldEnum[]
+}
+
+/**
+ * Customer.portalTokens
+ */
+export type Customer$portalTokensArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the PortalAccessToken
+   */
+  select?: Prisma.PortalAccessTokenSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the PortalAccessToken
+   */
+  omit?: Prisma.PortalAccessTokenOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.PortalAccessTokenInclude<ExtArgs> | null
+  where?: Prisma.PortalAccessTokenWhereInput
+  orderBy?: Prisma.PortalAccessTokenOrderByWithRelationInput | Prisma.PortalAccessTokenOrderByWithRelationInput[]
+  cursor?: Prisma.PortalAccessTokenWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.PortalAccessTokenScalarFieldEnum | Prisma.PortalAccessTokenScalarFieldEnum[]
 }
 
 /**

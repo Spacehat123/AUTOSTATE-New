@@ -54,6 +54,7 @@ export const ModelName = {
   Company: 'Company',
   User: 'User',
   Customer: 'Customer',
+  PortalAccessToken: 'PortalAccessToken',
   CompanyIntegration: 'CompanyIntegration',
   Invoice: 'Invoice',
   Payment: 'Payment',
@@ -128,6 +129,17 @@ export const CustomerScalarFieldEnum = {
 } as const
 
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
+
+
+export const PortalAccessTokenScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PortalAccessTokenScalarFieldEnum = (typeof PortalAccessTokenScalarFieldEnum)[keyof typeof PortalAccessTokenScalarFieldEnum]
 
 
 export const CompanyIntegrationScalarFieldEnum = {

@@ -2,7 +2,7 @@
 
 import React, { useState } from 'react'
 import { useRouter } from 'next/navigation'
-import { MessageCircle, DollarSign, StickyNote, Calendar, Loader2, Plus, Minus } from 'lucide-react'
+import { MessageCircle, DollarSign, StickyNote, Calendar, Loader2, Plus, Minus, Link as LinkIcon } from 'lucide-react'
 import { Card, CardHeader, CardTitle, CardContent } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -227,12 +227,44 @@ export function CustomerActions({
     }
   }
 
+  const handleCopyPortalLink = async () => {
+    setLoading(true)
+    try {
+      const res = await fetch(`/api/customers/${customerId}/portal-link`, {
+        method: 'POST'
+      })
+      if (res.ok) {
+        const data = await res.json()
+        await navigator.clipboard.writeText(data.url)
+        toast.success('Portal link copied to clipboard')
+      } else {
+        toast.error('Failed to generate portal link')
+      }
+    } catch {
+      toast.error('Network error')
+    } finally {
+      setLoading(false)
+    }
+  }
+
   // ----- Render -------------------------------------------------------------
 
   return (
     <Card className="bg-surface-card border-surface-border border-brand-500/20 shadow-[0_0_15px_rgba(59,130,246,0.05)]">
       <CardHeader className="pb-4">
-        <CardTitle className="text-lg font-semibold text-foreground">Quick Actions</CardTitle>
+        <CardTitle className="text-lg font-semibold text-foreground flex items-center justify-between">
+          Quick Actions
+          <Button 
+            variant="ghost" 
+            size="sm" 
+            onClick={handleCopyPortalLink}
+            disabled={loading}
+            className="text-xs h-7 text-indigo-400 hover:text-indigo-300 hover:bg-indigo-500/10 border border-indigo-500/20"
+          >
+            {loading ? <Loader2 className="w-3 h-3 mr-1.5 animate-spin" /> : <LinkIcon className="w-3 h-3 mr-1.5" />}
+            Copy Portal Link
+          </Button>
+        </CardTitle>
       </CardHeader>
       <CardContent className="grid grid-cols-2 gap-3">
 

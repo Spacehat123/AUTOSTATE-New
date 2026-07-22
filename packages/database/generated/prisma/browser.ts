@@ -33,6 +33,11 @@ export type User = Prisma.UserModel
  */
 export type Customer = Prisma.CustomerModel
 /**
+ * Model PortalAccessToken
+ * 
+ */
+export type PortalAccessToken = Prisma.PortalAccessTokenModel
+/**
  * Model CompanyIntegration
  * 
  */

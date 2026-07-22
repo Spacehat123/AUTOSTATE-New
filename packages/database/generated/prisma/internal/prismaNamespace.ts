@@ -387,6 +387,7 @@ export const ModelName = {
   Company: 'Company',
   User: 'User',
   Customer: 'Customer',
+  PortalAccessToken: 'PortalAccessToken',
   CompanyIntegration: 'CompanyIntegration',
   Invoice: 'Invoice',
   Payment: 'Payment',
@@ -413,7 +414,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "customer" | "companyIntegration" | "invoice" | "payment" | "paymentAllocation" | "message" | "promise" | "task" | "importJob" | "inboxEvent" | "auditLog" | "subscription"
+    modelProps: "company" | "user" | "customer" | "portalAccessToken" | "companyIntegration" | "invoice" | "payment" | "paymentAllocation" | "message" | "promise" | "task" | "importJob" | "inboxEvent" | "auditLog" | "subscription"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -636,6 +637,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         count: {
           args: Prisma.CustomerCountArgs<ExtArgs>
           result: runtime.Types.Utils.Optional<Prisma.CustomerCountAggregateOutputType> | number
+        }
+      }
+    }
+    PortalAccessToken: {
+      payload: Prisma.$PortalAccessTokenPayload<ExtArgs>
+      fields: Prisma.PortalAccessTokenFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.PortalAccessTokenFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.PortalAccessTokenFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>
+        }
+        findFirst: {
+          args: Prisma.PortalAccessTokenFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.PortalAccessTokenFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>
+        }
+        findMany: {
+          args: Prisma.PortalAccessTokenFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>[]
+        }
+        create: {
+          args: Prisma.PortalAccessTokenCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>
+        }
+        createMany: {
+          args: Prisma.PortalAccessTokenCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.PortalAccessTokenCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>[]
+        }
+        delete: {
+          args: Prisma.PortalAccessTokenDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>
+        }
+        update: {
+          args: Prisma.PortalAccessTokenUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>
+        }
+        deleteMany: {
+          args: Prisma.PortalAccessTokenDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.PortalAccessTokenUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.PortalAccessTokenUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>[]
+        }
+        upsert: {
+          args: Prisma.PortalAccessTokenUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$PortalAccessTokenPayload>
+        }
+        aggregate: {
+          args: Prisma.PortalAccessTokenAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregatePortalAccessToken>
+        }
+        groupBy: {
+          args: Prisma.PortalAccessTokenGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortalAccessTokenGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.PortalAccessTokenCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.PortalAccessTokenCountAggregateOutputType> | number
         }
       }
     }
@@ -1539,6 +1614,17 @@ export const CustomerScalarFieldEnum = {
 export type CustomerScalarFieldEnum = (typeof CustomerScalarFieldEnum)[keyof typeof CustomerScalarFieldEnum]
 
 
+export const PortalAccessTokenScalarFieldEnum = {
+  id: 'id',
+  customerId: 'customerId',
+  tokenHash: 'tokenHash',
+  expiresAt: 'expiresAt',
+  createdAt: 'createdAt'
+} as const
+
+export type PortalAccessTokenScalarFieldEnum = (typeof PortalAccessTokenScalarFieldEnum)[keyof typeof PortalAccessTokenScalarFieldEnum]
+
+
 export const CompanyIntegrationScalarFieldEnum = {
   id: 'id',
   companyId: 'companyId',
@@ -2119,6 +2205,7 @@ export type GlobalOmitConfig = {
   company?: Prisma.CompanyOmit
   user?: Prisma.UserOmit
   customer?: Prisma.CustomerOmit
+  portalAccessToken?: Prisma.PortalAccessTokenOmit
   companyIntegration?: Prisma.CompanyIntegrationOmit
   invoice?: Prisma.InvoiceOmit
   payment?: Prisma.PaymentOmit

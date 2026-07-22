@@ -68,7 +68,19 @@ model Customer {
   invoices Invoice[]
   messages Message[]
   promises Promise[]
-  tasks    Task[]
+  tasks        Task[]
+  portalTokens PortalAccessToken[]
+}
+
+model PortalAccessToken {
+  id         String   @id @default(cuid())
+  customerId String
+  customer   Customer @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  tokenHash  String   @unique
+  expiresAt  DateTime
+  createdAt  DateTime @default(now())
+
+  @@index([tokenHash])
 }
 
 model CompanyIntegration {
