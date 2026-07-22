@@ -8,7 +8,7 @@ export const dynamic = 'force-dynamic'
 
 const bodySchema = z.object({
   tone: z.enum(['formal', 'friendly', 'firm']).default('professional' as any).catch('formal'),
-  language: z.string().default('English').catch('English')
+  language: z.string().optional()
 })
 
 async function handleGenerate(
@@ -65,13 +65,12 @@ async function handleGenerate(
 
   const recentMessages = customer.messages.map((m: any) => m.content).reverse()
 
-  // 3. Call the AI model
   const message = await generateCollectionMessage({
     customerName: customer.name,
     outstandingAmount,
     daysOverdue,
     invoiceNumbers,
-    language,
+    language: language || customer.preferredLanguage || 'English',
     tone,
     recentMessages,
     channel

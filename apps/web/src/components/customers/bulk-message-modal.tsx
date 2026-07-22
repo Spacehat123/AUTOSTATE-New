@@ -18,7 +18,7 @@ export function BulkMessageModal({ open, onOpenChange, customerIds, onComplete }
   const [sending, setSending] = useState(false)
   const [messages, setMessages] = useState<any[]>([])
   const [tone, setTone] = useState('professional')
-  const [language, setLanguage] = useState('english')
+  const [language, setLanguage] = useState('preferred')
   
   const generateMessages = async () => {
     setLoading(true)
@@ -27,7 +27,7 @@ export function BulkMessageModal({ open, onOpenChange, customerIds, onComplete }
       const res = await fetch('/api/customers/bulk-generate-message', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ customerIds, tone, language })
+        body: JSON.stringify({ customerIds, tone, language: language === 'preferred' ? undefined : language })
       })
       const data = await res.json()
       if (!res.ok) throw new Error(data.error || 'Failed to generate')
@@ -129,6 +129,7 @@ export function BulkMessageModal({ open, onOpenChange, customerIds, onComplete }
                 <SelectValue placeholder="Language" />
               </SelectTrigger>
               <SelectContent>
+                <SelectItem value="preferred">Default (Preferred)</SelectItem>
                 <SelectItem value="english">English</SelectItem>
                 <SelectItem value="hindi">Hindi</SelectItem>
                 <SelectItem value="hinglish">Hinglish</SelectItem>

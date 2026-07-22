@@ -59,6 +59,7 @@ model Customer {
   riskScore          Int       @default(0)
   aiSummary          String?   @db.Text
   aiSummaryUpdatedAt DateTime?
+  preferredLanguage  String?
   companyId          String
   company            Company   @relation(fields: [companyId], references: [id])
   createdAt          DateTime  @default(now())

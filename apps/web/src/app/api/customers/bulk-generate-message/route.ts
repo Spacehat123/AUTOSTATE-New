@@ -8,7 +8,7 @@ export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
 
   try {
-    const { customerIds, tone = 'professional', language = 'english' } = await request.json()
+    const { customerIds, tone = 'professional', language } = await request.json()
 
     if (!Array.isArray(customerIds) || customerIds.length === 0) {
       return NextResponse.json({ error: 'customerIds must be a non-empty array' }, { status: 400 })
@@ -74,7 +74,7 @@ export async function POST(request: NextRequest) {
           outstandingAmount,
           daysOverdue,
           invoiceNumbers,
-          language,
+          language: language || customer.preferredLanguage || 'English',
           tone: tone as any,
           recentMessages: []
         })

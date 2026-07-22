@@ -47,7 +47,7 @@ CUSTOMER DETAILS:
 INSTRUCTIONS:
 1. Write a ${channel === 'EMAIL' ? 'detailed, professional email' : 'short, professional WhatsApp message'} asking for payment.
 2. The tone must be **${tone}**.
-3. Write the message in **${language}**.
+3. Write the message in **${language}**, taking care to use appropriate script and cultural tone conventions for that language.
 4. Mention the customer's name, the amount owed (${formattedAmount}), and the invoices.
 5. ${channel === 'EMAIL' ? 'Include a clear Subject: header line at the beginning.' : 'Keep it under 300 characters. Keep it concise, suitable for WhatsApp.'}
 6. Do NOT include placeholders like [Your Name] or [Company Name].`

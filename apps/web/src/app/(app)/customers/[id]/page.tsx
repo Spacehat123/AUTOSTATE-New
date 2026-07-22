@@ -13,6 +13,8 @@ import { InvoiceList } from '@/components/customers/invoice-list'
 import { CommunicationTimeline } from '@/components/customers/communication-timeline'
 import { CustomerActions } from '@/components/customers/customer-actions'
 
+import { CustomerLanguage } from '@/components/customers/customer-language'
+
 export default async function CustomerProfilePage({ params }: { params: Promise<{ id: string }> }) {
   const user = await getCurrentUser()
   const { id } = await params
@@ -56,11 +58,15 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
             <h1 className="text-3xl font-bold text-foreground tracking-tight">{customer.name}</h1>
             <RiskBadge score={customer.riskScore} />
           </div>
-          <div className="flex items-center gap-2 text-zinc-400">
-            <span>Total Outstanding:</span>
-            <span className="text-xl font-bold text-rose-500">
-              <CurrencyDisplay value={totalOutstanding} />
-            </span>
+          <div className="flex items-center gap-3 text-zinc-400">
+            <div className="flex items-center gap-2">
+              <span>Total Outstanding:</span>
+              <span className="text-xl font-bold text-rose-500">
+                <CurrencyDisplay value={totalOutstanding} />
+              </span>
+            </div>
+            <span className="text-surface-border">|</span>
+            <CustomerLanguage customerId={customer.id} initialLanguage={customer.preferredLanguage as string | null} />
           </div>
         </div>
       </div>
