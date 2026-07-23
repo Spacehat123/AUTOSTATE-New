@@ -13,6 +13,9 @@ export interface TaskCardProps {
   onSnooze: () => void
   selected?: boolean
   onSelect?: (checked: boolean) => void
+  currentUserRole?: string
+  teamMembers?: any[]
+  onAssign?: (taskId: string, newAssigneeId: string) => void
 }
 
 const TYPE_LABELS: Record<string, string> = {
@@ -23,10 +26,16 @@ const TYPE_LABELS: Record<string, string> = {
   RECORD_PAYMENT: 'Record Payment'
 }
 
-export function TaskCard({ task, onComplete, onSnooze, selected = false, onSelect }: TaskCardProps) {
+export function TaskCard({ task, onComplete, onSnooze, selected = false, onSelect, currentUserRole, teamMembers, onAssign }: TaskCardProps) {
   const isHighPriority = task.priority > 70
   const amount = task.amount || 0
   const daysOverdue = task.daysOverdue || 0
+
+  // RBAC for Assignee
+  const canAssign = currentUserRole === 'OWNER' || currentUserRole === 'ADMIN'
+  const assignableMembers = currentUserRole === 'OWNER' 
+    ? teamMembers 
+    : teamMembers?.filter(m => m.role === 'MEMBER' || m.id === task.assignedTo)
 
   const getPrimaryButton = () => {
     switch (task.taskType) {
@@ -112,6 +121,27 @@ export function TaskCard({ task, onComplete, onSnooze, selected = false, onSelec
               {task.reason || task.reasonText}
             </p>
           )}
+
+          {/* Assignee Dropdown */}
+          <div className="mt-3 flex items-center gap-2 text-xs">
+            <span className="text-zinc-500 font-medium">Assigned to:</span>
+            {!canAssign ? (
+              <span className="text-zinc-300 bg-surface-border/30 px-2 py-0.5 rounded-md border border-surface-border">
+                {teamMembers?.find(m => m.id === task.assignedTo)?.name || 'Unassigned'}
+              </span>
+            ) : (
+              <select 
+                value={task.assignedTo || ''} 
+                onChange={(e) => onAssign?.(task.id, e.target.value)}
+                className="bg-surface-card border border-surface-border text-foreground rounded-md px-2 py-0.5 min-w-[120px] focus:ring-1 focus:ring-brand-500 outline-none"
+              >
+                <option value="">Unassigned</option>
+                {assignableMembers?.map(m => (
+                  <option key={m.id} value={m.id}>{m.name || m.email}</option>
+                ))}
+              </select>
+            )}
+          </div>
         </div>
 
         {/* Right Side: Actions Grid */}

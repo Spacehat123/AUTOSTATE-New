@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
 import { sendTextMessage } from '@/lib/whatsapp'
+import { getWhatsappCredentials } from '@/lib/whatsapp-credentials'
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
@@ -22,10 +23,12 @@ export async function POST(request: NextRequest) {
       }, { status: 400 })
     }
 
+    const credentials = await getWhatsappCredentials(user.companyId)
+
     // Try to send a test message
     const testMessage = `👋 Hi from Autostate! Your WhatsApp integration for ${company.name} is successfully connected and working.`
     
-    await sendTextMessage(company.phone, testMessage)
+    await sendTextMessage(company.phone, testMessage, credentials)
 
     return NextResponse.json({ success: true, deliveredTo: company.phone })
   } catch (error: any) {

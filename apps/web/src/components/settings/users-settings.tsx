@@ -112,8 +112,35 @@ export function UsersSettings() {
       const res = await fetch('/api/team/invite', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ email: inviteEmail, role: inviteRole })
+        body: JSON.stringify({ email: inviteEmail, role: inviteRole, forceResend: false })
       })
+
+      if (res.status === 409) {
+        const error = await res.json()
+        if (error.isDuplicate) {
+          if (confirm(error.error + '\n\nDo you want to revoke the old invitation and send a new one?')) {
+            // Force resend
+            const resendRes = await fetch('/api/team/invite', {
+              method: 'POST',
+              headers: { 'Content-Type': 'application/json' },
+              body: JSON.stringify({ email: inviteEmail, role: inviteRole, forceResend: true })
+            })
+            
+            if (!resendRes.ok) {
+              const resendError = await resendRes.json()
+              throw new Error(resendError.error || 'Failed to resend invitation')
+            }
+            
+            toast.success('New invitation sent!')
+            setInviteOpen(false)
+            setInviteEmail('')
+            fetchUsers()
+            return
+          } else {
+            return
+          }
+        }
+      }
 
       if (!res.ok) {
         const error = await res.json()

@@ -80,7 +80,17 @@ export const processWhatsappInbox = inngest.createFunction(
 
     // 4. Processing & Transaction Boundary
     const processResult = await step.run('process-message', async () => {
-      const customer = await prisma.customer.findFirst({ where: { phone: msg.phone } })
+      if (!inboxEvent.companyId) {
+        await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'FAILED', lastError: 'No companyId on inboxEvent' } })
+        throw new Error('No companyId on inboxEvent')
+      }
+
+      const customer = await prisma.customer.findFirst({ 
+        where: { 
+          phone: msg.phone,
+          companyId: inboxEvent.companyId 
+        } 
+      })
       if (!customer) {
           await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'FAILED', lastError: 'Customer not found' } })
           throw new Error('Customer not found')

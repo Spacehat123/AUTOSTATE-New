@@ -16,6 +16,9 @@ export async function GET(request: NextRequest) {
 
   try {
     const users = await user.db.user.findMany({
+      where: {
+        companyId: user.companyId
+      },
       select: {
         id: true,
         name: true,

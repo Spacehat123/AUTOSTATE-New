@@ -31,6 +31,7 @@ export type CompanyMinAggregateOutputType = {
   phone: string | null
   email: string | null
   address: string | null
+  isArchived: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -42,6 +43,7 @@ export type CompanyMaxAggregateOutputType = {
   phone: string | null
   email: string | null
   address: string | null
+  isArchived: boolean | null
   createdAt: Date | null
   updatedAt: Date | null
 }
@@ -53,6 +55,7 @@ export type CompanyCountAggregateOutputType = {
   phone: number
   email: number
   address: number
+  isArchived: number
   createdAt: number
   updatedAt: number
   _all: number
@@ -66,6 +69,7 @@ export type CompanyMinAggregateInputType = {
   phone?: true
   email?: true
   address?: true
+  isArchived?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -77,6 +81,7 @@ export type CompanyMaxAggregateInputType = {
   phone?: true
   email?: true
   address?: true
+  isArchived?: true
   createdAt?: true
   updatedAt?: true
 }
@@ -88,6 +93,7 @@ export type CompanyCountAggregateInputType = {
   phone?: true
   email?: true
   address?: true
+  isArchived?: true
   createdAt?: true
   updatedAt?: true
   _all?: true
@@ -172,6 +178,7 @@ export type CompanyGroupByOutputType = {
   phone: string | null
   email: string | null
   address: string | null
+  isArchived: boolean
   createdAt: Date
   updatedAt: Date
   _count: CompanyCountAggregateOutputType | null
@@ -204,12 +211,14 @@ export type CompanyWhereInput = {
   phone?: Prisma.StringNullableFilter<"Company"> | string | null
   email?: Prisma.StringNullableFilter<"Company"> | string | null
   address?: Prisma.StringNullableFilter<"Company"> | string | null
+  isArchived?: Prisma.BoolFilter<"Company"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   users?: Prisma.UserListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   integrations?: Prisma.CompanyIntegrationListRelationFilter
+  actionItems?: Prisma.ActionItemListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }
 
@@ -220,12 +229,14 @@ export type CompanyOrderByWithRelationInput = {
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   users?: Prisma.UserOrderByRelationAggregateInput
   customers?: Prisma.CustomerOrderByRelationAggregateInput
   payments?: Prisma.PaymentOrderByRelationAggregateInput
   integrations?: Prisma.CompanyIntegrationOrderByRelationAggregateInput
+  actionItems?: Prisma.ActionItemOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
 }
 
@@ -239,12 +250,14 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   phone?: Prisma.StringNullableFilter<"Company"> | string | null
   email?: Prisma.StringNullableFilter<"Company"> | string | null
   address?: Prisma.StringNullableFilter<"Company"> | string | null
+  isArchived?: Prisma.BoolFilter<"Company"> | boolean
   createdAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeFilter<"Company"> | Date | string
   users?: Prisma.UserListRelationFilter
   customers?: Prisma.CustomerListRelationFilter
   payments?: Prisma.PaymentListRelationFilter
   integrations?: Prisma.CompanyIntegrationListRelationFilter
+  actionItems?: Prisma.ActionItemListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
 }, "id">
 
@@ -255,6 +268,7 @@ export type CompanyOrderByWithAggregationInput = {
   phone?: Prisma.SortOrderInput | Prisma.SortOrder
   email?: Prisma.SortOrderInput | Prisma.SortOrder
   address?: Prisma.SortOrderInput | Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
   _count?: Prisma.CompanyCountOrderByAggregateInput
@@ -272,6 +286,7 @@ export type CompanyScalarWhereWithAggregatesInput = {
   phone?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   email?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
   address?: Prisma.StringNullableWithAggregatesFilter<"Company"> | string | null
+  isArchived?: Prisma.BoolWithAggregatesFilter<"Company"> | boolean
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Company"> | Date | string
   updatedAt?: Prisma.DateTimeWithAggregatesFilter<"Company"> | Date | string
 }
@@ -283,12 +298,14 @@ export type CompanyCreateInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
 }
 
@@ -299,12 +316,14 @@ export type CompanyUncheckedCreateInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
 }
 
@@ -315,12 +334,14 @@ export type CompanyUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
 }
 
@@ -331,12 +352,14 @@ export type CompanyUncheckedUpdateInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
@@ -347,6 +370,7 @@ export type CompanyCreateManyInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
 }
@@ -358,6 +382,7 @@ export type CompanyUpdateManyMutationInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -369,6 +394,7 @@ export type CompanyUncheckedUpdateManyInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
 }
@@ -380,6 +406,7 @@ export type CompanyCountOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -391,6 +418,7 @@ export type CompanyMaxOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -402,6 +430,7 @@ export type CompanyMinOrderByAggregateInput = {
   phone?: Prisma.SortOrder
   email?: Prisma.SortOrder
   address?: Prisma.SortOrder
+  isArchived?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
   updatedAt?: Prisma.SortOrder
 }
@@ -417,6 +446,10 @@ export type StringFieldUpdateOperationsInput = {
 
 export type NullableStringFieldUpdateOperationsInput = {
   set?: string | null
+}
+
+export type BoolFieldUpdateOperationsInput = {
+  set?: boolean
 }
 
 export type DateTimeFieldUpdateOperationsInput = {
@@ -479,6 +512,20 @@ export type CompanyUpdateOneRequiredWithoutPaymentsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutPaymentsInput, Prisma.CompanyUpdateWithoutPaymentsInput>, Prisma.CompanyUncheckedUpdateWithoutPaymentsInput>
 }
 
+export type CompanyCreateNestedOneWithoutActionItemsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutActionItemsInput, Prisma.CompanyUncheckedCreateWithoutActionItemsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutActionItemsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutActionItemsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutActionItemsInput, Prisma.CompanyUncheckedCreateWithoutActionItemsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutActionItemsInput
+  upsert?: Prisma.CompanyUpsertWithoutActionItemsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutActionItemsInput, Prisma.CompanyUpdateWithoutActionItemsInput>, Prisma.CompanyUncheckedUpdateWithoutActionItemsInput>
+}
+
 export type CompanyCreateNestedOneWithoutSubscriptionInput = {
   create?: Prisma.XOR<Prisma.CompanyCreateWithoutSubscriptionInput, Prisma.CompanyUncheckedCreateWithoutSubscriptionInput>
   connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutSubscriptionInput
@@ -500,11 +547,13 @@ export type CompanyCreateWithoutUsersInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
 }
 
@@ -515,11 +564,13 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
 }
 
@@ -546,11 +597,13 @@ export type CompanyUpdateWithoutUsersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
 }
 
@@ -561,11 +614,13 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
@@ -576,11 +631,13 @@ export type CompanyCreateWithoutCustomersInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
 }
 
@@ -591,11 +648,13 @@ export type CompanyUncheckedCreateWithoutCustomersInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
 }
 
@@ -622,11 +681,13 @@ export type CompanyUpdateWithoutCustomersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
 }
 
@@ -637,11 +698,13 @@ export type CompanyUncheckedUpdateWithoutCustomersInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
@@ -652,11 +715,13 @@ export type CompanyCreateWithoutIntegrationsInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
 }
 
@@ -667,11 +732,13 @@ export type CompanyUncheckedCreateWithoutIntegrationsInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
 }
 
@@ -698,11 +765,13 @@ export type CompanyUpdateWithoutIntegrationsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
 }
 
@@ -713,11 +782,13 @@ export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
 }
 
@@ -728,11 +799,13 @@ export type CompanyCreateWithoutPaymentsInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
 }
 
@@ -743,11 +816,13 @@ export type CompanyUncheckedCreateWithoutPaymentsInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
 }
 
@@ -774,11 +849,13 @@ export type CompanyUpdateWithoutPaymentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
 }
 
@@ -789,10 +866,96 @@ export type CompanyUncheckedUpdateWithoutPaymentsInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutActionItemsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutActionItemsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutActionItemsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutActionItemsInput, Prisma.CompanyUncheckedCreateWithoutActionItemsInput>
+}
+
+export type CompanyUpsertWithoutActionItemsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutActionItemsInput, Prisma.CompanyUncheckedUpdateWithoutActionItemsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutActionItemsInput, Prisma.CompanyUncheckedCreateWithoutActionItemsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutActionItemsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutActionItemsInput, Prisma.CompanyUncheckedUpdateWithoutActionItemsInput>
+}
+
+export type CompanyUpdateWithoutActionItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutActionItemsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
 }
@@ -804,12 +967,14 @@ export type CompanyCreateWithoutSubscriptionInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutSubscriptionInput = {
@@ -819,12 +984,14 @@ export type CompanyUncheckedCreateWithoutSubscriptionInput = {
   phone?: string | null
   email?: string | null
   address?: string | null
+  isArchived?: boolean
   createdAt?: Date | string
   updatedAt?: Date | string
   users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
   customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutSubscriptionInput = {
@@ -850,12 +1017,14 @@ export type CompanyUpdateWithoutSubscriptionInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutSubscriptionInput = {
@@ -865,12 +1034,14 @@ export type CompanyUncheckedUpdateWithoutSubscriptionInput = {
   phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
   customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -883,6 +1054,7 @@ export type CompanyCountOutputType = {
   customers: number
   payments: number
   integrations: number
+  actionItems: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -890,6 +1062,7 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   customers?: boolean | CompanyCountOutputTypeCountCustomersArgs
   payments?: boolean | CompanyCountOutputTypeCountPaymentsArgs
   integrations?: boolean | CompanyCountOutputTypeCountIntegrationsArgs
+  actionItems?: boolean | CompanyCountOutputTypeCountActionItemsArgs
 }
 
 /**
@@ -930,6 +1103,13 @@ export type CompanyCountOutputTypeCountIntegrationsArgs<ExtArgs extends runtime.
   where?: Prisma.CompanyIntegrationWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountActionItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.ActionItemWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -938,12 +1118,14 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   phone?: boolean
   email?: boolean
   address?: boolean
+  isArchived?: boolean
   createdAt?: boolean
   updatedAt?: boolean
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   customers?: boolean | Prisma.Company$customersArgs<ExtArgs>
   payments?: boolean | Prisma.Company$paymentsArgs<ExtArgs>
   integrations?: boolean | Prisma.Company$integrationsArgs<ExtArgs>
+  actionItems?: boolean | Prisma.Company$actionItemsArgs<ExtArgs>
   subscription?: boolean | Prisma.Company$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
@@ -955,6 +1137,7 @@ export type CompanySelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   phone?: boolean
   email?: boolean
   address?: boolean
+  isArchived?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["company"]>
@@ -966,6 +1149,7 @@ export type CompanySelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   phone?: boolean
   email?: boolean
   address?: boolean
+  isArchived?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }, ExtArgs["result"]["company"]>
@@ -977,16 +1161,18 @@ export type CompanySelectScalar = {
   phone?: boolean
   email?: boolean
   address?: boolean
+  isArchived?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "gstNumber" | "phone" | "email" | "address" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
+export type CompanyOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "name" | "gstNumber" | "phone" | "email" | "address" | "isArchived" | "createdAt" | "updatedAt", ExtArgs["result"]["company"]>
 export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   users?: boolean | Prisma.Company$usersArgs<ExtArgs>
   customers?: boolean | Prisma.Company$customersArgs<ExtArgs>
   payments?: boolean | Prisma.Company$paymentsArgs<ExtArgs>
   integrations?: boolean | Prisma.Company$integrationsArgs<ExtArgs>
+  actionItems?: boolean | Prisma.Company$actionItemsArgs<ExtArgs>
   subscription?: boolean | Prisma.Company$subscriptionArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
@@ -1000,6 +1186,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     customers: Prisma.$CustomerPayload<ExtArgs>[]
     payments: Prisma.$PaymentPayload<ExtArgs>[]
     integrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
+    actionItems: Prisma.$ActionItemPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
@@ -1009,6 +1196,7 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     phone: string | null
     email: string | null
     address: string | null
+    isArchived: boolean
     createdAt: Date
     updatedAt: Date
   }, ExtArgs["result"]["company"]>
@@ -1409,6 +1597,7 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   customers<T extends Prisma.Company$customersArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$customersArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   payments<T extends Prisma.Company$paymentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$paymentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   integrations<T extends Prisma.Company$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  actionItems<T extends Prisma.Company$actionItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$actionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.Company$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
@@ -1445,6 +1634,7 @@ export interface CompanyFieldRefs {
   readonly phone: Prisma.FieldRef<"Company", 'String'>
   readonly email: Prisma.FieldRef<"Company", 'String'>
   readonly address: Prisma.FieldRef<"Company", 'String'>
+  readonly isArchived: Prisma.FieldRef<"Company", 'Boolean'>
   readonly createdAt: Prisma.FieldRef<"Company", 'DateTime'>
   readonly updatedAt: Prisma.FieldRef<"Company", 'DateTime'>
 }
@@ -1933,6 +2123,30 @@ export type Company$integrationsArgs<ExtArgs extends runtime.Types.Extensions.In
   take?: number
   skip?: number
   distinct?: Prisma.CompanyIntegrationScalarFieldEnum | Prisma.CompanyIntegrationScalarFieldEnum[]
+}
+
+/**
+ * Company.actionItems
+ */
+export type Company$actionItemsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the ActionItem
+   */
+  select?: Prisma.ActionItemSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the ActionItem
+   */
+  omit?: Prisma.ActionItemOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.ActionItemInclude<ExtArgs> | null
+  where?: Prisma.ActionItemWhereInput
+  orderBy?: Prisma.ActionItemOrderByWithRelationInput | Prisma.ActionItemOrderByWithRelationInput[]
+  cursor?: Prisma.ActionItemWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.ActionItemScalarFieldEnum | Prisma.ActionItemScalarFieldEnum[]
 }
 
 /**

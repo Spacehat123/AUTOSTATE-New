@@ -3,14 +3,20 @@
 import React, { useState, useEffect } from 'react'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
-import { Loader2, MessageCircle, CheckCircle2, XCircle, Send } from 'lucide-react'
+import { Loader2, MessageCircle, CheckCircle2, XCircle, Send, Save } from 'lucide-react'
 import { toast } from 'sonner'
 
 export function WhatsappSettings() {
   const [loading, setLoading] = useState(true)
   const [testing, setTesting] = useState(false)
-  const [config, setConfig] = useState<any>(null)
+  const [saving, setSaving] = useState(false)
+  
   const [isConfigured, setIsConfigured] = useState(false)
+  const [integrationId, setIntegrationId] = useState('')
+  
+  const [phoneNumberId, setPhoneNumberId] = useState('')
+  const [accessToken, setAccessToken] = useState('')
+  const [verifyToken, setVerifyToken] = useState('')
 
   useEffect(() => {
     fetchConfig()
@@ -21,12 +27,43 @@ export function WhatsappSettings() {
       const res = await fetch('/api/settings/whatsapp')
       if (!res.ok) throw new Error('Failed to load WhatsApp config')
       const data = await res.json()
-      setConfig(data.config)
+      
+      setPhoneNumberId(data.config.phoneNumberId || '')
+      setAccessToken(data.config.accessToken || '')
+      setVerifyToken(data.config.verifyToken || '')
+      setIntegrationId(data.config.integrationId || '')
       setIsConfigured(data.isConfigured)
     } catch (error) {
       toast.error('Failed to load WhatsApp settings')
     } finally {
       setLoading(false)
+    }
+  }
+
+  const handleSave = async () => {
+    setSaving(true)
+    try {
+      const res = await fetch('/api/settings/whatsapp', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          phoneNumberId,
+          accessToken,
+          verifyToken
+        })
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Failed to save configuration')
+      }
+
+      toast.success('WhatsApp settings saved securely')
+      await fetchConfig() // Reload to get masked values and updated integrationId
+    } catch (error: any) {
+      toast.error(error.message)
+    } finally {
+      setSaving(false)
     }
   }
 
@@ -50,13 +87,17 @@ export function WhatsappSettings() {
     }
   }
 
-  if (loading || !config) {
+  if (loading) {
     return (
       <div className="flex items-center justify-center h-48 text-zinc-500">
         <Loader2 className="w-6 h-6 animate-spin" />
       </div>
     )
   }
+
+  const webhookUrl = typeof window !== 'undefined' && integrationId 
+    ? `${window.location.origin}/api/webhooks/whatsapp/${integrationId}` 
+    : (typeof window !== 'undefined' ? `${window.location.origin}/api/webhooks/whatsapp/[integrationId]` : '')
 
   return (
     <div className="bg-surface-card border border-surface-border rounded-xl max-w-2xl overflow-hidden">
@@ -91,22 +132,24 @@ export function WhatsappSettings() {
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-300">WhatsApp Phone Number ID</label>
             <Input 
-              readOnly 
-              value={config.phoneNumberId} 
-              className="bg-black/20 border-surface-border text-zinc-400 font-mono text-sm"
+              value={phoneNumberId} 
+              onChange={(e) => setPhoneNumberId(e.target.value)}
+              placeholder="e.g. 101234567890123"
+              className="bg-black/20 border-surface-border text-zinc-200 font-mono text-sm"
             />
           </div>
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-300">System Access Token</label>
             <Input 
-              type="text" 
-              readOnly 
-              value={config.accessToken} 
-              className="bg-black/20 border-surface-border text-zinc-400 font-mono text-sm tracking-wider"
+              type="password" 
+              value={accessToken} 
+              onChange={(e) => setAccessToken(e.target.value)}
+              placeholder="•••••••••••• (Leave blank to keep unchanged)"
+              className="bg-black/20 border-surface-border text-zinc-200 font-mono text-sm tracking-wider"
             />
             <p className="text-xs text-zinc-500">
-              For security, access tokens are managed via environment variables and cannot be edited here.
+              Your access token is encrypted securely at rest.
             </p>
           </div>
         </div>
@@ -121,23 +164,43 @@ export function WhatsappSettings() {
             <label className="text-sm font-medium text-zinc-300">Callback URL</label>
             <Input 
               readOnly 
-              value={config.webhookUrl} 
-              className="bg-black/20 border-surface-border text-zinc-300 font-mono text-sm"
+              value={webhookUrl} 
+              className="bg-black/20 border-surface-border text-zinc-400 font-mono text-sm"
             />
+            {!integrationId && (
+              <p className="text-xs text-amber-500 mt-1">
+                Save your configuration first to generate your unique Callback URL.
+              </p>
+            )}
           </div>
           
           <div className="space-y-2">
             <label className="text-sm font-medium text-zinc-300">Verify Token</label>
             <Input 
               type="text" 
-              readOnly 
-              value={config.verifyToken} 
-              className="bg-black/20 border-surface-border text-zinc-400 font-mono text-sm tracking-wider"
+              value={verifyToken} 
+              onChange={(e) => setVerifyToken(e.target.value)}
+              placeholder="•••••••••••• (Leave blank to keep unchanged)"
+              className="bg-black/20 border-surface-border text-zinc-200 font-mono text-sm tracking-wider"
             />
           </div>
         </div>
 
-        <div className="pt-6 flex justify-end">
+        <div className="pt-6 flex justify-end gap-3">
+          <Button 
+            onClick={handleSave} 
+            disabled={saving || (!phoneNumberId && !accessToken)}
+            variant="outline"
+            className="border-surface-border"
+          >
+            {saving ? (
+              <Loader2 className="w-4 h-4 mr-2 animate-spin" />
+            ) : (
+              <Save className="w-4 h-4 mr-2" />
+            )}
+            Save Configuration
+          </Button>
+
           <Button 
             onClick={handleTestConnection} 
             disabled={testing || !isConfigured}

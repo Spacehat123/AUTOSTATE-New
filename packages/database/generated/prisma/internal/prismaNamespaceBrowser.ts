@@ -62,6 +62,7 @@ export const ModelName = {
   Message: 'Message',
   Promise: 'Promise',
   Task: 'Task',
+  ActionItem: 'ActionItem',
   ImportJob: 'ImportJob',
   InboxEvent: 'InboxEvent',
   AuditLog: 'AuditLog',
@@ -91,6 +92,7 @@ export const CompanyScalarFieldEnum = {
   phone: 'phone',
   email: 'email',
   address: 'address',
+  isArchived: 'isArchived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -243,6 +245,23 @@ export const TaskScalarFieldEnum = {
 } as const
 
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
+
+
+export const ActionItemScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  notes: 'notes',
+  priority: 'priority',
+  status: 'status',
+  dueDate: 'dueDate',
+  userId: 'userId',
+  companyId: 'companyId',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ActionItemScalarFieldEnum = (typeof ActionItemScalarFieldEnum)[keyof typeof ActionItemScalarFieldEnum]
 
 
 export const ImportJobScalarFieldEnum = {

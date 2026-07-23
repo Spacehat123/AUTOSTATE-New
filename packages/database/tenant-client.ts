@@ -5,16 +5,33 @@ export function withTenant(companyId: string) {
     query: {
       $allModels: {
         async $allOperations({ model, operation, args, query }) {
-          const tenantModels = ['Customer', 'Invoice', 'Message', 'Promise', 'Task', 'ImportJob']
+          const directCompanyModels = [
+            'User', 'Customer', 'CompanyIntegration', 'Payment', 
+            'ImportJob', 'AuditLog', 'Subscription'
+          ]
+          const customerRelatedModels = [
+            'Invoice', 'Message', 'Promise', 'Task', 'PortalAccessToken'
+          ]
+          const paymentRelatedModels = ['PaymentAllocation']
+          
+          const tenantModels = [
+            ...directCompanyModels, 
+            ...customerRelatedModels, 
+            ...paymentRelatedModels
+          ]
           
           if (!tenantModels.includes(model)) {
             return query(args)
           }
 
-          const hasDirectCompanyId = ['Customer', 'ImportJob'].includes(model)
-          const filter = hasDirectCompanyId 
-            ? { companyId } 
-            : { customer: { companyId } }
+          let filter: any = {}
+          if (directCompanyModels.includes(model)) {
+            filter = { companyId }
+          } else if (customerRelatedModels.includes(model)) {
+            filter = { customer: { companyId } }
+          } else if (paymentRelatedModels.includes(model)) {
+            filter = { payment: { companyId } }
+          }
 
           const listOperations = ['findMany', 'findFirst', 'findFirstOrThrow', 'count', 'updateMany', 'deleteMany', 'aggregate', 'groupBy']
           const uniqueOperations = ['findUnique', 'findUniqueOrThrow', 'update', 'delete']
@@ -29,10 +46,12 @@ export function withTenant(companyId: string) {
               select: { id: true }
             })
             if (!record) {
+              if (operation === 'findUnique') return null
               throw new Error(`Record not found or access denied for tenant ${companyId}`)
             }
           }
 
+          const hasDirectCompanyId = directCompanyModels.includes(model)
           if (operation === 'create' && hasDirectCompanyId) {
             (args as any).data = { ...(args as any).data, companyId }
           } else if (operation === 'createMany' && hasDirectCompanyId) {

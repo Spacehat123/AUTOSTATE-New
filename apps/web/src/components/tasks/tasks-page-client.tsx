@@ -9,7 +9,15 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { isToday, isPast } from 'date-fns'
 
-export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
+export function TasksPageClient({ 
+  initialTasks, 
+  currentUserRole, 
+  teamMembers 
+}: { 
+  initialTasks: any[], 
+  currentUserRole?: string, 
+  teamMembers?: any[] 
+}) {
   const [tasks, setTasks] = useState<any[]>(initialTasks)
   const [loading, setLoading] = useState(false)
   const [activeTab, setActiveTab] = useState('today')
@@ -83,6 +91,30 @@ export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
     }
   }
 
+  const handleAssign = async (taskId: string, newAssigneeId: string) => {
+    try {
+      // Optimistic update
+      setTasks(current => current.map(t => t.id === taskId ? { ...t, assignedTo: newAssigneeId || null } : t))
+      
+      const res = await fetch(`/api/tasks/${taskId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ assignedTo: newAssigneeId || null })
+      })
+      
+      if (!res.ok) {
+        const error = await res.json()
+        toast.error(error.error || 'Failed to assign task')
+        fetchTasks(activeTab) // revert
+      } else {
+        toast.success('Task reassigned successfully')
+      }
+    } catch (e) {
+      toast.error('An error occurred')
+      fetchTasks(activeTab) // revert
+    }
+  }
+
   const handleBulkUpdate = async (newStatus: string) => {
     if (selectedIds.size === 0) return
     setBulkLoading(true)
@@ -138,6 +170,9 @@ export function TasksPageClient({ initialTasks }: { initialTasks: any[] }) {
               task={task}
               onComplete={() => handleUpdateStatus(task.id, 'COMPLETED')}
               onSnooze={() => handleUpdateStatus(task.id, 'SNOOZED')}
+              currentUserRole={currentUserRole}
+              teamMembers={teamMembers}
+              onAssign={handleAssign}
               selected={selectedIds.has(task.id)}
               onSelect={(checked) => {
                 const next = new Set(selectedIds)

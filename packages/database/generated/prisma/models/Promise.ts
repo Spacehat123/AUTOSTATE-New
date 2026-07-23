@@ -583,10 +583,6 @@ export type NullableFloatFieldUpdateOperationsInput = {
   divide?: number
 }
 
-export type BoolFieldUpdateOperationsInput = {
-  set?: boolean
-}
-
 export type PromiseCreateWithoutCustomerInput = {
   id?: string
   expectedDate: Date | string

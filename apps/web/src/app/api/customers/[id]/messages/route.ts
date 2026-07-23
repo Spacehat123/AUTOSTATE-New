@@ -5,6 +5,7 @@ import { logAction } from '@autostate/database'
 import { ratelimit } from '@autostate/shared'
 import { sendTextMessage } from '@/lib/whatsapp'
 import { sendEmail } from '@autostate/email'
+import { getWhatsappCredentials } from '@/lib/whatsapp-credentials'
 
 export const dynamic = 'force-dynamic'
 
@@ -59,7 +60,8 @@ export async function POST(
         )
       }
 
-      const result = await sendTextMessage(customer.phone, content)
+      const credentials = await getWhatsappCredentials(user.companyId)
+      const result = await sendTextMessage(customer.phone, content, credentials)
       whatsappId = result.whatsappId
     } else if (type === 'EMAIL') {
       if (!customer.email) {

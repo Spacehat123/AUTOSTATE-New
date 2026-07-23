@@ -3,6 +3,7 @@ import { headers } from 'next/headers'
 import { WebhookEvent } from '@clerk/nextjs/server'
 import { prisma } from '@autostate/database'
 import { logger, ratelimit } from '@autostate/shared'
+import { removeUserAndArchiveCompany } from '@/lib/services/users'
 
 export async function POST(req: Request) {
   const WEBHOOK_SECRET = process.env.CLERK_WEBHOOK_SECRET
@@ -59,15 +60,43 @@ export async function POST(req: Request) {
   // Handle the event
   const eventType = evt.type
   
+  if (eventType === 'user.created') {
+    const { id, email_addresses, first_name, last_name, public_metadata } = evt.data
+    
+    // If the user signed up via an invitation, they will have companyId and role in their metadata
+    if (public_metadata && typeof public_metadata.companyId === 'string' && typeof public_metadata.role === 'string') {
+      const email = email_addresses[0]?.email_address
+      if (email) {
+        try {
+          await prisma.user.create({
+            data: {
+              clerkId: id,
+              email: email,
+              name: `${first_name || ''} ${last_name || ''}`.trim() || null,
+              companyId: public_metadata.companyId,
+              role: public_metadata.role as 'OWNER' | 'ADMIN' | 'MEMBER'
+            }
+          })
+          logger.info({ userId: id, companyId: public_metadata.companyId }, 'Invited user successfully joined company')
+        } catch (error) {
+          logger.error({ error, userId: id }, 'Error creating invited user in database')
+        }
+      }
+    }
+  }
+
   if (eventType === 'user.deleted') {
     const { id } = evt.data
     
     if (id) {
       try {
-        await prisma.user.delete({
+        const user = await prisma.user.findUnique({
           where: { clerkId: id }
         })
-        logger.info({ userId: id }, 'User deleted from database')
+        
+        if (user) {
+          await removeUserAndArchiveCompany(user)
+        }
       } catch (error) {
         logger.error({ error, userId: id }, 'Error deleting user from database')
       }

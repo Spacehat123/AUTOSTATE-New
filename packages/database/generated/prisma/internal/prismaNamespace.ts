@@ -395,6 +395,7 @@ export const ModelName = {
   Message: 'Message',
   Promise: 'Promise',
   Task: 'Task',
+  ActionItem: 'ActionItem',
   ImportJob: 'ImportJob',
   InboxEvent: 'InboxEvent',
   AuditLog: 'AuditLog',
@@ -414,7 +415,7 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
     omit: GlobalOmitOptions
   }
   meta: {
-    modelProps: "company" | "user" | "customer" | "portalAccessToken" | "companyIntegration" | "invoice" | "payment" | "paymentAllocation" | "message" | "promise" | "task" | "importJob" | "inboxEvent" | "auditLog" | "subscription"
+    modelProps: "company" | "user" | "customer" | "portalAccessToken" | "companyIntegration" | "invoice" | "payment" | "paymentAllocation" | "message" | "promise" | "task" | "actionItem" | "importJob" | "inboxEvent" | "auditLog" | "subscription"
     txIsolationLevel: TransactionIsolationLevel
   }
   model: {
@@ -1232,6 +1233,80 @@ export type TypeMap<ExtArgs extends runtime.Types.Extensions.InternalArgs = runt
         }
       }
     }
+    ActionItem: {
+      payload: Prisma.$ActionItemPayload<ExtArgs>
+      fields: Prisma.ActionItemFieldRefs
+      operations: {
+        findUnique: {
+          args: Prisma.ActionItemFindUniqueArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload> | null
+        }
+        findUniqueOrThrow: {
+          args: Prisma.ActionItemFindUniqueOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>
+        }
+        findFirst: {
+          args: Prisma.ActionItemFindFirstArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload> | null
+        }
+        findFirstOrThrow: {
+          args: Prisma.ActionItemFindFirstOrThrowArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>
+        }
+        findMany: {
+          args: Prisma.ActionItemFindManyArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>[]
+        }
+        create: {
+          args: Prisma.ActionItemCreateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>
+        }
+        createMany: {
+          args: Prisma.ActionItemCreateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        createManyAndReturn: {
+          args: Prisma.ActionItemCreateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>[]
+        }
+        delete: {
+          args: Prisma.ActionItemDeleteArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>
+        }
+        update: {
+          args: Prisma.ActionItemUpdateArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>
+        }
+        deleteMany: {
+          args: Prisma.ActionItemDeleteManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateMany: {
+          args: Prisma.ActionItemUpdateManyArgs<ExtArgs>
+          result: BatchPayload
+        }
+        updateManyAndReturn: {
+          args: Prisma.ActionItemUpdateManyAndReturnArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>[]
+        }
+        upsert: {
+          args: Prisma.ActionItemUpsertArgs<ExtArgs>
+          result: runtime.Types.Utils.PayloadToResult<Prisma.$ActionItemPayload>
+        }
+        aggregate: {
+          args: Prisma.ActionItemAggregateArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.AggregateActionItem>
+        }
+        groupBy: {
+          args: Prisma.ActionItemGroupByArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActionItemGroupByOutputType>[]
+        }
+        count: {
+          args: Prisma.ActionItemCountArgs<ExtArgs>
+          result: runtime.Types.Utils.Optional<Prisma.ActionItemCountAggregateOutputType> | number
+        }
+      }
+    }
     ImportJob: {
       payload: Prisma.$ImportJobPayload<ExtArgs>
       fields: Prisma.ImportJobFieldRefs
@@ -1574,6 +1649,7 @@ export const CompanyScalarFieldEnum = {
   phone: 'phone',
   email: 'email',
   address: 'address',
+  isArchived: 'isArchived',
   createdAt: 'createdAt',
   updatedAt: 'updatedAt'
 } as const
@@ -1728,6 +1804,23 @@ export const TaskScalarFieldEnum = {
 export type TaskScalarFieldEnum = (typeof TaskScalarFieldEnum)[keyof typeof TaskScalarFieldEnum]
 
 
+export const ActionItemScalarFieldEnum = {
+  id: 'id',
+  title: 'title',
+  notes: 'notes',
+  priority: 'priority',
+  status: 'status',
+  dueDate: 'dueDate',
+  userId: 'userId',
+  companyId: 'companyId',
+  deletedAt: 'deletedAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type ActionItemScalarFieldEnum = (typeof ActionItemScalarFieldEnum)[keyof typeof ActionItemScalarFieldEnum]
+
+
 export const ImportJobScalarFieldEnum = {
   id: 'id',
   companyId: 'companyId',
@@ -1859,6 +1952,13 @@ export type StringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 
  * Reference to a field of type 'String[]'
  */
 export type ListStringFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'String[]'>
+    
+
+
+/**
+ * Reference to a field of type 'Boolean'
+ */
+export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
     
 
 
@@ -2003,13 +2103,6 @@ export type ListFloatFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaMode
 
 
 /**
- * Reference to a field of type 'Boolean'
- */
-export type BooleanFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Boolean'>
-    
-
-
-/**
  * Reference to a field of type 'TaskType'
  */
 export type EnumTaskTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskType'>
@@ -2034,6 +2127,20 @@ export type EnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$Prism
  * Reference to a field of type 'TaskStatus[]'
  */
 export type ListEnumTaskStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'TaskStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ActionItemStatus'
+ */
+export type EnumActionItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActionItemStatus'>
+    
+
+
+/**
+ * Reference to a field of type 'ActionItemStatus[]'
+ */
+export type ListEnumActionItemStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ActionItemStatus[]'>
     
 
 
@@ -2213,6 +2320,7 @@ export type GlobalOmitConfig = {
   message?: Prisma.MessageOmit
   promise?: Prisma.PromiseOmit
   task?: Prisma.TaskOmit
+  actionItem?: Prisma.ActionItemOmit
   importJob?: Prisma.ImportJobOmit
   inboxEvent?: Prisma.InboxEventOmit
   auditLog?: Prisma.AuditLogOmit

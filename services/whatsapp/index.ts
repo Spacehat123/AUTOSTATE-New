@@ -2,22 +2,9 @@ import axios, { AxiosError } from 'axios'
 
 const GRAPH_API_BASE = 'https://graph.facebook.com/v18.0'
 
-/**
- * Reads and validates required WhatsApp env vars at call time
- * (not at module load time, so the package can be imported safely during builds).
- */
-function getConfig() {
-  const accessToken = process.env.WHATSAPP_ACCESS_TOKEN
-  const phoneNumberId = process.env.WHATSAPP_PHONE_NUMBER_ID
-
-  if (!accessToken) {
-    throw new Error('Missing env var: WHATSAPP_ACCESS_TOKEN')
-  }
-  if (!phoneNumberId) {
-    throw new Error('Missing env var: WHATSAPP_PHONE_NUMBER_ID')
-  }
-
-  return { accessToken, phoneNumberId }
+export interface WhatsappCredentials {
+  accessToken: string
+  phoneNumberId: string
 }
 
 /**
@@ -48,13 +35,15 @@ function extractMetaError(error: unknown): string {
  *
  * @param to - Recipient phone number in E.164 format (e.g. "+919876543210")
  * @param message - The message body text
+ * @param credentials - WhatsApp API credentials
  * @returns An object containing the WhatsApp message ID
  */
 export async function sendTextMessage(
   to: string,
-  message: string
+  message: string,
+  credentials: WhatsappCredentials
 ): Promise<{ whatsappId: string }> {
-  const { accessToken, phoneNumberId } = getConfig()
+  const { accessToken, phoneNumberId } = credentials
 
   try {
     const response = await axios.post(
@@ -95,14 +84,16 @@ export async function sendTextMessage(
  * @param to - Recipient phone number in E.164 format
  * @param templateName - The name of the approved template (e.g. "payment_reminder")
  * @param components - Array of template component objects (header, body, buttons)
+ * @param credentials - WhatsApp API credentials
  * @returns An object containing the WhatsApp message ID
  */
 export async function sendTemplateMessage(
   to: string,
   templateName: string,
-  components: object[] = []
+  components: object[] = [],
+  credentials: WhatsappCredentials
 ): Promise<{ whatsappId: string }> {
-  const { accessToken, phoneNumberId } = getConfig()
+  const { accessToken, phoneNumberId } = credentials
 
   try {
     const response = await axios.post(

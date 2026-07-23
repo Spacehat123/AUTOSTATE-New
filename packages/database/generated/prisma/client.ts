@@ -95,6 +95,11 @@ export type Promise = Prisma.PromiseModel
  */
 export type Task = Prisma.TaskModel
 /**
+ * Model ActionItem
+ * 
+ */
+export type ActionItem = Prisma.ActionItemModel
+/**
  * Model ImportJob
  * 
  */

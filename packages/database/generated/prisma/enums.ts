@@ -56,6 +56,15 @@ export const PromiseStatus = {
 export type PromiseStatus = (typeof PromiseStatus)[keyof typeof PromiseStatus]
 
 
+export const ActionItemStatus = {
+  PENDING: 'PENDING',
+  COMPLETED: 'COMPLETED',
+  SNOOZED: 'SNOOZED'
+} as const
+
+export type ActionItemStatus = (typeof ActionItemStatus)[keyof typeof ActionItemStatus]
+
+
 export const TaskType = {
   CALL: 'CALL',
   SEND_REMINDER: 'SEND_REMINDER',
