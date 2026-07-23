@@ -119,3 +119,28 @@ export type AuditLog = Prisma.AuditLogModel
  * 
  */
 export type Subscription = Prisma.SubscriptionModel
+/**
+ * Model AccountingIntegration
+ * 
+ */
+export type AccountingIntegration = Prisma.AccountingIntegrationModel
+/**
+ * Model Workflow
+ * 
+ */
+export type Workflow = Prisma.WorkflowModel
+/**
+ * Model WorkflowStep
+ * 
+ */
+export type WorkflowStep = Prisma.WorkflowStepModel
+/**
+ * Model WorkflowEnrollment
+ * 
+ */
+export type WorkflowEnrollment = Prisma.WorkflowEnrollmentModel
+/**
+ * Model Dispute
+ * 
+ */
+export type Dispute = Prisma.DisputeModel

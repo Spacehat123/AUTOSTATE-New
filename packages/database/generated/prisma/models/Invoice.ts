@@ -286,6 +286,8 @@ export type InvoiceWhereInput = {
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   paymentAllocations?: Prisma.PaymentAllocationListRelationFilter
+  workflowEnrollments?: Prisma.WorkflowEnrollmentListRelationFilter
+  disputes?: Prisma.DisputeListRelationFilter
 }
 
 export type InvoiceOrderByWithRelationInput = {
@@ -304,6 +306,8 @@ export type InvoiceOrderByWithRelationInput = {
   updatedAt?: Prisma.SortOrder
   customer?: Prisma.CustomerOrderByWithRelationInput
   paymentAllocations?: Prisma.PaymentAllocationOrderByRelationAggregateInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentOrderByRelationAggregateInput
+  disputes?: Prisma.DisputeOrderByRelationAggregateInput
 }
 
 export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
@@ -326,6 +330,8 @@ export type InvoiceWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Invoice"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
   paymentAllocations?: Prisma.PaymentAllocationListRelationFilter
+  workflowEnrollments?: Prisma.WorkflowEnrollmentListRelationFilter
+  disputes?: Prisma.DisputeListRelationFilter
 }, "id" | "customerId_invoiceNumber">
 
 export type InvoiceOrderByWithAggregationInput = {
@@ -383,6 +389,8 @@ export type InvoiceCreateInput = {
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutInvoicesInput
   paymentAllocations?: Prisma.PaymentAllocationCreateNestedManyWithoutInvoiceInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUncheckedCreateInput = {
@@ -400,6 +408,8 @@ export type InvoiceUncheckedCreateInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   paymentAllocations?: Prisma.PaymentAllocationUncheckedCreateNestedManyWithoutInvoiceInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUpdateInput = {
@@ -417,6 +427,8 @@ export type InvoiceUpdateInput = {
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutInvoicesNestedInput
   paymentAllocations?: Prisma.PaymentAllocationUpdateManyWithoutInvoiceNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateInput = {
@@ -434,6 +446,8 @@ export type InvoiceUncheckedUpdateInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentAllocations?: Prisma.PaymentAllocationUncheckedUpdateManyWithoutInvoiceNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceCreateManyInput = {
@@ -621,6 +635,34 @@ export type InvoiceUpdateOneRequiredWithoutPaymentAllocationsNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutPaymentAllocationsInput, Prisma.InvoiceUpdateWithoutPaymentAllocationsInput>, Prisma.InvoiceUncheckedUpdateWithoutPaymentAllocationsInput>
 }
 
+export type InvoiceCreateNestedOneWithoutWorkflowEnrollmentsInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUncheckedCreateWithoutWorkflowEnrollmentsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutWorkflowEnrollmentsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+}
+
+export type InvoiceUpdateOneRequiredWithoutWorkflowEnrollmentsNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUncheckedCreateWithoutWorkflowEnrollmentsInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutWorkflowEnrollmentsInput
+  upsert?: Prisma.InvoiceUpsertWithoutWorkflowEnrollmentsInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUpdateWithoutWorkflowEnrollmentsInput>, Prisma.InvoiceUncheckedUpdateWithoutWorkflowEnrollmentsInput>
+}
+
+export type InvoiceCreateNestedOneWithoutDisputesInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutDisputesInput, Prisma.InvoiceUncheckedCreateWithoutDisputesInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutDisputesInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+}
+
+export type InvoiceUpdateOneRequiredWithoutDisputesNestedInput = {
+  create?: Prisma.XOR<Prisma.InvoiceCreateWithoutDisputesInput, Prisma.InvoiceUncheckedCreateWithoutDisputesInput>
+  connectOrCreate?: Prisma.InvoiceCreateOrConnectWithoutDisputesInput
+  upsert?: Prisma.InvoiceUpsertWithoutDisputesInput
+  connect?: Prisma.InvoiceWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.InvoiceUpdateToOneWithWhereWithoutDisputesInput, Prisma.InvoiceUpdateWithoutDisputesInput>, Prisma.InvoiceUncheckedUpdateWithoutDisputesInput>
+}
+
 export type InvoiceCreateWithoutCustomerInput = {
   id?: string
   currency?: string
@@ -635,6 +677,8 @@ export type InvoiceCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   paymentAllocations?: Prisma.PaymentAllocationCreateNestedManyWithoutInvoiceInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUncheckedCreateWithoutCustomerInput = {
@@ -651,6 +695,8 @@ export type InvoiceUncheckedCreateWithoutCustomerInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   paymentAllocations?: Prisma.PaymentAllocationUncheckedCreateNestedManyWithoutInvoiceInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceCreateOrConnectWithoutCustomerInput = {
@@ -712,6 +758,8 @@ export type InvoiceCreateWithoutPaymentAllocationsInput = {
   createdAt?: Date | string
   updatedAt?: Date | string
   customer: Prisma.CustomerCreateNestedOneWithoutInvoicesInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceUncheckedCreateWithoutPaymentAllocationsInput = {
@@ -728,6 +776,8 @@ export type InvoiceUncheckedCreateWithoutPaymentAllocationsInput = {
   customerId: string
   createdAt?: Date | string
   updatedAt?: Date | string
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutInvoiceInput
 }
 
 export type InvoiceCreateOrConnectWithoutPaymentAllocationsInput = {
@@ -760,6 +810,8 @@ export type InvoiceUpdateWithoutPaymentAllocationsInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   customer?: Prisma.CustomerUpdateOneRequiredWithoutInvoicesNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateWithoutPaymentAllocationsInput = {
@@ -776,6 +828,184 @@ export type InvoiceUncheckedUpdateWithoutPaymentAllocationsInput = {
   customerId?: Prisma.StringFieldUpdateOperationsInput | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceCreateWithoutWorkflowEnrollmentsInput = {
+  id?: string
+  currency?: string
+  invoiceNumber: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate: Date | string
+  dueDate: Date | string
+  status?: $Enums.InvoiceStatus
+  paidAt?: Date | string | null
+  closedAt?: Date | string | null
+  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.CustomerCreateNestedOneWithoutInvoicesInput
+  paymentAllocations?: Prisma.PaymentAllocationCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceUncheckedCreateWithoutWorkflowEnrollmentsInput = {
+  id?: string
+  currency?: string
+  invoiceNumber: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate: Date | string
+  dueDate: Date | string
+  status?: $Enums.InvoiceStatus
+  paidAt?: Date | string | null
+  closedAt?: Date | string | null
+  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  customerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paymentAllocations?: Prisma.PaymentAllocationUncheckedCreateNestedManyWithoutInvoiceInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceCreateOrConnectWithoutWorkflowEnrollmentsInput = {
+  where: Prisma.InvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUncheckedCreateWithoutWorkflowEnrollmentsInput>
+}
+
+export type InvoiceUpsertWithoutWorkflowEnrollmentsInput = {
+  update: Prisma.XOR<Prisma.InvoiceUpdateWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUncheckedUpdateWithoutWorkflowEnrollmentsInput>
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUncheckedCreateWithoutWorkflowEnrollmentsInput>
+  where?: Prisma.InvoiceWhereInput
+}
+
+export type InvoiceUpdateToOneWithWhereWithoutWorkflowEnrollmentsInput = {
+  where?: Prisma.InvoiceWhereInput
+  data: Prisma.XOR<Prisma.InvoiceUpdateWithoutWorkflowEnrollmentsInput, Prisma.InvoiceUncheckedUpdateWithoutWorkflowEnrollmentsInput>
+}
+
+export type InvoiceUpdateWithoutWorkflowEnrollmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutInvoicesNestedInput
+  paymentAllocations?: Prisma.PaymentAllocationUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceUncheckedUpdateWithoutWorkflowEnrollmentsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentAllocations?: Prisma.PaymentAllocationUncheckedUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceCreateWithoutDisputesInput = {
+  id?: string
+  currency?: string
+  invoiceNumber: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate: Date | string
+  dueDate: Date | string
+  status?: $Enums.InvoiceStatus
+  paidAt?: Date | string | null
+  closedAt?: Date | string | null
+  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  customer: Prisma.CustomerCreateNestedOneWithoutInvoicesInput
+  paymentAllocations?: Prisma.PaymentAllocationCreateNestedManyWithoutInvoiceInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceUncheckedCreateWithoutDisputesInput = {
+  id?: string
+  currency?: string
+  invoiceNumber: string
+  amount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate: Date | string
+  dueDate: Date | string
+  status?: $Enums.InvoiceStatus
+  paidAt?: Date | string | null
+  closedAt?: Date | string | null
+  outstandingAmount: runtime.Decimal | runtime.DecimalJsLike | number | string
+  customerId: string
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  paymentAllocations?: Prisma.PaymentAllocationUncheckedCreateNestedManyWithoutInvoiceInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedCreateNestedManyWithoutInvoiceInput
+}
+
+export type InvoiceCreateOrConnectWithoutDisputesInput = {
+  where: Prisma.InvoiceWhereUniqueInput
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutDisputesInput, Prisma.InvoiceUncheckedCreateWithoutDisputesInput>
+}
+
+export type InvoiceUpsertWithoutDisputesInput = {
+  update: Prisma.XOR<Prisma.InvoiceUpdateWithoutDisputesInput, Prisma.InvoiceUncheckedUpdateWithoutDisputesInput>
+  create: Prisma.XOR<Prisma.InvoiceCreateWithoutDisputesInput, Prisma.InvoiceUncheckedCreateWithoutDisputesInput>
+  where?: Prisma.InvoiceWhereInput
+}
+
+export type InvoiceUpdateToOneWithWhereWithoutDisputesInput = {
+  where?: Prisma.InvoiceWhereInput
+  data: Prisma.XOR<Prisma.InvoiceUpdateWithoutDisputesInput, Prisma.InvoiceUncheckedUpdateWithoutDisputesInput>
+}
+
+export type InvoiceUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  customer?: Prisma.CustomerUpdateOneRequiredWithoutInvoicesNestedInput
+  paymentAllocations?: Prisma.PaymentAllocationUpdateManyWithoutInvoiceNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUpdateManyWithoutInvoiceNestedInput
+}
+
+export type InvoiceUncheckedUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  currency?: Prisma.StringFieldUpdateOperationsInput | string
+  invoiceNumber?: Prisma.StringFieldUpdateOperationsInput | string
+  amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  issueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  dueDate?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  status?: Prisma.EnumInvoiceStatusFieldUpdateOperationsInput | $Enums.InvoiceStatus
+  paidAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  closedAt?: Prisma.NullableDateTimeFieldUpdateOperationsInput | Date | string | null
+  outstandingAmount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
+  customerId?: Prisma.StringFieldUpdateOperationsInput | string
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  paymentAllocations?: Prisma.PaymentAllocationUncheckedUpdateManyWithoutInvoiceNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceCreateManyCustomerInput = {
@@ -807,6 +1037,8 @@ export type InvoiceUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentAllocations?: Prisma.PaymentAllocationUpdateManyWithoutInvoiceNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateWithoutCustomerInput = {
@@ -823,6 +1055,8 @@ export type InvoiceUncheckedUpdateWithoutCustomerInput = {
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   paymentAllocations?: Prisma.PaymentAllocationUncheckedUpdateManyWithoutInvoiceNestedInput
+  workflowEnrollments?: Prisma.WorkflowEnrollmentUncheckedUpdateManyWithoutInvoiceNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutInvoiceNestedInput
 }
 
 export type InvoiceUncheckedUpdateManyWithoutCustomerInput = {
@@ -847,10 +1081,14 @@ export type InvoiceUncheckedUpdateManyWithoutCustomerInput = {
 
 export type InvoiceCountOutputType = {
   paymentAllocations: number
+  workflowEnrollments: number
+  disputes: number
 }
 
 export type InvoiceCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   paymentAllocations?: boolean | InvoiceCountOutputTypeCountPaymentAllocationsArgs
+  workflowEnrollments?: boolean | InvoiceCountOutputTypeCountWorkflowEnrollmentsArgs
+  disputes?: boolean | InvoiceCountOutputTypeCountDisputesArgs
 }
 
 /**
@@ -870,6 +1108,20 @@ export type InvoiceCountOutputTypeCountPaymentAllocationsArgs<ExtArgs extends ru
   where?: Prisma.PaymentAllocationWhereInput
 }
 
+/**
+ * InvoiceCountOutputType without action
+ */
+export type InvoiceCountOutputTypeCountWorkflowEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkflowEnrollmentWhereInput
+}
+
+/**
+ * InvoiceCountOutputType without action
+ */
+export type InvoiceCountOutputTypeCountDisputesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DisputeWhereInput
+}
+
 
 export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -887,6 +1139,8 @@ export type InvoiceSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   updatedAt?: boolean
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   paymentAllocations?: boolean | Prisma.Invoice$paymentAllocationsArgs<ExtArgs>
+  workflowEnrollments?: boolean | Prisma.Invoice$workflowEnrollmentsArgs<ExtArgs>
+  disputes?: boolean | Prisma.Invoice$disputesArgs<ExtArgs>
   _count?: boolean | Prisma.InvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["invoice"]>
 
@@ -944,6 +1198,8 @@ export type InvoiceOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = 
 export type InvoiceInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   paymentAllocations?: boolean | Prisma.Invoice$paymentAllocationsArgs<ExtArgs>
+  workflowEnrollments?: boolean | Prisma.Invoice$workflowEnrollmentsArgs<ExtArgs>
+  disputes?: boolean | Prisma.Invoice$disputesArgs<ExtArgs>
   _count?: boolean | Prisma.InvoiceCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type InvoiceIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -958,6 +1214,8 @@ export type $InvoicePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
   objects: {
     customer: Prisma.$CustomerPayload<ExtArgs>
     paymentAllocations: Prisma.$PaymentAllocationPayload<ExtArgs>[]
+    workflowEnrollments: Prisma.$WorkflowEnrollmentPayload<ExtArgs>[]
+    disputes: Prisma.$DisputePayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1369,6 +1627,8 @@ export interface Prisma__InvoiceClient<T, Null = never, ExtArgs extends runtime.
   readonly [Symbol.toStringTag]: "PrismaPromise"
   customer<T extends Prisma.CustomerDefaultArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.CustomerDefaultArgs<ExtArgs>>): Prisma.Prisma__CustomerClient<runtime.Types.Result.GetResult<Prisma.$CustomerPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | Null, Null, ExtArgs, GlobalOmitOptions>
   paymentAllocations<T extends Prisma.Invoice$paymentAllocationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$paymentAllocationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$PaymentAllocationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  workflowEnrollments<T extends Prisma.Invoice$workflowEnrollmentsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$workflowEnrollmentsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowEnrollmentPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  disputes<T extends Prisma.Invoice$disputesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Invoice$disputesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -1833,6 +2093,54 @@ export type Invoice$paymentAllocationsArgs<ExtArgs extends runtime.Types.Extensi
   take?: number
   skip?: number
   distinct?: Prisma.PaymentAllocationScalarFieldEnum | Prisma.PaymentAllocationScalarFieldEnum[]
+}
+
+/**
+ * Invoice.workflowEnrollments
+ */
+export type Invoice$workflowEnrollmentsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the WorkflowEnrollment
+   */
+  select?: Prisma.WorkflowEnrollmentSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the WorkflowEnrollment
+   */
+  omit?: Prisma.WorkflowEnrollmentOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkflowEnrollmentInclude<ExtArgs> | null
+  where?: Prisma.WorkflowEnrollmentWhereInput
+  orderBy?: Prisma.WorkflowEnrollmentOrderByWithRelationInput | Prisma.WorkflowEnrollmentOrderByWithRelationInput[]
+  cursor?: Prisma.WorkflowEnrollmentWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkflowEnrollmentScalarFieldEnum | Prisma.WorkflowEnrollmentScalarFieldEnum[]
+}
+
+/**
+ * Invoice.disputes
+ */
+export type Invoice$disputesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Dispute
+   */
+  select?: Prisma.DisputeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Dispute
+   */
+  omit?: Prisma.DisputeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DisputeInclude<ExtArgs> | null
+  where?: Prisma.DisputeWhereInput
+  orderBy?: Prisma.DisputeOrderByWithRelationInput | Prisma.DisputeOrderByWithRelationInput[]
+  cursor?: Prisma.DisputeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DisputeScalarFieldEnum | Prisma.DisputeScalarFieldEnum[]
 }
 
 /**

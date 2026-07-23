@@ -35,8 +35,16 @@ export async function POST(request: NextRequest) {
     })
 
     return NextResponse.json({ url })
-  } catch (error) {
+  } catch (error: any) {
     console.error('[BILLING_CHECKOUT]', error)
+    
+    if (error.message && error.message.includes('is not set')) {
+      return NextResponse.json(
+        { error: `Billing configuration error: ${error.message}. Please check your .env.local file.` },
+        { status: 500 }
+      )
+    }
+
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

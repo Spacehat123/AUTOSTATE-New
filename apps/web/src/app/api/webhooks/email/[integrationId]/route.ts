@@ -46,7 +46,7 @@ export async function POST(
 
     await inngest.send({
       name: 'inbox.email.received',
-      data: { inboxEventId: inboxEvent.id }
+      data: { inboxEventId: inboxEvent.id, companyId: integration.companyId }
     })
 
     await prisma.inboxEvent.update({

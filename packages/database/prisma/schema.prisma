@@ -29,6 +29,9 @@ model Company {
   integrations CompanyIntegration[]
   actionItems   ActionItem[]
   subscription Subscription?
+  workflows    Workflow[]
+  disputes     Dispute[]
+  accountingIntegrations AccountingIntegration[]
 }
 
 model User {
@@ -76,6 +79,7 @@ model Customer {
   promises Promise[]
   tasks        Task[]
   portalTokens PortalAccessToken[]
+  disputes     Dispute[]
 }
 
 model PortalAccessToken {
@@ -115,10 +119,13 @@ model Invoice {
   customerId        String
   customer          Customer      @relation(fields: [customerId], references: [id])
   paymentAllocations PaymentAllocation[]
+  workflowEnrollments WorkflowEnrollment[]
+  disputes          Dispute[]
   createdAt         DateTime      @default(now())
   updatedAt         DateTime      @updatedAt
 
   @@unique([customerId, invoiceNumber])
+  @@index([customerId, status, dueDate])
 }
 
 model Payment {
@@ -176,6 +183,8 @@ model Message {
   createdAt     DateTime         @default(now())
 
   promises Promise[]
+
+  @@index([customerId, timestamp])
 }
 
 enum MessageType {
@@ -317,6 +326,9 @@ model InboxEvent {
   receivedAt  DateTime  @default(now())
   createdAt   DateTime  @default(now())
   updatedAt   DateTime  @updatedAt
+
+  @@index([status, createdAt])
+  @@index([status, updatedAt])
 }
 
 enum InboxProvider {
@@ -370,4 +382,106 @@ enum SubscriptionStatus {
   ACTIVE
   PAST_DUE
   CANCELED
+}
+
+model AccountingIntegration {
+  id                    String     @id @default(cuid())
+  companyId             String
+  company               Company    @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  provider              String
+  realmId               String?
+  accessToken           String     @db.Text
+  refreshToken          String     @db.Text
+  tokenExpiresAt        DateTime
+  refreshTokenExpiresAt DateTime?
+  syncStatus            SyncStatus @default(PENDING)
+  lastSyncAt            DateTime?
+  errorDetails          String?    @db.Text
+  createdAt             DateTime   @default(now())
+  updatedAt             DateTime   @updatedAt
+  @@unique([companyId, provider])
+}
+
+enum SyncStatus {
+  PENDING
+  IN_PROGRESS
+  SUCCESS
+  FAILED
+}
+
+model Workflow {
+  id          String   @id @default(cuid())
+  name        String
+  description String?
+  companyId   String
+  company     Company  @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  isActive    Boolean  @default(true)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+  steps       WorkflowStep[]
+  enrollments WorkflowEnrollment[]
+}
+
+model WorkflowStep {
+  id          String   @id @default(cuid())
+  workflowId  String
+  workflow    Workflow @relation(fields: [workflowId], references: [id], onDelete: Cascade)
+  order       Int
+  type        WorkflowStepType
+  template    String?  @db.Text
+  delayDays   Int      @default(0)
+  enrollments WorkflowEnrollment[]
+}
+
+enum WorkflowStepType {
+  EMAIL
+  WHATSAPP
+  TASK
+}
+
+model WorkflowEnrollment {
+  id            String   @id @default(cuid())
+  workflowId    String
+  workflow      Workflow @relation(fields: [workflowId], references: [id], onDelete: Restrict)
+  invoiceId     String
+  invoice       Invoice  @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  currentStepId String?
+  currentStep   WorkflowStep? @relation(fields: [currentStepId], references: [id], onDelete: SetNull)
+  status        EnrollmentStatus @default(ACTIVE)
+  nextActionAt  DateTime?
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+  @@unique([workflowId, invoiceId])
+}
+
+enum EnrollmentStatus {
+  ACTIVE
+  PAUSED
+  COMPLETED
+  CANCELLED
+}
+
+model Dispute {
+  id          String        @id @default(cuid())
+  invoiceId   String
+  invoice     Invoice       @relation(fields: [invoiceId], references: [id], onDelete: Cascade)
+  customerId  String
+  customer    Customer      @relation(fields: [customerId], references: [id], onDelete: Cascade)
+  companyId   String
+  company     Company       @relation(fields: [companyId], references: [id], onDelete: Cascade)
+  reason      String
+  description String?       @db.Text
+  status      DisputeStatus @default(OPEN)
+  createdAt   DateTime      @default(now())
+  updatedAt   DateTime      @updatedAt
+  @@index([invoiceId])
+  @@index([customerId])
+  @@index([companyId, status])
+}
+
+enum DisputeStatus {
+  OPEN
+  UNDER_REVIEW
+  RESOLVED
+  REJECTED
 }

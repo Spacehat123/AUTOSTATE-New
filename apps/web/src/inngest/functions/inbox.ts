@@ -27,7 +27,11 @@ function extractWhatsappMessage(payload: any) {
 }
 
 export const processWhatsappInbox = inngest.createFunction(
-  { id: 'process-whatsapp-inbox', triggers: [{ event: 'inbox.whatsapp.received' }] },
+  { 
+    id: 'process-whatsapp-inbox', 
+    triggers: [{ event: 'inbox.whatsapp.received' }],
+    concurrency: { limit: 5, key: "event.data.companyId" }
+  },
   async ({ event, step }) => {
     const { inboxEventId } = event.data
 
@@ -163,7 +167,11 @@ function extractEmailMessage(payload: any) {
 }
 
 export const processEmailInbox = inngest.createFunction(
-  { id: 'process-email-inbox', triggers: [{ event: 'inbox.email.received' }] },
+  { 
+    id: 'process-email-inbox', 
+    triggers: [{ event: 'inbox.email.received' }],
+    concurrency: { limit: 5, key: "event.data.companyId" }
+  },
   async ({ event, step }) => {
     const { inboxEventId } = event.data
 
@@ -289,7 +297,7 @@ export const recoverStuckInboxEvents = inngest.createFunction(
       for (const ev of stuckEvents) {
         await inngest.send({
           name: `inbox.${ev.provider.toLowerCase()}.received`,
-          data: { inboxEventId: ev.id }
+          data: { inboxEventId: ev.id, companyId: ev.companyId }
         })
       }
       

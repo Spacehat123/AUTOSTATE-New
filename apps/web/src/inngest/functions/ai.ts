@@ -3,19 +3,34 @@ import { prisma } from '@autostate/database'
 import { extractPromise, generateDraftReply } from '@autostate/ai'
 
 export const analyzeMessage = inngest.createFunction(
-  { id: 'analyze-message', name: 'Analyze Message for Intent', triggers: [{ event: 'message.analyze' }] },
+  { id: 'analyze-message', name: 'Analyze Message for Intent', triggers: [{ event: 'message.analyze' }], concurrency: { limit: 10, key: 'tenant-ai-extraction' } },
   async ({ event, step }) => {
     const { messageId } = event.data
 
     const message = await step.run('fetch-message', async () => {
       return prisma.message.findUnique({
         where: { id: messageId },
-        include: { customer: true }
+        include: {
+          customer: {
+            include: {
+              company: {
+                include: {
+                  subscription: true
+                }
+              }
+            }
+          }
+        }
       })
     })
 
     if (!message) {
       return { success: false, reason: 'Message not found' }
+    }
+
+    const subStatus = message.customer.company.subscription?.status
+    if (subStatus !== 'ACTIVE' && subStatus !== 'TRIALING') {
+      return { success: false, skipped: true, reason: 'Subscription is not active or trialing' }
     }
 
     // Call AI to extract intent

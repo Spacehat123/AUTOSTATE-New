@@ -66,7 +66,12 @@ export const ModelName = {
   ImportJob: 'ImportJob',
   InboxEvent: 'InboxEvent',
   AuditLog: 'AuditLog',
-  Subscription: 'Subscription'
+  Subscription: 'Subscription',
+  AccountingIntegration: 'AccountingIntegration',
+  Workflow: 'Workflow',
+  WorkflowStep: 'WorkflowStep',
+  WorkflowEnrollment: 'WorkflowEnrollment',
+  Dispute: 'Dispute'
 } as const
 
 export type ModelName = (typeof ModelName)[keyof typeof ModelName]
@@ -337,6 +342,79 @@ export const SubscriptionScalarFieldEnum = {
 } as const
 
 export type SubscriptionScalarFieldEnum = (typeof SubscriptionScalarFieldEnum)[keyof typeof SubscriptionScalarFieldEnum]
+
+
+export const AccountingIntegrationScalarFieldEnum = {
+  id: 'id',
+  companyId: 'companyId',
+  provider: 'provider',
+  realmId: 'realmId',
+  accessToken: 'accessToken',
+  refreshToken: 'refreshToken',
+  tokenExpiresAt: 'tokenExpiresAt',
+  refreshTokenExpiresAt: 'refreshTokenExpiresAt',
+  syncStatus: 'syncStatus',
+  lastSyncAt: 'lastSyncAt',
+  errorDetails: 'errorDetails',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type AccountingIntegrationScalarFieldEnum = (typeof AccountingIntegrationScalarFieldEnum)[keyof typeof AccountingIntegrationScalarFieldEnum]
+
+
+export const WorkflowScalarFieldEnum = {
+  id: 'id',
+  name: 'name',
+  description: 'description',
+  companyId: 'companyId',
+  isActive: 'isActive',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkflowScalarFieldEnum = (typeof WorkflowScalarFieldEnum)[keyof typeof WorkflowScalarFieldEnum]
+
+
+export const WorkflowStepScalarFieldEnum = {
+  id: 'id',
+  workflowId: 'workflowId',
+  order: 'order',
+  type: 'type',
+  template: 'template',
+  delayDays: 'delayDays'
+} as const
+
+export type WorkflowStepScalarFieldEnum = (typeof WorkflowStepScalarFieldEnum)[keyof typeof WorkflowStepScalarFieldEnum]
+
+
+export const WorkflowEnrollmentScalarFieldEnum = {
+  id: 'id',
+  workflowId: 'workflowId',
+  invoiceId: 'invoiceId',
+  currentStepId: 'currentStepId',
+  status: 'status',
+  nextActionAt: 'nextActionAt',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type WorkflowEnrollmentScalarFieldEnum = (typeof WorkflowEnrollmentScalarFieldEnum)[keyof typeof WorkflowEnrollmentScalarFieldEnum]
+
+
+export const DisputeScalarFieldEnum = {
+  id: 'id',
+  invoiceId: 'invoiceId',
+  customerId: 'customerId',
+  companyId: 'companyId',
+  reason: 'reason',
+  description: 'description',
+  status: 'status',
+  createdAt: 'createdAt',
+  updatedAt: 'updatedAt'
+} as const
+
+export type DisputeScalarFieldEnum = (typeof DisputeScalarFieldEnum)[keyof typeof DisputeScalarFieldEnum]
 
 
 export const SortOrder = {

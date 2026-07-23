@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@autostate/database'
 import { inngest } from '@/lib/inngest'
 import { logger, ratelimit, decrypt } from '@autostate/shared'
+import crypto from 'crypto'
 
 export const dynamic = 'force-dynamic'
 
@@ -69,7 +70,33 @@ export async function POST(
       return respond() // Drop silently
     }
 
-    const body = await request.json()
+    const rawBody = await request.text()
+    
+    const signatureHeader = request.headers.get('x-hub-signature-256')
+    const secret = process.env.WHATSAPP_APP_SECRET
+    
+    if (secret) {
+      if (!signatureHeader) {
+        logger.warn('WhatsApp webhook missing signature header')
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+      
+      const signature = signatureHeader.startsWith('sha256=') 
+        ? signatureHeader.slice(7) 
+        : signatureHeader
+      
+      const expectedSignature = crypto.createHmac('sha256', secret).update(rawBody).digest('hex')
+      
+      const sigBuf = Buffer.from(signature)
+      const expectedBuf = Buffer.from(expectedSignature)
+      
+      if (sigBuf.length !== expectedBuf.length || !crypto.timingSafeEqual(sigBuf, expectedBuf)) {
+        logger.warn('WhatsApp webhook signature verification failed')
+        return NextResponse.json({ error: 'Unauthorized' }, { status: 401 })
+      }
+    }
+
+    const body = JSON.parse(rawBody)
     const headers = Object.fromEntries(request.headers.entries())
 
     const ip = headers['x-forwarded-for'] ?? 'unknown'
@@ -91,7 +118,7 @@ export async function POST(
 
     await inngest.send({
       name: 'inbox.whatsapp.received',
-      data: { inboxEventId: inboxEvent.id }
+      data: { inboxEventId: inboxEvent.id, companyId: integration.companyId }
     })
 
     await prisma.inboxEvent.update({

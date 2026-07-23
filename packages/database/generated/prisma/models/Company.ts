@@ -220,6 +220,9 @@ export type CompanyWhereInput = {
   integrations?: Prisma.CompanyIntegrationListRelationFilter
   actionItems?: Prisma.ActionItemListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  workflows?: Prisma.WorkflowListRelationFilter
+  disputes?: Prisma.DisputeListRelationFilter
+  accountingIntegrations?: Prisma.AccountingIntegrationListRelationFilter
 }
 
 export type CompanyOrderByWithRelationInput = {
@@ -238,6 +241,9 @@ export type CompanyOrderByWithRelationInput = {
   integrations?: Prisma.CompanyIntegrationOrderByRelationAggregateInput
   actionItems?: Prisma.ActionItemOrderByRelationAggregateInput
   subscription?: Prisma.SubscriptionOrderByWithRelationInput
+  workflows?: Prisma.WorkflowOrderByRelationAggregateInput
+  disputes?: Prisma.DisputeOrderByRelationAggregateInput
+  accountingIntegrations?: Prisma.AccountingIntegrationOrderByRelationAggregateInput
 }
 
 export type CompanyWhereUniqueInput = Prisma.AtLeast<{
@@ -259,6 +265,9 @@ export type CompanyWhereUniqueInput = Prisma.AtLeast<{
   integrations?: Prisma.CompanyIntegrationListRelationFilter
   actionItems?: Prisma.ActionItemListRelationFilter
   subscription?: Prisma.XOR<Prisma.SubscriptionNullableScalarRelationFilter, Prisma.SubscriptionWhereInput> | null
+  workflows?: Prisma.WorkflowListRelationFilter
+  disputes?: Prisma.DisputeListRelationFilter
+  accountingIntegrations?: Prisma.AccountingIntegrationListRelationFilter
 }, "id">
 
 export type CompanyOrderByWithAggregationInput = {
@@ -307,6 +316,9 @@ export type CompanyCreateInput = {
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateInput = {
@@ -325,6 +337,9 @@ export type CompanyUncheckedCreateInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUpdateInput = {
@@ -343,6 +358,9 @@ export type CompanyUpdateInput = {
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateInput = {
@@ -361,6 +379,9 @@ export type CompanyUncheckedUpdateInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateManyInput = {
@@ -540,6 +561,48 @@ export type CompanyUpdateOneRequiredWithoutSubscriptionNestedInput = {
   update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutSubscriptionInput, Prisma.CompanyUpdateWithoutSubscriptionInput>, Prisma.CompanyUncheckedUpdateWithoutSubscriptionInput>
 }
 
+export type CompanyCreateNestedOneWithoutAccountingIntegrationsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutAccountingIntegrationsInput, Prisma.CompanyUncheckedCreateWithoutAccountingIntegrationsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutAccountingIntegrationsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutAccountingIntegrationsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutAccountingIntegrationsInput, Prisma.CompanyUncheckedCreateWithoutAccountingIntegrationsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutAccountingIntegrationsInput
+  upsert?: Prisma.CompanyUpsertWithoutAccountingIntegrationsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutAccountingIntegrationsInput, Prisma.CompanyUpdateWithoutAccountingIntegrationsInput>, Prisma.CompanyUncheckedUpdateWithoutAccountingIntegrationsInput>
+}
+
+export type CompanyCreateNestedOneWithoutWorkflowsInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutWorkflowsInput, Prisma.CompanyUncheckedCreateWithoutWorkflowsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutWorkflowsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutWorkflowsNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutWorkflowsInput, Prisma.CompanyUncheckedCreateWithoutWorkflowsInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutWorkflowsInput
+  upsert?: Prisma.CompanyUpsertWithoutWorkflowsInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutWorkflowsInput, Prisma.CompanyUpdateWithoutWorkflowsInput>, Prisma.CompanyUncheckedUpdateWithoutWorkflowsInput>
+}
+
+export type CompanyCreateNestedOneWithoutDisputesInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutDisputesInput, Prisma.CompanyUncheckedCreateWithoutDisputesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutDisputesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+}
+
+export type CompanyUpdateOneRequiredWithoutDisputesNestedInput = {
+  create?: Prisma.XOR<Prisma.CompanyCreateWithoutDisputesInput, Prisma.CompanyUncheckedCreateWithoutDisputesInput>
+  connectOrCreate?: Prisma.CompanyCreateOrConnectWithoutDisputesInput
+  upsert?: Prisma.CompanyUpsertWithoutDisputesInput
+  connect?: Prisma.CompanyWhereUniqueInput
+  update?: Prisma.XOR<Prisma.XOR<Prisma.CompanyUpdateToOneWithWhereWithoutDisputesInput, Prisma.CompanyUpdateWithoutDisputesInput>, Prisma.CompanyUncheckedUpdateWithoutDisputesInput>
+}
+
 export type CompanyCreateWithoutUsersInput = {
   id?: string
   name: string
@@ -555,6 +618,9 @@ export type CompanyCreateWithoutUsersInput = {
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutUsersInput = {
@@ -572,6 +638,9 @@ export type CompanyUncheckedCreateWithoutUsersInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutUsersInput = {
@@ -605,6 +674,9 @@ export type CompanyUpdateWithoutUsersInput = {
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutUsersInput = {
@@ -622,6 +694,9 @@ export type CompanyUncheckedUpdateWithoutUsersInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutCustomersInput = {
@@ -639,6 +714,9 @@ export type CompanyCreateWithoutCustomersInput = {
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutCustomersInput = {
@@ -656,6 +734,9 @@ export type CompanyUncheckedCreateWithoutCustomersInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutCustomersInput = {
@@ -689,6 +770,9 @@ export type CompanyUpdateWithoutCustomersInput = {
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutCustomersInput = {
@@ -706,6 +790,9 @@ export type CompanyUncheckedUpdateWithoutCustomersInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutIntegrationsInput = {
@@ -723,6 +810,9 @@ export type CompanyCreateWithoutIntegrationsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutIntegrationsInput = {
@@ -740,6 +830,9 @@ export type CompanyUncheckedCreateWithoutIntegrationsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutIntegrationsInput = {
@@ -773,6 +866,9 @@ export type CompanyUpdateWithoutIntegrationsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
@@ -790,6 +886,9 @@ export type CompanyUncheckedUpdateWithoutIntegrationsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutPaymentsInput = {
@@ -807,6 +906,9 @@ export type CompanyCreateWithoutPaymentsInput = {
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutPaymentsInput = {
@@ -824,6 +926,9 @@ export type CompanyUncheckedCreateWithoutPaymentsInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutPaymentsInput = {
@@ -857,6 +962,9 @@ export type CompanyUpdateWithoutPaymentsInput = {
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutPaymentsInput = {
@@ -874,6 +982,9 @@ export type CompanyUncheckedUpdateWithoutPaymentsInput = {
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutActionItemsInput = {
@@ -891,6 +1002,9 @@ export type CompanyCreateWithoutActionItemsInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutActionItemsInput = {
@@ -908,6 +1022,9 @@ export type CompanyUncheckedCreateWithoutActionItemsInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutActionItemsInput = {
@@ -941,6 +1058,9 @@ export type CompanyUpdateWithoutActionItemsInput = {
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutActionItemsInput = {
@@ -958,6 +1078,9 @@ export type CompanyUncheckedUpdateWithoutActionItemsInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyCreateWithoutSubscriptionInput = {
@@ -975,6 +1098,9 @@ export type CompanyCreateWithoutSubscriptionInput = {
   payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyUncheckedCreateWithoutSubscriptionInput = {
@@ -992,6 +1118,9 @@ export type CompanyUncheckedCreateWithoutSubscriptionInput = {
   payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
   integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
   actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
 }
 
 export type CompanyCreateOrConnectWithoutSubscriptionInput = {
@@ -1025,6 +1154,9 @@ export type CompanyUpdateWithoutSubscriptionInput = {
   payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
 }
 
 export type CompanyUncheckedUpdateWithoutSubscriptionInput = {
@@ -1042,6 +1174,297 @@ export type CompanyUncheckedUpdateWithoutSubscriptionInput = {
   payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
   integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
   actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutAccountingIntegrationsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutAccountingIntegrationsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutAccountingIntegrationsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutAccountingIntegrationsInput, Prisma.CompanyUncheckedCreateWithoutAccountingIntegrationsInput>
+}
+
+export type CompanyUpsertWithoutAccountingIntegrationsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutAccountingIntegrationsInput, Prisma.CompanyUncheckedUpdateWithoutAccountingIntegrationsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutAccountingIntegrationsInput, Prisma.CompanyUncheckedCreateWithoutAccountingIntegrationsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutAccountingIntegrationsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutAccountingIntegrationsInput, Prisma.CompanyUncheckedUpdateWithoutAccountingIntegrationsInput>
+}
+
+export type CompanyUpdateWithoutAccountingIntegrationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutAccountingIntegrationsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutWorkflowsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  disputes?: Prisma.DisputeCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutWorkflowsInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  disputes?: Prisma.DisputeUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutWorkflowsInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutWorkflowsInput, Prisma.CompanyUncheckedCreateWithoutWorkflowsInput>
+}
+
+export type CompanyUpsertWithoutWorkflowsInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutWorkflowsInput, Prisma.CompanyUncheckedUpdateWithoutWorkflowsInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutWorkflowsInput, Prisma.CompanyUncheckedCreateWithoutWorkflowsInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutWorkflowsInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutWorkflowsInput, Prisma.CompanyUncheckedUpdateWithoutWorkflowsInput>
+}
+
+export type CompanyUpdateWithoutWorkflowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutWorkflowsInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  disputes?: Prisma.DisputeUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyCreateWithoutDisputesInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyUncheckedCreateWithoutDisputesInput = {
+  id?: string
+  name: string
+  gstNumber?: string | null
+  phone?: string | null
+  email?: string | null
+  address?: string | null
+  isArchived?: boolean
+  createdAt?: Date | string
+  updatedAt?: Date | string
+  users?: Prisma.UserUncheckedCreateNestedManyWithoutCompanyInput
+  customers?: Prisma.CustomerUncheckedCreateNestedManyWithoutCompanyInput
+  payments?: Prisma.PaymentUncheckedCreateNestedManyWithoutCompanyInput
+  integrations?: Prisma.CompanyIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+  actionItems?: Prisma.ActionItemUncheckedCreateNestedManyWithoutCompanyInput
+  subscription?: Prisma.SubscriptionUncheckedCreateNestedOneWithoutCompanyInput
+  workflows?: Prisma.WorkflowUncheckedCreateNestedManyWithoutCompanyInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedCreateNestedManyWithoutCompanyInput
+}
+
+export type CompanyCreateOrConnectWithoutDisputesInput = {
+  where: Prisma.CompanyWhereUniqueInput
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutDisputesInput, Prisma.CompanyUncheckedCreateWithoutDisputesInput>
+}
+
+export type CompanyUpsertWithoutDisputesInput = {
+  update: Prisma.XOR<Prisma.CompanyUpdateWithoutDisputesInput, Prisma.CompanyUncheckedUpdateWithoutDisputesInput>
+  create: Prisma.XOR<Prisma.CompanyCreateWithoutDisputesInput, Prisma.CompanyUncheckedCreateWithoutDisputesInput>
+  where?: Prisma.CompanyWhereInput
+}
+
+export type CompanyUpdateToOneWithWhereWithoutDisputesInput = {
+  where?: Prisma.CompanyWhereInput
+  data: Prisma.XOR<Prisma.CompanyUpdateWithoutDisputesInput, Prisma.CompanyUncheckedUpdateWithoutDisputesInput>
+}
+
+export type CompanyUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUpdateManyWithoutCompanyNestedInput
+}
+
+export type CompanyUncheckedUpdateWithoutDisputesInput = {
+  id?: Prisma.StringFieldUpdateOperationsInput | string
+  name?: Prisma.StringFieldUpdateOperationsInput | string
+  gstNumber?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  phone?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  email?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  address?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  isArchived?: Prisma.BoolFieldUpdateOperationsInput | boolean
+  createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  updatedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
+  users?: Prisma.UserUncheckedUpdateManyWithoutCompanyNestedInput
+  customers?: Prisma.CustomerUncheckedUpdateManyWithoutCompanyNestedInput
+  payments?: Prisma.PaymentUncheckedUpdateManyWithoutCompanyNestedInput
+  integrations?: Prisma.CompanyIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
+  actionItems?: Prisma.ActionItemUncheckedUpdateManyWithoutCompanyNestedInput
+  subscription?: Prisma.SubscriptionUncheckedUpdateOneWithoutCompanyNestedInput
+  workflows?: Prisma.WorkflowUncheckedUpdateManyWithoutCompanyNestedInput
+  accountingIntegrations?: Prisma.AccountingIntegrationUncheckedUpdateManyWithoutCompanyNestedInput
 }
 
 
@@ -1055,6 +1478,9 @@ export type CompanyCountOutputType = {
   payments: number
   integrations: number
   actionItems: number
+  workflows: number
+  disputes: number
+  accountingIntegrations: number
 }
 
 export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
@@ -1063,6 +1489,9 @@ export type CompanyCountOutputTypeSelect<ExtArgs extends runtime.Types.Extension
   payments?: boolean | CompanyCountOutputTypeCountPaymentsArgs
   integrations?: boolean | CompanyCountOutputTypeCountIntegrationsArgs
   actionItems?: boolean | CompanyCountOutputTypeCountActionItemsArgs
+  workflows?: boolean | CompanyCountOutputTypeCountWorkflowsArgs
+  disputes?: boolean | CompanyCountOutputTypeCountDisputesArgs
+  accountingIntegrations?: boolean | CompanyCountOutputTypeCountAccountingIntegrationsArgs
 }
 
 /**
@@ -1110,6 +1539,27 @@ export type CompanyCountOutputTypeCountActionItemsArgs<ExtArgs extends runtime.T
   where?: Prisma.ActionItemWhereInput
 }
 
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountWorkflowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.WorkflowWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountDisputesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.DisputeWhereInput
+}
+
+/**
+ * CompanyCountOutputType without action
+ */
+export type CompanyCountOutputTypeCountAccountingIntegrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  where?: Prisma.AccountingIntegrationWhereInput
+}
+
 
 export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetSelect<{
   id?: boolean
@@ -1127,6 +1577,9 @@ export type CompanySelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   integrations?: boolean | Prisma.Company$integrationsArgs<ExtArgs>
   actionItems?: boolean | Prisma.Company$actionItemsArgs<ExtArgs>
   subscription?: boolean | Prisma.Company$subscriptionArgs<ExtArgs>
+  workflows?: boolean | Prisma.Company$workflowsArgs<ExtArgs>
+  disputes?: boolean | Prisma.Company$disputesArgs<ExtArgs>
+  accountingIntegrations?: boolean | Prisma.Company$accountingIntegrationsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }, ExtArgs["result"]["company"]>
 
@@ -1174,6 +1627,9 @@ export type CompanyInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs
   integrations?: boolean | Prisma.Company$integrationsArgs<ExtArgs>
   actionItems?: boolean | Prisma.Company$actionItemsArgs<ExtArgs>
   subscription?: boolean | Prisma.Company$subscriptionArgs<ExtArgs>
+  workflows?: boolean | Prisma.Company$workflowsArgs<ExtArgs>
+  disputes?: boolean | Prisma.Company$disputesArgs<ExtArgs>
+  accountingIntegrations?: boolean | Prisma.Company$accountingIntegrationsArgs<ExtArgs>
   _count?: boolean | Prisma.CompanyCountOutputTypeDefaultArgs<ExtArgs>
 }
 export type CompanyIncludeCreateManyAndReturn<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {}
@@ -1188,6 +1644,9 @@ export type $CompanyPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     integrations: Prisma.$CompanyIntegrationPayload<ExtArgs>[]
     actionItems: Prisma.$ActionItemPayload<ExtArgs>[]
     subscription: Prisma.$SubscriptionPayload<ExtArgs> | null
+    workflows: Prisma.$WorkflowPayload<ExtArgs>[]
+    disputes: Prisma.$DisputePayload<ExtArgs>[]
+    accountingIntegrations: Prisma.$AccountingIntegrationPayload<ExtArgs>[]
   }
   scalars: runtime.Types.Extensions.GetPayloadResult<{
     id: string
@@ -1599,6 +2058,9 @@ export interface Prisma__CompanyClient<T, Null = never, ExtArgs extends runtime.
   integrations<T extends Prisma.Company$integrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$integrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$CompanyIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   actionItems<T extends Prisma.Company$actionItemsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$actionItemsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$ActionItemPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   subscription<T extends Prisma.Company$subscriptionArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$subscriptionArgs<ExtArgs>>): Prisma.Prisma__SubscriptionClient<runtime.Types.Result.GetResult<Prisma.$SubscriptionPayload<ExtArgs>, T, "findUniqueOrThrow", GlobalOmitOptions> | null, null, ExtArgs, GlobalOmitOptions>
+  workflows<T extends Prisma.Company$workflowsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$workflowsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$WorkflowPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  disputes<T extends Prisma.Company$disputesArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$disputesArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$DisputePayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
+  accountingIntegrations<T extends Prisma.Company$accountingIntegrationsArgs<ExtArgs> = {}>(args?: Prisma.Subset<T, Prisma.Company$accountingIntegrationsArgs<ExtArgs>>): Prisma.PrismaPromise<runtime.Types.Result.GetResult<Prisma.$AccountingIntegrationPayload<ExtArgs>, T, "findMany", GlobalOmitOptions> | Null>
   /**
    * Attaches callbacks for the resolution and/or rejection of the Promise.
    * @param onfulfilled The callback to execute when the Promise is resolved.
@@ -2166,6 +2628,78 @@ export type Company$subscriptionArgs<ExtArgs extends runtime.Types.Extensions.In
    */
   include?: Prisma.SubscriptionInclude<ExtArgs> | null
   where?: Prisma.SubscriptionWhereInput
+}
+
+/**
+ * Company.workflows
+ */
+export type Company$workflowsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Workflow
+   */
+  select?: Prisma.WorkflowSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Workflow
+   */
+  omit?: Prisma.WorkflowOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.WorkflowInclude<ExtArgs> | null
+  where?: Prisma.WorkflowWhereInput
+  orderBy?: Prisma.WorkflowOrderByWithRelationInput | Prisma.WorkflowOrderByWithRelationInput[]
+  cursor?: Prisma.WorkflowWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.WorkflowScalarFieldEnum | Prisma.WorkflowScalarFieldEnum[]
+}
+
+/**
+ * Company.disputes
+ */
+export type Company$disputesArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the Dispute
+   */
+  select?: Prisma.DisputeSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the Dispute
+   */
+  omit?: Prisma.DisputeOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.DisputeInclude<ExtArgs> | null
+  where?: Prisma.DisputeWhereInput
+  orderBy?: Prisma.DisputeOrderByWithRelationInput | Prisma.DisputeOrderByWithRelationInput[]
+  cursor?: Prisma.DisputeWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.DisputeScalarFieldEnum | Prisma.DisputeScalarFieldEnum[]
+}
+
+/**
+ * Company.accountingIntegrations
+ */
+export type Company$accountingIntegrationsArgs<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
+  /**
+   * Select specific fields to fetch from the AccountingIntegration
+   */
+  select?: Prisma.AccountingIntegrationSelect<ExtArgs> | null
+  /**
+   * Omit specific fields from the AccountingIntegration
+   */
+  omit?: Prisma.AccountingIntegrationOmit<ExtArgs> | null
+  /**
+   * Choose, which related nodes to fetch as well
+   */
+  include?: Prisma.AccountingIntegrationInclude<ExtArgs> | null
+  where?: Prisma.AccountingIntegrationWhereInput
+  orderBy?: Prisma.AccountingIntegrationOrderByWithRelationInput | Prisma.AccountingIntegrationOrderByWithRelationInput[]
+  cursor?: Prisma.AccountingIntegrationWhereUniqueInput
+  take?: number
+  skip?: number
+  distinct?: Prisma.AccountingIntegrationScalarFieldEnum | Prisma.AccountingIntegrationScalarFieldEnum[]
 }
 
 /**

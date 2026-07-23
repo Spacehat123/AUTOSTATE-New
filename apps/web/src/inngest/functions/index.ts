@@ -4,6 +4,7 @@ import { promiseFollowUpCheck } from './promise-follow-up'
 import { processImport } from './process-import'
 import { processWhatsappInbox, processEmailInbox, recoverStuckInboxEvents } from './inbox'
 import { analyzeMessage } from './ai'
+import { evaluateDunningWorkflows } from './workflows'
 
 export const allFunctions = [
   parseWhatsappReply,
@@ -13,5 +14,6 @@ export const allFunctions = [
   processImport,
   processWhatsappInbox,
   processEmailInbox,
-  recoverStuckInboxEvents
+  recoverStuckInboxEvents,
+  evaluateDunningWorkflows
 ]
