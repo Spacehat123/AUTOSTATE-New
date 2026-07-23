@@ -37,7 +37,7 @@ const NAV_ITEMS = [
   { name: 'Reports', icon: BarChart2, href: '/reports' },
 ]
 
-export function Sidebar({ companyName, notificationCount = 0 }: { companyName?: string, notificationCount?: number }) {
+export function Sidebar({ companyName, notificationCount = 0, isAuthorized = false }: { companyName?: string, notificationCount?: number, isAuthorized?: boolean }) {
   const pathname = usePathname()
   const { user: clerkUser } = useUser()
   const { theme, setTheme } = useTheme()
@@ -162,17 +162,19 @@ export function Sidebar({ companyName, notificationCount = 0 }: { companyName?: 
             {isCollapsed && notificationCount > 0 && <span className="absolute top-2 right-2 w-2 h-2 rounded-full bg-brand-500" />}
           </Link>
           
-          <Link 
-            href="/settings"
-            title={isCollapsed ? "Settings" : undefined}
-            className={cn(
-              "flex items-center gap-3 py-2.5 rounded-xl text-sm font-medium transition-all text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
-              isCollapsed ? "justify-center px-0 w-12 h-12 mx-auto" : "px-3"
-            )}
-          >
-            <Settings className="w-[18px] h-[18px] shrink-0" />
-            {!isCollapsed && <span className="truncate flex-1">Settings</span>}
-          </Link>
+          {isAuthorized && (
+            <Link 
+              href="/settings"
+              title={isCollapsed ? "Settings" : undefined}
+              className={cn(
+                "flex items-center gap-3 py-2.5 rounded-xl text-sm font-medium transition-all text-muted-foreground hover:text-foreground hover:bg-black/5 dark:hover:bg-white/5",
+                isCollapsed ? "justify-center px-0 w-12 h-12 mx-auto" : "px-3"
+              )}
+            >
+              <Settings className="w-[18px] h-[18px] shrink-0" />
+              {!isCollapsed && <span className="truncate flex-1">Settings</span>}
+            </Link>
+          )}
 
           <button
             onClick={() => setTheme(theme === 'dark' ? 'light' : 'dark')}

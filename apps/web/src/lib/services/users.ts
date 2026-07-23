@@ -65,3 +65,57 @@ export async function reconcileUser(existingUser: User): Promise<boolean> {
     return false
   }
 }
+
+export interface ProvisionUserData {
+  clerkId: string
+  email: string
+  name?: string | null
+  publicMetadata?: Record<string, any> | null
+}
+
+/**
+ * Shared service for provisioning users in the database.
+ * Used by both Clerk Webhooks and Authentication runtime fallback.
+ */
+export async function provisionUser(data: ProvisionUserData) {
+  const { clerkId, email, name, publicMetadata } = data
+
+  if (!publicMetadata || typeof publicMetadata.companyId !== 'string' || typeof publicMetadata.role !== 'string') {
+    return null
+  }
+
+  const companyId = publicMetadata.companyId
+  const role = publicMetadata.role as 'OWNER' | 'ADMIN' | 'MEMBER'
+
+  const existingUser = await prisma.user.findUnique({
+    where: { clerkId },
+    include: { company: true }
+  })
+
+  if (existingUser) return existingUser
+
+  try {
+    const newUser = await prisma.user.create({
+      data: {
+        clerkId,
+        email: email || '',
+        name: name || null,
+        companyId,
+        role
+      },
+      include: { company: true }
+    })
+    logger.info({ userId: clerkId, companyId, role }, 'User successfully provisioned')
+    return newUser
+  } catch (error: any) {
+    if (error.code === 'P2002') {
+      const user = await prisma.user.findUnique({
+        where: { clerkId },
+        include: { company: true }
+      })
+      if (user) return user
+    }
+    logger.error({ error, userId: clerkId, companyId }, 'Error provisioning user')
+    throw error
+  }
+}

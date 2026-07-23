@@ -3,6 +3,7 @@ import { prisma } from '@autostate/database'
 import { Sidebar } from '@/components/layout/sidebar'
 import { MobileHeader } from '@/components/layout/mobile-header'
 import { GridBackground } from '@/components/layout/grid-background'
+import { isAuthorizedUser } from '@/lib/rbac'
 
 export default async function AppLayout({
   children,
@@ -23,7 +24,7 @@ export default async function AppLayout({
       <div className="flex h-screen bg-transparent overflow-hidden relative z-10">
         {/* Fixed Sidebar (Hidden on mobile, block on md+) */}
         <div className="hidden md:flex z-20 relative">
-          <Sidebar companyName={user.company?.name} notificationCount={notificationCount} />
+          <Sidebar companyName={user.company?.name} notificationCount={notificationCount} isAuthorized={isAuthorizedUser(user)} />
         </div>
         
         {/* Main Content Area */}

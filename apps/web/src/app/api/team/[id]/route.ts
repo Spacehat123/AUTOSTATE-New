@@ -5,7 +5,10 @@ import { logAction } from '@autostate/database'
 import { requireRole, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 const roleSchema = z.object({
-  role: z.enum(['OWNER', 'ADMIN', 'MEMBER'])
+  role: z.enum(['OWNER', 'ADMIN', 'MEMBER']).optional(),
+  isAuthorizedByOwner: z.boolean().optional()
+}).refine(data => data.role !== undefined || data.isAuthorizedByOwner !== undefined, {
+  message: "Must provide at least one field to update"
 })
 
 export async function PATCH(
@@ -42,18 +45,33 @@ export async function PATCH(
     const parsed = roleSchema.safeParse(body)
 
     if (!parsed.success) {
-      return NextResponse.json({ error: 'Invalid role', details: parsed.error.format() }, { status: 400 })
+      return NextResponse.json({ error: 'Invalid update payload', details: parsed.error.format() }, { status: 400 })
+    }
+
+    if (parsed.data.isAuthorizedByOwner !== undefined && targetUser.role === 'MEMBER' && parsed.data.role !== 'ADMIN' && parsed.data.role !== 'OWNER') {
+      return NextResponse.json({ error: 'Only admins can be authorized by owner' }, { status: 400 })
     }
 
     const updatedUser = await currentUser.db.user.update({
       where: { id: targetUserId },
-      data: { role: parsed.data.role },
-      select: { id: true, name: true, email: true, role: true, createdAt: true }
+      data: { 
+        role: parsed.data.role,
+        isAuthorizedByOwner: parsed.data.isAuthorizedByOwner
+      },
+      select: { id: true, name: true, email: true, role: true, isAuthorizedByOwner: true, createdAt: true }
     })
 
-    logAction(currentUser.companyId, currentUser.id, 'team.role_changed', 'user', updatedUser.id, {
-      newRole: updatedUser.role
-    })
+    if (parsed.data.role !== undefined) {
+      logAction(currentUser.companyId, currentUser.id, 'team.role_changed', 'user', updatedUser.id, {
+        newRole: updatedUser.role
+      })
+    }
+    
+    if (parsed.data.isAuthorizedByOwner !== undefined) {
+      logAction(currentUser.companyId, currentUser.id, 'team.authorization_changed', 'user', updatedUser.id, {
+        isAuthorized: updatedUser.isAuthorizedByOwner
+      })
+    }
 
     return NextResponse.json(updatedUser)
   } catch (error) {

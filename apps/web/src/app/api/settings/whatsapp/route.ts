@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
+import { requireAuthorizedUser, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 import { encrypt, decrypt } from '@autostate/shared'
 
 export const dynamic = 'force-dynamic'
@@ -20,6 +21,13 @@ function maskString(str: string | undefined): string {
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
 
   try {
     const integration = await prisma.companyIntegration.findUnique({
@@ -58,6 +66,13 @@ export async function GET(request: NextRequest) {
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
 
   try {
     const body = await request.json()

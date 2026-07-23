@@ -1,6 +1,7 @@
 import { auth, clerkClient } from '@clerk/nextjs/server'
 import { prisma, getTenantDb } from '@autostate/database'
 import { redirect } from 'next/navigation'
+import { provisionUser } from '@/lib/services/users'
 
 export async function getCurrentUser() {
   const { userId } = await auth()
@@ -15,24 +16,18 @@ export async function getCurrentUser() {
     const client = await clerkClient()
     const clerkUser = await client.users.getUser(userId)
     const primaryEmail = clerkUser.emailAddresses[0]?.emailAddress
+    const name = `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || null
 
-    if (primaryEmail) {
-      const pendingUser = await prisma.user.findFirst({
-        where: { email: primaryEmail, clerkId: { startsWith: 'invite_' } }
-      })
+    const provisionedUser = await provisionUser({
+      clerkId: userId,
+      email: primaryEmail || '',
+      name,
+      publicMetadata: clerkUser.publicMetadata
+    })
 
-      if (pendingUser) {
-        const linkedUser = await prisma.user.update({
-          where: { id: pendingUser.id },
-          data: { 
-            clerkId: userId,
-            name: `${clerkUser.firstName || ''} ${clerkUser.lastName || ''}`.trim() || null
-          },
-          include: { company: true }
-        })
-        const db = getTenantDb(linkedUser.companyId)
-        return { ...linkedUser, db }
-      }
+    if (provisionedUser) {
+      const db = getTenantDb(provisionedUser.companyId)
+      return { ...provisionedUser, db }
     }
 
     redirect('/onboarding')

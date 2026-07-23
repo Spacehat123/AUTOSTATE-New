@@ -1,11 +1,19 @@
 import { NextRequest, NextResponse } from 'next/server'
 import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
+import { requireAuthorizedUser, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 import { sendTextMessage } from '@/lib/whatsapp'
 import { getWhatsappCredentials } from '@/lib/whatsapp-credentials'
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
 
   try {
     const company = await prisma.company.findUnique({

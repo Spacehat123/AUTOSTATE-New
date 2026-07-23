@@ -32,3 +32,23 @@ export function requireRole(user: { role: UserRole }, minRole: UserRole) {
 export function roleErrorResponse() {
   return Response.json({ error: 'insufficient_role' }, { status: 403 })
 }
+
+/**
+ * Checks if a user is authorized by the company owner.
+ * Owners are always authorized. Admins must be explicitly authorized.
+ */
+export function isAuthorizedUser(user: { role: UserRole; isAuthorizedByOwner?: boolean }) {
+  if (user.role === 'OWNER') return true
+  if (user.role === 'ADMIN' && user.isAuthorizedByOwner === true) return true
+  return false
+}
+
+/**
+ * Ensures the user is authorized by the company owner.
+ * Throws an InsufficientRoleError if they do not.
+ */
+export function requireAuthorizedUser(user: { role: UserRole; isAuthorizedByOwner?: boolean }) {
+  if (!isAuthorizedUser(user)) {
+    throw new InsufficientRoleError()
+  }
+}

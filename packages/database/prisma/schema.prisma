@@ -32,15 +32,16 @@ model Company {
 }
 
 model User {
-  id        String   @id @default(cuid())
-  clerkId   String   @unique
-  email     String   @unique
-  name      String?
-  role      UserRole @default(MEMBER)
-  companyId String
-  company   Company  @relation(fields: [companyId], references: [id])
-  createdAt DateTime @default(now())
-  updatedAt DateTime @updatedAt
+  id                  String   @id @default(cuid())
+  clerkId             String   @unique
+  email               String   @unique
+  name                String?
+  role                UserRole @default(MEMBER)
+  isAuthorizedByOwner Boolean  @default(false)
+  companyId           String
+  company             Company  @relation(fields: [companyId], references: [id])
+  createdAt           DateTime @default(now())
+  updatedAt           DateTime @updatedAt
 
   tasks Task[]
   actionItems ActionItem[]

@@ -1,7 +1,7 @@
 'use client'
 
 import React, { useState, useEffect } from 'react'
-import { Loader2, Users, AlertTriangle, Trash2, UserPlus } from 'lucide-react'
+import { Loader2, Users, AlertTriangle, Trash2, UserPlus, MoreHorizontal, Shield, ShieldOff } from 'lucide-react'
 import { toast } from 'sonner'
 import { Button } from '@/components/ui/button'
 import { Input } from '@/components/ui/input'
@@ -21,12 +21,19 @@ import {
   SelectTrigger,
   SelectValue,
 } from '@/components/ui/select'
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuItem,
+  DropdownMenuTrigger,
+} from '@/components/ui/dropdown-menu'
 
 interface User {
   id: string
   name: string | null
   email: string
   role: 'OWNER' | 'ADMIN' | 'MEMBER'
+  isAuthorizedByOwner?: boolean
   createdAt: string
 }
 
@@ -80,9 +87,34 @@ export function UsersSettings() {
       }
       
       toast.success('User role updated')
+      fetchUsers()
     } catch (error: any) {
       toast.error(error.message)
       // Revert optimistic update on failure by refetching
+      fetchUsers()
+    }
+  }
+
+  const handleToggleAuthorization = async (userId: string, currentAuth: boolean) => {
+    // Optimistic UI update
+    setUsers(prev => prev.map(u => u.id === userId ? { ...u, isAuthorizedByOwner: !currentAuth } : u))
+    
+    try {
+      const res = await fetch(`/api/team/${userId}`, {
+        method: 'PATCH',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ isAuthorizedByOwner: !currentAuth })
+      })
+
+      if (!res.ok) {
+        const error = await res.json()
+        throw new Error(error.error || 'Failed to update authorization')
+      }
+      
+      toast.success('User authorization updated')
+      fetchUsers()
+    } catch (error: any) {
+      toast.error(error.message)
       fetchUsers()
     }
   }
@@ -275,14 +307,34 @@ export function UsersSettings() {
                 </SelectContent>
               </Select>
               
-              <Button 
-                variant="ghost" 
-                size="icon" 
-                className="text-zinc-500 hover:text-rose-500 hover:bg-rose-500/10 h-9 w-9"
-                onClick={() => handleDelete(user.id)}
-              >
-                <Trash2 className="w-4 h-4" />
-              </Button>
+              <DropdownMenu>
+                <DropdownMenuTrigger asChild>
+                  <Button variant="ghost" size="icon" className="h-9 w-9 text-zinc-400 hover:text-foreground">
+                    <MoreHorizontal className="w-4 h-4" />
+                  </Button>
+                </DropdownMenuTrigger>
+                <DropdownMenuContent align="end" className="w-48">
+                  {user.role === 'ADMIN' && (
+                    <DropdownMenuItem onClick={() => handleToggleAuthorization(user.id, !!user.isAuthorizedByOwner)}>
+                      {user.isAuthorizedByOwner ? (
+                        <>
+                          <ShieldOff className="w-4 h-4 mr-2" />
+                          Revoke Settings Access
+                        </>
+                      ) : (
+                        <>
+                          <Shield className="w-4 h-4 mr-2" />
+                          Authorize Settings Access
+                        </>
+                      )}
+                    </DropdownMenuItem>
+                  )}
+                  <DropdownMenuItem onClick={() => handleDelete(user.id)} className="text-rose-500 focus:text-rose-500">
+                    <Trash2 className="w-4 h-4 mr-2" />
+                    Remove User
+                  </DropdownMenuItem>
+                </DropdownMenuContent>
+              </DropdownMenu>
             </div>
           </div>
         ))}

@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { InvoiceStatus, prisma } from '@autostate/database'
 import { parseExcelFile, type ImportPreviewRow } from '@autostate/importer'
 import { getCurrentUser } from '@/lib/auth'
+import { requireAuthorizedUser, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 export const dynamic = 'force-dynamic'
 
@@ -29,6 +30,14 @@ function isPreviewRow(value: unknown): value is ImportPreviewRow {
 
 export async function GET() {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
+
   try {
     // user.db is the tenant-scoped client — automatically filters by companyId
     const jobs = await user.db.importJob.findMany({
@@ -44,6 +53,14 @@ export async function GET() {
 
 export async function POST(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
+
   const contentType = request.headers.get('content-type') || ''
 
   if (contentType.includes('multipart/form-data')) {

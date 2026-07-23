@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from 'next/server'
 import { z } from 'zod'
 import { prisma } from '@autostate/database'
 import { getCurrentUser } from '@/lib/auth'
+import { requireAuthorizedUser, InsufficientRoleError, roleErrorResponse } from '@/lib/rbac'
 
 const companySettingsSchema = z.object({
   name: z.string().min(1, 'Company name is required'),
@@ -13,6 +14,13 @@ const companySettingsSchema = z.object({
 
 export async function GET(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
 
   try {
     const company = await prisma.company.findUnique({
@@ -40,6 +48,13 @@ export async function GET(request: NextRequest) {
 
 export async function PATCH(request: NextRequest) {
   const user = await getCurrentUser()
+
+  try {
+    requireAuthorizedUser(user)
+  } catch (error) {
+    if (error instanceof InsufficientRoleError) return roleErrorResponse()
+    throw error
+  }
 
   try {
     const body = await request.json()
