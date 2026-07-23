@@ -31,6 +31,8 @@ export type MessageMinAggregateOutputType = {
   direction: $Enums.MessageDirection | null
   content: string | null
   aiSummary: string | null
+  aiDraftReply: string | null
+  aiDraftStatus: string | null
   whatsappId: string | null
   timestamp: Date | null
   createdAt: Date | null
@@ -43,6 +45,8 @@ export type MessageMaxAggregateOutputType = {
   direction: $Enums.MessageDirection | null
   content: string | null
   aiSummary: string | null
+  aiDraftReply: string | null
+  aiDraftStatus: string | null
   whatsappId: string | null
   timestamp: Date | null
   createdAt: Date | null
@@ -55,6 +59,8 @@ export type MessageCountAggregateOutputType = {
   direction: number
   content: number
   aiSummary: number
+  aiDraftReply: number
+  aiDraftStatus: number
   whatsappId: number
   timestamp: number
   createdAt: number
@@ -69,6 +75,8 @@ export type MessageMinAggregateInputType = {
   direction?: true
   content?: true
   aiSummary?: true
+  aiDraftReply?: true
+  aiDraftStatus?: true
   whatsappId?: true
   timestamp?: true
   createdAt?: true
@@ -81,6 +89,8 @@ export type MessageMaxAggregateInputType = {
   direction?: true
   content?: true
   aiSummary?: true
+  aiDraftReply?: true
+  aiDraftStatus?: true
   whatsappId?: true
   timestamp?: true
   createdAt?: true
@@ -93,6 +103,8 @@ export type MessageCountAggregateInputType = {
   direction?: true
   content?: true
   aiSummary?: true
+  aiDraftReply?: true
+  aiDraftStatus?: true
   whatsappId?: true
   timestamp?: true
   createdAt?: true
@@ -178,6 +190,8 @@ export type MessageGroupByOutputType = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary: string | null
+  aiDraftReply: string | null
+  aiDraftStatus: string | null
   whatsappId: string | null
   timestamp: Date
   createdAt: Date
@@ -211,6 +225,8 @@ export type MessageWhereInput = {
   direction?: Prisma.EnumMessageDirectionFilter<"Message"> | $Enums.MessageDirection
   content?: Prisma.StringFilter<"Message"> | string
   aiSummary?: Prisma.StringNullableFilter<"Message"> | string | null
+  aiDraftReply?: Prisma.StringNullableFilter<"Message"> | string | null
+  aiDraftStatus?: Prisma.StringNullableFilter<"Message"> | string | null
   whatsappId?: Prisma.StringNullableFilter<"Message"> | string | null
   timestamp?: Prisma.DateTimeFilter<"Message"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
@@ -225,6 +241,8 @@ export type MessageOrderByWithRelationInput = {
   direction?: Prisma.SortOrder
   content?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiDraftReply?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiDraftStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappId?: Prisma.SortOrderInput | Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -243,6 +261,8 @@ export type MessageWhereUniqueInput = Prisma.AtLeast<{
   direction?: Prisma.EnumMessageDirectionFilter<"Message"> | $Enums.MessageDirection
   content?: Prisma.StringFilter<"Message"> | string
   aiSummary?: Prisma.StringNullableFilter<"Message"> | string | null
+  aiDraftReply?: Prisma.StringNullableFilter<"Message"> | string | null
+  aiDraftStatus?: Prisma.StringNullableFilter<"Message"> | string | null
   timestamp?: Prisma.DateTimeFilter<"Message"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
   customer?: Prisma.XOR<Prisma.CustomerScalarRelationFilter, Prisma.CustomerWhereInput>
@@ -256,6 +276,8 @@ export type MessageOrderByWithAggregationInput = {
   direction?: Prisma.SortOrder
   content?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiDraftReply?: Prisma.SortOrderInput | Prisma.SortOrder
+  aiDraftStatus?: Prisma.SortOrderInput | Prisma.SortOrder
   whatsappId?: Prisma.SortOrderInput | Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -274,6 +296,8 @@ export type MessageScalarWhereWithAggregatesInput = {
   direction?: Prisma.EnumMessageDirectionWithAggregatesFilter<"Message"> | $Enums.MessageDirection
   content?: Prisma.StringWithAggregatesFilter<"Message"> | string
   aiSummary?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
+  aiDraftReply?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
+  aiDraftStatus?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
   whatsappId?: Prisma.StringNullableWithAggregatesFilter<"Message"> | string | null
   timestamp?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Message"> | Date | string
@@ -285,6 +309,8 @@ export type MessageCreateInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -299,6 +325,8 @@ export type MessageUncheckedCreateInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -311,6 +339,8 @@ export type MessageUpdateInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -325,6 +355,8 @@ export type MessageUncheckedUpdateInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -338,6 +370,8 @@ export type MessageCreateManyInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -349,6 +383,8 @@ export type MessageUpdateManyMutationInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -361,6 +397,8 @@ export type MessageUncheckedUpdateManyInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -383,6 +421,8 @@ export type MessageCountOrderByAggregateInput = {
   direction?: Prisma.SortOrder
   content?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrder
+  aiDraftReply?: Prisma.SortOrder
+  aiDraftStatus?: Prisma.SortOrder
   whatsappId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -395,6 +435,8 @@ export type MessageMaxOrderByAggregateInput = {
   direction?: Prisma.SortOrder
   content?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrder
+  aiDraftReply?: Prisma.SortOrder
+  aiDraftStatus?: Prisma.SortOrder
   whatsappId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -407,6 +449,8 @@ export type MessageMinOrderByAggregateInput = {
   direction?: Prisma.SortOrder
   content?: Prisma.SortOrder
   aiSummary?: Prisma.SortOrder
+  aiDraftReply?: Prisma.SortOrder
+  aiDraftStatus?: Prisma.SortOrder
   whatsappId?: Prisma.SortOrder
   timestamp?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -489,6 +533,8 @@ export type MessageCreateWithoutCustomerInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -501,6 +547,8 @@ export type MessageUncheckedCreateWithoutCustomerInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -543,6 +591,8 @@ export type MessageScalarWhereInput = {
   direction?: Prisma.EnumMessageDirectionFilter<"Message"> | $Enums.MessageDirection
   content?: Prisma.StringFilter<"Message"> | string
   aiSummary?: Prisma.StringNullableFilter<"Message"> | string | null
+  aiDraftReply?: Prisma.StringNullableFilter<"Message"> | string | null
+  aiDraftStatus?: Prisma.StringNullableFilter<"Message"> | string | null
   whatsappId?: Prisma.StringNullableFilter<"Message"> | string | null
   timestamp?: Prisma.DateTimeFilter<"Message"> | Date | string
   createdAt?: Prisma.DateTimeFilter<"Message"> | Date | string
@@ -554,6 +604,8 @@ export type MessageCreateWithoutPromisesInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -567,6 +619,8 @@ export type MessageUncheckedCreateWithoutPromisesInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -594,6 +648,8 @@ export type MessageUpdateWithoutPromisesInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -607,6 +663,8 @@ export type MessageUncheckedUpdateWithoutPromisesInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -618,6 +676,8 @@ export type MessageCreateManyCustomerInput = {
   direction: $Enums.MessageDirection
   content: string
   aiSummary?: string | null
+  aiDraftReply?: string | null
+  aiDraftStatus?: string | null
   whatsappId?: string | null
   timestamp?: Date | string
   createdAt?: Date | string
@@ -629,6 +689,8 @@ export type MessageUpdateWithoutCustomerInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -641,6 +703,8 @@ export type MessageUncheckedUpdateWithoutCustomerInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -653,6 +717,8 @@ export type MessageUncheckedUpdateManyWithoutCustomerInput = {
   direction?: Prisma.EnumMessageDirectionFieldUpdateOperationsInput | $Enums.MessageDirection
   content?: Prisma.StringFieldUpdateOperationsInput | string
   aiSummary?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftReply?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  aiDraftStatus?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   whatsappId?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   timestamp?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -696,6 +762,8 @@ export type MessageSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   direction?: boolean
   content?: boolean
   aiSummary?: boolean
+  aiDraftReply?: boolean
+  aiDraftStatus?: boolean
   whatsappId?: boolean
   timestamp?: boolean
   createdAt?: boolean
@@ -711,6 +779,8 @@ export type MessageSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   direction?: boolean
   content?: boolean
   aiSummary?: boolean
+  aiDraftReply?: boolean
+  aiDraftStatus?: boolean
   whatsappId?: boolean
   timestamp?: boolean
   createdAt?: boolean
@@ -724,6 +794,8 @@ export type MessageSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   direction?: boolean
   content?: boolean
   aiSummary?: boolean
+  aiDraftReply?: boolean
+  aiDraftStatus?: boolean
   whatsappId?: boolean
   timestamp?: boolean
   createdAt?: boolean
@@ -737,12 +809,14 @@ export type MessageSelectScalar = {
   direction?: boolean
   content?: boolean
   aiSummary?: boolean
+  aiDraftReply?: boolean
+  aiDraftStatus?: boolean
   whatsappId?: boolean
   timestamp?: boolean
   createdAt?: boolean
 }
 
-export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "type" | "direction" | "content" | "aiSummary" | "whatsappId" | "timestamp" | "createdAt", ExtArgs["result"]["message"]>
+export type MessageOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "customerId" | "type" | "direction" | "content" | "aiSummary" | "aiDraftReply" | "aiDraftStatus" | "whatsappId" | "timestamp" | "createdAt", ExtArgs["result"]["message"]>
 export type MessageInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   customer?: boolean | Prisma.CustomerDefaultArgs<ExtArgs>
   promises?: boolean | Prisma.Message$promisesArgs<ExtArgs>
@@ -768,6 +842,8 @@ export type $MessagePayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     direction: $Enums.MessageDirection
     content: string
     aiSummary: string | null
+    aiDraftReply: string | null
+    aiDraftStatus: string | null
     whatsappId: string | null
     timestamp: Date
     createdAt: Date
@@ -1202,6 +1278,8 @@ export interface MessageFieldRefs {
   readonly direction: Prisma.FieldRef<"Message", 'MessageDirection'>
   readonly content: Prisma.FieldRef<"Message", 'String'>
   readonly aiSummary: Prisma.FieldRef<"Message", 'String'>
+  readonly aiDraftReply: Prisma.FieldRef<"Message", 'String'>
+  readonly aiDraftStatus: Prisma.FieldRef<"Message", 'String'>
   readonly whatsappId: Prisma.FieldRef<"Message", 'String'>
   readonly timestamp: Prisma.FieldRef<"Message", 'DateTime'>
   readonly createdAt: Prisma.FieldRef<"Message", 'DateTime'>

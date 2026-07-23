@@ -1675,6 +1675,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const CustomerScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  creditBalance: 'creditBalance',
+  currency: 'currency',
   phone: 'phone',
   email: 'email',
   gstNumber: 'gstNumber',
@@ -1716,6 +1718,7 @@ export type CompanyIntegrationScalarFieldEnum = (typeof CompanyIntegrationScalar
 
 export const InvoiceScalarFieldEnum = {
   id: 'id',
+  currency: 'currency',
   invoiceNumber: 'invoiceNumber',
   amount: 'amount',
   issueDate: 'issueDate',
@@ -1738,6 +1741,7 @@ export const PaymentScalarFieldEnum = {
   amount: 'amount',
   receivedAt: 'receivedAt',
   reference: 'reference',
+  idempotencyKey: 'idempotencyKey',
   method: 'method',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -1765,6 +1769,8 @@ export const MessageScalarFieldEnum = {
   direction: 'direction',
   content: 'content',
   aiSummary: 'aiSummary',
+  aiDraftReply: 'aiDraftReply',
+  aiDraftStatus: 'aiDraftStatus',
   whatsappId: 'whatsappId',
   timestamp: 'timestamp',
   createdAt: 'createdAt'
@@ -1827,6 +1833,8 @@ export const ImportJobScalarFieldEnum = {
   companyId: 'companyId',
   fileName: 'fileName',
   status: 'status',
+  type: 'type',
+  fileHash: 'fileHash',
   totalRows: 'totalRows',
   processedRows: 'processedRows',
   errorLog: 'errorLog',
@@ -1992,6 +2000,20 @@ export type ListEnumUserRoleFieldRefInput<$PrismaModel> = FieldRefInputType<$Pri
 
 
 /**
+ * Reference to a field of type 'Decimal'
+ */
+export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
+    
+
+
+/**
+ * Reference to a field of type 'Decimal[]'
+ */
+export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
+    
+
+
+/**
  * Reference to a field of type 'Int'
  */
 export type IntFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Int'>
@@ -2016,20 +2038,6 @@ export type JsonFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'J
  * Reference to a field of type 'QueryMode'
  */
 export type EnumQueryModeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'QueryMode'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal'
- */
-export type DecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal'>
-    
-
-
-/**
- * Reference to a field of type 'Decimal[]'
- */
-export type ListDecimalFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'Decimal[]'>
     
 
 
@@ -2156,6 +2164,20 @@ export type EnumImportJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$
  * Reference to a field of type 'ImportJobStatus[]'
  */
 export type ListEnumImportJobStatusFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportJobStatus[]'>
+    
+
+
+/**
+ * Reference to a field of type 'ImportType'
+ */
+export type EnumImportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportType'>
+    
+
+
+/**
+ * Reference to a field of type 'ImportType[]'
+ */
+export type ListEnumImportTypeFieldRefInput<$PrismaModel> = FieldRefInputType<$PrismaModel, 'ImportType[]'>
     
 
 

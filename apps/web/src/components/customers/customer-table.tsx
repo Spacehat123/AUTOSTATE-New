@@ -178,7 +178,15 @@ export function CustomerTable({ initialData, initialTotal }: CustomerTableProps)
                       className="rounded border-surface-border bg-surface-card w-4 h-4 text-brand-600 focus:ring-brand-500"
                     />
                   </TableCell>
-                  <TableCell className="font-semibold text-foreground py-4">{customer.name}</TableCell>
+                  <TableCell className="py-4">
+                    <div className="font-semibold text-foreground">{customer.name}</div>
+                    {(customer.email || customer.phone) && (
+                      <div className="text-xs text-muted-foreground mt-1 flex flex-col gap-0.5">
+                        {customer.email && <span>{customer.email}</span>}
+                        {customer.phone && <span>{customer.phone}</span>}
+                      </div>
+                    )}
+                  </TableCell>
                   <TableCell className="py-4">
                     <CurrencyDisplay value={customer.totalPaid || 0} compact className="text-emerald-500 font-semibold" />
                   </TableCell>

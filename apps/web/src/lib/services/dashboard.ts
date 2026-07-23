@@ -10,9 +10,14 @@ export async function getDashboardData(companyId: string) {
   const nextWeek = new Date(today)
   nextWeek.setDate(today.getDate() + 7)
 
+  const firstDayOfMonth = new Date(today.getFullYear(), today.getMonth(), 1)
+
   const [
     collectionsResult,
     overdueResult,
+    outstandingResult,
+    cashCollectedThisMonthResult,
+    activePromisesCount,
     overdueCustomersCount,
     overdueInvoicesCount,
     needsAttentionTasks,
@@ -34,17 +39,34 @@ export async function getDashboardData(companyId: string) {
       _sum: { outstandingAmount: true },
     }),
 
-    // 3. overdueCustomersCount
+    // 3. totalOutstanding
+    prisma.invoice.aggregate({
+      where: { customer: { companyId }, outstandingAmount: { gt: 0 } },
+      _sum: { outstandingAmount: true },
+    }),
+
+    // 4. cashCollectedThisMonth
+    prisma.payment.aggregate({
+      where: { companyId, receivedAt: { gte: firstDayOfMonth } },
+      _sum: { amount: true },
+    }),
+
+    // 5. activePromisesToPay (Count)
+    prisma.promise.count({
+      where: { customer: { companyId }, status: 'PENDING' }
+    }),
+
+    // 6. overdueCustomersCount
     prisma.customer.count({
       where: { companyId, invoices: { some: { outstandingAmount: { gt: 0 }, dueDate: { lt: today } } } },
     }),
 
-    // 4. overdueInvoicesCount
+    // 7. overdueInvoicesCount
     prisma.invoice.count({
       where: { customer: { companyId }, outstandingAmount: { gt: 0 }, dueDate: { lt: today } },
     }),
 
-    // 5. needsAttentionTasks (High priority tasks)
+    // 8. needsAttentionTasks (High priority tasks)
     prisma.task.findMany({
       where: { customer: { companyId }, status: 'PENDING', priority: { gte: 70 } },
       orderBy: { priority: 'desc' },
@@ -52,7 +74,7 @@ export async function getDashboardData(companyId: string) {
       include: { customer: true },
     }),
 
-    // 6. todaysTasks
+    // 9. todaysTasks
     prisma.task.findMany({
       where: { customer: { companyId }, status: 'PENDING' },
       orderBy: { priority: 'desc' },
@@ -69,13 +91,13 @@ export async function getDashboardData(companyId: string) {
       },
     }),
 
-    // 7. monthlyCollections: All paid invoices this month
+    // 10. monthlyCollections: All paid invoices this month
     prisma.payment.findMany({
-      where: { companyId, receivedAt: { gte: new Date(today.getFullYear(), today.getMonth(), 1) } },
+      where: { companyId, receivedAt: { gte: firstDayOfMonth } },
       select: { amount: true, receivedAt: true }
     }),
 
-    // 8. recentMessages
+    // 11. recentMessages
     prisma.message.findMany({
       where: { customer: { companyId } },
       orderBy: { createdAt: 'desc' },
@@ -83,7 +105,7 @@ export async function getDashboardData(companyId: string) {
       include: { customer: true }
     }),
 
-    // 9. recentPayments
+    // 12. recentPayments
     prisma.payment.findMany({
       where: { companyId },
       orderBy: { receivedAt: 'desc' },
@@ -91,7 +113,7 @@ export async function getDashboardData(companyId: string) {
       include: { allocations: { include: { invoice: { include: { customer: true } } } } }
     }),
 
-    // 10. expectedResult
+    // 13. expectedResult
     prisma.invoice.aggregate({
       where: { customer: { companyId }, status: 'PENDING', dueDate: { gte: today, lte: nextWeek } },
       _sum: { amount: true }
@@ -135,6 +157,9 @@ export async function getDashboardData(companyId: string) {
   return {
     todaysCollections: collectionsResult._sum.amount || 0,
     totalOverdue: overdueResult._sum.outstandingAmount || 0,
+    totalOutstanding: outstandingResult._sum.outstandingAmount || 0,
+    cashCollectedThisMonth: cashCollectedThisMonthResult._sum.amount || 0,
+    activePromisesToPay: activePromisesCount || 0,
     expectedCollections: expectedResult._sum.amount || 0,
     overdueCustomersCount,
     overdueInvoicesCount,

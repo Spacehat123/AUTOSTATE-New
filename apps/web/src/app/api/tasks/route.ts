@@ -11,17 +11,24 @@ export async function GET(request: NextRequest) {
   
   const status = (searchParams.get('status') || 'PENDING') as TaskStatus
   const type = (searchParams.get('type') as TaskType) || undefined
+  const assignedTo = searchParams.get('assignedTo') || undefined
 
   try {
     const result = await getTasks({
       db: user.db,
       status,
-      type
+      type,
+      assignedTo,
+      requestingUserRole: user.role,
+      requestingUserId: user.id
     })
 
     return NextResponse.json(result)
-  } catch (error) {
+  } catch (error: any) {
     console.error('[TASKS_GET]', error)
+    if (error.message === "Unauthorized to view other users' assigned tasks") {
+      return NextResponse.json({ error: 'Unauthorized' }, { status: 403 })
+    }
     return NextResponse.json({ error: 'Internal Server Error' }, { status: 500 })
   }
 }

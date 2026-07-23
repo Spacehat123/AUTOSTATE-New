@@ -21,7 +21,7 @@ function extractWhatsappMessage(payload: any) {
       text: msg.text?.body ?? '',
       timestamp: new Date(Number(msg.timestamp) * 1000)
     }
-  } catch (e) {
+  } catch {
     return null
   }
 }
@@ -142,6 +142,130 @@ export const processWhatsappInbox = inngest.createFunction(
   }
 )
 
+// Helper to safely extract Email message data from the webhook payload
+function extractEmailMessage(payload: any) {
+  try {
+    const fromStr = payload?.from || payload?.sender || '';
+    const emailMatch = fromStr.match(/<([^>]+)>/);
+    const email = emailMatch ? emailMatch[1] : fromStr;
+
+    if (!email || typeof email !== 'string') return null;
+
+    return {
+      id: payload?.messageId || payload?.id || String(Date.now()),
+      email: email.toLowerCase().trim(),
+      text: payload?.text || payload?.textBody || payload?.body || '',
+      timestamp: payload?.timestamp ? new Date(payload.timestamp) : new Date()
+    }
+  } catch {
+    return null
+  }
+}
+
+export const processEmailInbox = inngest.createFunction(
+  { id: 'process-email-inbox', triggers: [{ event: 'inbox.email.received' }] },
+  async ({ event, step }) => {
+    const { inboxEventId } = event.data
+
+    const claimed = await step.run('atomic-claim', async () => {
+      const tenMinutesAgo = new Date(Date.now() - 10 * 60 * 1000);
+      
+      const updateResult = await prisma.inboxEvent.updateMany({
+        where: {
+          id: inboxEventId,
+          attempts: { lt: MAX_ATTEMPTS },
+          OR: [
+            { status: { in: ['RECEIVED', 'QUEUED'] } },
+            { status: 'PROCESSING', updatedAt: { lt: tenMinutesAgo } }
+          ]
+        },
+        data: { 
+          status: 'PROCESSING', 
+          attempts: { increment: 1 } 
+        }
+      });
+
+      if (updateResult.count === 0) {
+        const ev = await prisma.inboxEvent.findUnique({ where: { id: inboxEventId } });
+        if (ev && ev.attempts >= MAX_ATTEMPTS) {
+          await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'FAILED_PERMANENT' }});
+        }
+        return false;
+      }
+      return true;
+    });
+
+    if (!claimed) return { status: 'claimed_or_poisoned' };
+
+    const inboxEvent = await step.run('fetch', () => prisma.inboxEvent.findUniqueOrThrow({ where: { id: inboxEventId } }));
+
+    const msg = extractEmailMessage(inboxEvent.payload)
+    if (!msg) {
+      await step.run('mark-ignored', () => 
+        prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'IGNORED' } })
+      )
+      return { status: 'ignored' }
+    }
+
+    await step.run('store-provider-id', () => prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { providerEventId: msg.id } }));
+
+    const processResult = await step.run('process-message', async () => {
+      if (!inboxEvent.companyId) {
+        await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'FAILED', lastError: 'No companyId on inboxEvent' } })
+        throw new Error('No companyId on inboxEvent')
+      }
+
+      const customer = await prisma.customer.findFirst({ 
+        where: { 
+          email: msg.email,
+          companyId: inboxEvent.companyId 
+        } 
+      })
+      if (!customer) {
+          await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'FAILED', lastError: 'Customer not found' } })
+          throw new Error('Customer not found')
+      }
+
+      try {
+        const [newMessage] = await prisma.$transaction([
+          prisma.message.create({
+            data: {
+              customerId: customer.id,
+              type: 'EMAIL',
+              direction: 'INCOMING',
+              content: msg.text,
+              timestamp: msg.timestamp
+            }
+          }),
+          prisma.inboxEvent.update({ 
+            where: { id: inboxEventId }, 
+            data: { status: 'PROCESSED', processedAt: new Date(), companyId: customer.companyId } 
+          })
+        ])
+
+        return { status: 'created', messageId: newMessage.id, customerId: customer.id }
+      } catch (error: any) {
+        if (error instanceof Prisma.PrismaClientKnownRequestError && error.code === 'P2002') {
+          await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { status: 'IGNORED', lastError: 'Duplicate P2002' } })
+          return { status: 'duplicate' }
+        }
+        
+        await prisma.inboxEvent.update({ where: { id: inboxEventId }, data: { lastError: error.message, status: 'FAILED' } })
+        throw error
+      }
+    })
+
+    if (processResult.status === 'created') {
+      const createdResult = processResult as { status: 'created', messageId: string, customerId: string };
+      await step.sendEvent('trigger-ai', {
+        name: 'message.analyze',
+        data: { messageId: createdResult.messageId, customerId: createdResult.customerId }
+      })
+    }
+
+    return processResult
+  }
+)
 // ─────────────────────────────────────────────────────────────────────────────
 // SAFETY NET: Sweep stuck events (RECEIVED, QUEUED, stale PROCESSING)
 // ─────────────────────────────────────────────────────────────────────────────

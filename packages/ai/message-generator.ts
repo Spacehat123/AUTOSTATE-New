@@ -73,3 +73,30 @@ INSTRUCTIONS:
     return `Hi ${customerName}, this is a reminder regarding your outstanding balance of ${formattedAmount} for ${invoicesStr} which is ${daysOverdue} days overdue. Please arrange payment at your earliest convenience.`
   }
 }
+
+export async function generateDraftReply(
+  customerName: string,
+  messageContent: string
+): Promise<string> {
+  const prompt = `You are an AI assistant helping to draft a reply to a customer's message.
+  
+CUSTOMER NAME: ${customerName}
+CUSTOMER MESSAGE: "${messageContent}"
+
+INSTRUCTIONS:
+1. Write a short, professional, and helpful reply to the customer's message.
+2. The message will be sent via SMS or WhatsApp, so keep it concise (under 300 characters).
+3. Do NOT include placeholders like [Your Name]. Just provide the text of the reply.
+4. Respond ONLY with the text of the message.`
+
+  try {
+    const { text } = await generateText({
+      model: fastModel as any,
+      prompt
+    })
+    return text.trim()
+  } catch (error) {
+    logger.error({ error }, 'Failed to generate draft reply')
+    return `Hi ${customerName}, we received your message and will get back to you shortly.`
+  }
+}

@@ -19,7 +19,10 @@ export { generateTasksForCompany } from './task-generator'
 export { parseReply } from './reply-parser'
 export type { ParsedReply } from './reply-parser'
 
-export { generateCollectionMessage } from './message-generator'
+export { extractPromise, PromiseExtractionSchema } from './extract-promise'
+export type { PromiseExtractionResult, ExtractPromiseOptions } from './extract-promise'
+
+export { generateCollectionMessage, generateDraftReply } from './message-generator'
 export type { MessageGenerationParams } from './message-generator'
 
 export { generateRelationshipSummary } from './relationship-summary'

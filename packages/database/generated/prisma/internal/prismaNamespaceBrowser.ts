@@ -118,6 +118,8 @@ export type UserScalarFieldEnum = (typeof UserScalarFieldEnum)[keyof typeof User
 export const CustomerScalarFieldEnum = {
   id: 'id',
   name: 'name',
+  creditBalance: 'creditBalance',
+  currency: 'currency',
   phone: 'phone',
   email: 'email',
   gstNumber: 'gstNumber',
@@ -159,6 +161,7 @@ export type CompanyIntegrationScalarFieldEnum = (typeof CompanyIntegrationScalar
 
 export const InvoiceScalarFieldEnum = {
   id: 'id',
+  currency: 'currency',
   invoiceNumber: 'invoiceNumber',
   amount: 'amount',
   issueDate: 'issueDate',
@@ -181,6 +184,7 @@ export const PaymentScalarFieldEnum = {
   amount: 'amount',
   receivedAt: 'receivedAt',
   reference: 'reference',
+  idempotencyKey: 'idempotencyKey',
   method: 'method',
   notes: 'notes',
   createdAt: 'createdAt',
@@ -208,6 +212,8 @@ export const MessageScalarFieldEnum = {
   direction: 'direction',
   content: 'content',
   aiSummary: 'aiSummary',
+  aiDraftReply: 'aiDraftReply',
+  aiDraftStatus: 'aiDraftStatus',
   whatsappId: 'whatsappId',
   timestamp: 'timestamp',
   createdAt: 'createdAt'
@@ -270,6 +276,8 @@ export const ImportJobScalarFieldEnum = {
   companyId: 'companyId',
   fileName: 'fileName',
   status: 'status',
+  type: 'type',
+  fileHash: 'fileHash',
   totalRows: 'totalRows',
   processedRows: 'processedRows',
   errorLog: 'errorLog',

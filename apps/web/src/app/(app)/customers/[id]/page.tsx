@@ -68,6 +68,13 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
             <span className="text-surface-border">|</span>
             <CustomerLanguage customerId={customer.id} initialLanguage={customer.preferredLanguage as string | null} />
           </div>
+          {(customer.email || customer.phone) && (
+            <div className="flex items-center gap-3 text-sm text-zinc-400 mt-2">
+              {customer.email && <span>{customer.email}</span>}
+              {customer.email && customer.phone && <span className="text-surface-border">|</span>}
+              {customer.phone && <span>{customer.phone}</span>}
+            </div>
+          )}
         </div>
       </div>
 
@@ -82,7 +89,7 @@ export default async function CustomerProfilePage({ params }: { params: Promise<
         {/* Right Column */}
         <div className="flex flex-col gap-6">
           <CustomerActions customerId={customer.id} openInvoices={openInvoices as any} />
-          <CommunicationTimeline messages={customer.messages} />
+          <CommunicationTimeline customerId={customer.id} messages={customer.messages} />
         </div>
       </div>
     </div>

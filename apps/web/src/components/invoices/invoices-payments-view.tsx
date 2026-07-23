@@ -3,7 +3,8 @@
 import React, { useState, useMemo } from 'react'
 import Link from 'next/link'
 import { format, differenceInDays } from 'date-fns'
-import { FileText, CreditCard, Search, ChevronUp, ChevronDown } from 'lucide-react'
+import { RecordPaymentModal } from '@/components/invoices/record-payment-modal'
+import { FileText, DollarSign, CreditCard, Search, ChevronUp, ChevronDown } from 'lucide-react'
 import { CurrencyDisplay } from '@/components/shared/currency-display'
 import { EmptyState } from '@/components/shared/empty-state'
 
@@ -119,8 +120,9 @@ function InvoiceTable({ invoices }: { invoices: Invoice[] }) {
   return (
     <div className="space-y-4">
       {/* Filters */}
-      <div className="flex flex-col sm:flex-row gap-3">
-        <div className="relative flex-1 max-w-sm">
+      <div className="flex flex-col sm:flex-row gap-3 justify-between">
+        <div className="flex flex-col sm:flex-row gap-3 flex-1">
+          <div className="relative flex-1 max-w-sm">
           <Search className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-zinc-500" />
           <input
             value={search}
@@ -145,8 +147,9 @@ function InvoiceTable({ invoices }: { invoices: Invoice[] }) {
           ))}
         </div>
       </div>
+    </div>
 
-      {/* Stats row */}
+    {/* Stats row */}
       <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
         {[
           { label: 'Total', value: invoices.length, suffix: 'invoices' },

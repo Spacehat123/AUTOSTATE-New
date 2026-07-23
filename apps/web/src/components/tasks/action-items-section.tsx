@@ -7,9 +7,9 @@ import { Button } from '@/components/ui/button'
 import { toast } from 'sonner'
 import { Card } from '@/components/ui/card'
 
-export function ActionItemsSection() {
-  const [items, setItems] = useState<any[]>([])
-  const [loading, setLoading] = useState(true)
+export function ActionItemsSection({ initialItems = [] }: { initialItems?: any[] }) {
+  const [items, setItems] = useState<any[]>(initialItems)
+  const [loading, setLoading] = useState(false)
   const [title, setTitle] = useState('')
   const [isSubmitting, setIsSubmitting] = useState(false)
 
@@ -26,10 +26,6 @@ export function ActionItemsSection() {
       setLoading(false)
     }
   }
-
-  useEffect(() => {
-    fetchItems()
-  }, [])
 
   const handleAdd = async (e: React.FormEvent) => {
     e.preventDefault()

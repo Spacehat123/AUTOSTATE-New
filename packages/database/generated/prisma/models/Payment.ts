@@ -40,6 +40,7 @@ export type PaymentMinAggregateOutputType = {
   amount: runtime.Decimal | null
   receivedAt: Date | null
   reference: string | null
+  idempotencyKey: string | null
   method: string | null
   notes: string | null
   createdAt: Date | null
@@ -52,6 +53,7 @@ export type PaymentMaxAggregateOutputType = {
   amount: runtime.Decimal | null
   receivedAt: Date | null
   reference: string | null
+  idempotencyKey: string | null
   method: string | null
   notes: string | null
   createdAt: Date | null
@@ -64,6 +66,7 @@ export type PaymentCountAggregateOutputType = {
   amount: number
   receivedAt: number
   reference: number
+  idempotencyKey: number
   method: number
   notes: number
   createdAt: number
@@ -86,6 +89,7 @@ export type PaymentMinAggregateInputType = {
   amount?: true
   receivedAt?: true
   reference?: true
+  idempotencyKey?: true
   method?: true
   notes?: true
   createdAt?: true
@@ -98,6 +102,7 @@ export type PaymentMaxAggregateInputType = {
   amount?: true
   receivedAt?: true
   reference?: true
+  idempotencyKey?: true
   method?: true
   notes?: true
   createdAt?: true
@@ -110,6 +115,7 @@ export type PaymentCountAggregateInputType = {
   amount?: true
   receivedAt?: true
   reference?: true
+  idempotencyKey?: true
   method?: true
   notes?: true
   createdAt?: true
@@ -209,6 +215,7 @@ export type PaymentGroupByOutputType = {
   amount: runtime.Decimal
   receivedAt: Date
   reference: string | null
+  idempotencyKey: string | null
   method: string | null
   notes: string | null
   createdAt: Date
@@ -244,6 +251,7 @@ export type PaymentWhereInput = {
   amount?: Prisma.DecimalFilter<"Payment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   reference?: Prisma.StringNullableFilter<"Payment"> | string | null
+  idempotencyKey?: Prisma.StringNullableFilter<"Payment"> | string | null
   method?: Prisma.StringNullableFilter<"Payment"> | string | null
   notes?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -258,6 +266,7 @@ export type PaymentOrderByWithRelationInput = {
   amount?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -268,6 +277,7 @@ export type PaymentOrderByWithRelationInput = {
 
 export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   id?: string
+  idempotencyKey?: string
   AND?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
   OR?: Prisma.PaymentWhereInput[]
   NOT?: Prisma.PaymentWhereInput | Prisma.PaymentWhereInput[]
@@ -281,7 +291,7 @@ export type PaymentWhereUniqueInput = Prisma.AtLeast<{
   updatedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   company?: Prisma.XOR<Prisma.CompanyScalarRelationFilter, Prisma.CompanyWhereInput>
   allocations?: Prisma.PaymentAllocationListRelationFilter
-}, "id">
+}, "id" | "idempotencyKey">
 
 export type PaymentOrderByWithAggregationInput = {
   id?: Prisma.SortOrder
@@ -289,6 +299,7 @@ export type PaymentOrderByWithAggregationInput = {
   amount?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   reference?: Prisma.SortOrderInput | Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrderInput | Prisma.SortOrder
   method?: Prisma.SortOrderInput | Prisma.SortOrder
   notes?: Prisma.SortOrderInput | Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -309,6 +320,7 @@ export type PaymentScalarWhereWithAggregatesInput = {
   amount?: Prisma.DecimalWithAggregatesFilter<"Payment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
   reference?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
+  idempotencyKey?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   method?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   notes?: Prisma.StringNullableWithAggregatesFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeWithAggregatesFilter<"Payment"> | Date | string
@@ -320,6 +332,7 @@ export type PaymentCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -334,6 +347,7 @@ export type PaymentUncheckedCreateInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -346,6 +360,7 @@ export type PaymentUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -360,6 +375,7 @@ export type PaymentUncheckedUpdateInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -373,6 +389,7 @@ export type PaymentCreateManyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -384,6 +401,7 @@ export type PaymentUpdateManyMutationInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -396,6 +414,7 @@ export type PaymentUncheckedUpdateManyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -418,6 +437,7 @@ export type PaymentCountOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
   method?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -434,6 +454,7 @@ export type PaymentMaxOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
   method?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -446,6 +467,7 @@ export type PaymentMinOrderByAggregateInput = {
   amount?: Prisma.SortOrder
   receivedAt?: Prisma.SortOrder
   reference?: Prisma.SortOrder
+  idempotencyKey?: Prisma.SortOrder
   method?: Prisma.SortOrder
   notes?: Prisma.SortOrder
   createdAt?: Prisma.SortOrder
@@ -522,6 +544,7 @@ export type PaymentCreateWithoutCompanyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -534,6 +557,7 @@ export type PaymentUncheckedCreateWithoutCompanyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -576,6 +600,7 @@ export type PaymentScalarWhereInput = {
   amount?: Prisma.DecimalFilter<"Payment"> | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
   reference?: Prisma.StringNullableFilter<"Payment"> | string | null
+  idempotencyKey?: Prisma.StringNullableFilter<"Payment"> | string | null
   method?: Prisma.StringNullableFilter<"Payment"> | string | null
   notes?: Prisma.StringNullableFilter<"Payment"> | string | null
   createdAt?: Prisma.DateTimeFilter<"Payment"> | Date | string
@@ -587,6 +612,7 @@ export type PaymentCreateWithoutAllocationsInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -600,6 +626,7 @@ export type PaymentUncheckedCreateWithoutAllocationsInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -627,6 +654,7 @@ export type PaymentUpdateWithoutAllocationsInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -640,6 +668,7 @@ export type PaymentUncheckedUpdateWithoutAllocationsInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -651,6 +680,7 @@ export type PaymentCreateManyCompanyInput = {
   amount: runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt: Date | string
   reference?: string | null
+  idempotencyKey?: string | null
   method?: string | null
   notes?: string | null
   createdAt?: Date | string
@@ -662,6 +692,7 @@ export type PaymentUpdateWithoutCompanyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -674,6 +705,7 @@ export type PaymentUncheckedUpdateWithoutCompanyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -686,6 +718,7 @@ export type PaymentUncheckedUpdateManyWithoutCompanyInput = {
   amount?: Prisma.DecimalFieldUpdateOperationsInput | runtime.Decimal | runtime.DecimalJsLike | number | string
   receivedAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
   reference?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
+  idempotencyKey?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   method?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   notes?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   createdAt?: Prisma.DateTimeFieldUpdateOperationsInput | Date | string
@@ -729,6 +762,7 @@ export type PaymentSelect<ExtArgs extends runtime.Types.Extensions.InternalArgs 
   amount?: boolean
   receivedAt?: boolean
   reference?: boolean
+  idempotencyKey?: boolean
   method?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -744,6 +778,7 @@ export type PaymentSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Exten
   amount?: boolean
   receivedAt?: boolean
   reference?: boolean
+  idempotencyKey?: boolean
   method?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -757,6 +792,7 @@ export type PaymentSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Exten
   amount?: boolean
   receivedAt?: boolean
   reference?: boolean
+  idempotencyKey?: boolean
   method?: boolean
   notes?: boolean
   createdAt?: boolean
@@ -770,13 +806,14 @@ export type PaymentSelectScalar = {
   amount?: boolean
   receivedAt?: boolean
   reference?: boolean
+  idempotencyKey?: boolean
   method?: boolean
   notes?: boolean
   createdAt?: boolean
   updatedAt?: boolean
 }
 
-export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "amount" | "receivedAt" | "reference" | "method" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
+export type PaymentOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "amount" | "receivedAt" | "reference" | "idempotencyKey" | "method" | "notes" | "createdAt" | "updatedAt", ExtArgs["result"]["payment"]>
 export type PaymentInclude<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   company?: boolean | Prisma.CompanyDefaultArgs<ExtArgs>
   allocations?: boolean | Prisma.Payment$allocationsArgs<ExtArgs>
@@ -801,6 +838,7 @@ export type $PaymentPayload<ExtArgs extends runtime.Types.Extensions.InternalArg
     amount: runtime.Decimal
     receivedAt: Date
     reference: string | null
+    idempotencyKey: string | null
     method: string | null
     notes: string | null
     createdAt: Date
@@ -1235,6 +1273,7 @@ export interface PaymentFieldRefs {
   readonly amount: Prisma.FieldRef<"Payment", 'Decimal'>
   readonly receivedAt: Prisma.FieldRef<"Payment", 'DateTime'>
   readonly reference: Prisma.FieldRef<"Payment", 'String'>
+  readonly idempotencyKey: Prisma.FieldRef<"Payment", 'String'>
   readonly method: Prisma.FieldRef<"Payment", 'String'>
   readonly notes: Prisma.FieldRef<"Payment", 'String'>
   readonly createdAt: Prisma.FieldRef<"Payment", 'DateTime'>

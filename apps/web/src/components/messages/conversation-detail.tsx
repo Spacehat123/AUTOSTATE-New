@@ -5,6 +5,7 @@ import { Send, Sparkles, Loader2, CheckCircle, X, Calendar, DollarSign } from 'l
 import { Button } from '@/components/ui/button'
 import { Textarea } from '@/components/ui/textarea'
 import { CommunicationTimeline } from '@/components/customers/communication-timeline'
+import { AIDraftBox } from '@/components/messages/ai-draft-box'
 import { toast } from 'sonner'
 
 interface ParsedReply {
@@ -29,6 +30,10 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
   const [parsedReply, setParsedReply] = useState<ParsedReply | null>(null)
   const [savingPromise, setSavingPromise] = useState(false)
   const bottomRef = useRef<HTMLDivElement>(null)
+
+  const pendingDraft = messages.length > 0 && messages[messages.length - 1]?.status === 'PENDING'
+    ? messages[messages.length - 1]
+    : null
 
   const fetchMessages = async () => {
     try {
@@ -139,6 +144,20 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
     }
   }
 
+  const handleApproveDraft = async (messageId: string) => {
+    const res = await fetch('/api/messages/approve', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ messageId })
+    })
+    if (res.ok) {
+      toast.success('Draft approved and sent')
+      await fetchMessages()
+    } else {
+      throw new Error('Failed to approve draft')
+    }
+  }
+
   return (
     <div className="flex flex-col h-full">
       {/* Header */}
@@ -165,6 +184,16 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
           </div>
         )}
       </div>
+
+      {/* AI Draft Panel */}
+      {pendingDraft && (
+        <AIDraftBox
+          messageId={pendingDraft.id}
+          content={pendingDraft.content}
+          onApprove={handleApproveDraft}
+          onEdit={(content) => setMessageText(content)}
+        />
+      )}
 
       {/* AI Promise Detection Panel */}
       {parsedReply?.intent === 'promise_to_pay' && (

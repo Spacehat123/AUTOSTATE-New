@@ -56,6 +56,8 @@ enum UserRole {
 model Customer {
   id                 String    @id @default(cuid())
   name               String
+  creditBalance      Decimal   @db.Decimal(18, 2) @default(0)
+  currency           String    @default("INR")
   phone              String?
   email              String?
   gstNumber          String?
@@ -101,6 +103,7 @@ model CompanyIntegration {
 
 model Invoice {
   id                String        @id @default(cuid())
+  currency          String        @default("INR")
   invoiceNumber     String
   amount            Decimal       @db.Decimal(18, 2)
   issueDate         DateTime
@@ -119,16 +122,17 @@ model Invoice {
 }
 
 model Payment {
-  id          String   @id @default(cuid())
-  companyId   String
-  company     Company  @relation(fields: [companyId], references: [id])
-  amount      Decimal  @db.Decimal(18, 2)
-  receivedAt  DateTime
-  reference   String?
-  method      String?
-  notes       String?  @db.Text
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  id             String   @id @default(cuid())
+  companyId      String
+  company        Company  @relation(fields: [companyId], references: [id])
+  amount         Decimal  @db.Decimal(18, 2)
+  receivedAt     DateTime
+  reference      String?
+  idempotencyKey String?  @unique
+  method         String?
+  notes          String?  @db.Text
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
 
   allocations PaymentAllocation[]
 
@@ -158,16 +162,18 @@ enum InvoiceStatus {
 }
 
 model Message {
-  id         String           @id @default(cuid())
-  customerId String
-  customer   Customer         @relation(fields: [customerId], references: [id])
-  type       MessageType
-  direction  MessageDirection
-  content    String           @db.Text
-  aiSummary  String?          @db.Text
-  whatsappId String?          @unique
-  timestamp  DateTime         @default(now())
-  createdAt  DateTime         @default(now())
+  id            String           @id @default(cuid())
+  customerId    String
+  customer      Customer         @relation(fields: [customerId], references: [id])
+  type          MessageType
+  direction     MessageDirection
+  content       String           @db.Text
+  aiSummary     String?          @db.Text
+  aiDraftReply  String?          @db.Text
+  aiDraftStatus String?          @default("PENDING")
+  whatsappId    String?          @unique
+  timestamp     DateTime         @default(now())
+  createdAt     DateTime         @default(now())
 
   promises Promise[]
 }
@@ -269,11 +275,18 @@ model ImportJob {
   companyId     String
   fileName      String
   status        ImportJobStatus @default(PENDING)
+  type          ImportType      @default(INVOICE)
+  fileHash      String?
   totalRows     Int?
   processedRows Int?
   errorLog      String?         @db.Text
   createdAt     DateTime        @default(now())
   updatedAt     DateTime        @updatedAt
+}
+
+enum ImportType {
+  INVOICE
+  PAYMENT
 }
 
 enum ImportJobStatus {

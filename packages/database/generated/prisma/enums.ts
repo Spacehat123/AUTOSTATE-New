@@ -87,6 +87,14 @@ export const TaskStatus = {
 export type TaskStatus = (typeof TaskStatus)[keyof typeof TaskStatus]
 
 
+export const ImportType = {
+  INVOICE: 'INVOICE',
+  PAYMENT: 'PAYMENT'
+} as const
+
+export type ImportType = (typeof ImportType)[keyof typeof ImportType]
+
+
 export const ImportJobStatus = {
   PENDING: 'PENDING',
   PROCESSING: 'PROCESSING',

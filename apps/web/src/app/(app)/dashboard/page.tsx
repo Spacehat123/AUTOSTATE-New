@@ -7,6 +7,9 @@ import { RecentActivity } from '@/components/dashboard/recent-activity'
 import { getCurrentUser } from '@/lib/auth'
 import { getDashboardData } from '@/lib/services/dashboard'
 
+export const dynamic = 'force-dynamic'
+
+
 export default async function DashboardPage() {
   const user = await getCurrentUser()
   const data = await getDashboardData(user.companyId)
@@ -15,6 +18,10 @@ export default async function DashboardPage() {
   const overdueAmount = Number(data.totalOverdue) || 0
   const expectedCollections = Number(data.expectedCollections) || 0
   const todaysCollections = Number(data.todaysCollections) || 0
+
+  const totalOutstanding = Number(data.totalOutstanding) || 0
+  const cashCollectedThisMonth = Number(data.cashCollectedThisMonth) || 0
+  const activePromisesToPay = Number(data.activePromisesToPay) || 0
 
   return (
     <div className="flex flex-col pb-10 w-[85%] max-w-[1600px] mx-auto gap-12 pt-8">
@@ -26,9 +33,10 @@ export default async function DashboardPage() {
       />
       
       <MetricsGroup 
-        outstanding={overdueAmount}
-        predicted={expectedCollections}
-        recovered={todaysCollections}
+        totalOutstanding={totalOutstanding}
+        totalOverdue={overdueAmount}
+        cashCollectedThisMonth={cashCollectedThisMonth}
+        activePromisesToPay={activePromisesToPay}
       />
       
       <div className="grid grid-cols-1 lg:grid-cols-[2fr_1fr] gap-6 pt-4">

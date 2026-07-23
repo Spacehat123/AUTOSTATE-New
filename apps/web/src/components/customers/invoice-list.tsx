@@ -37,9 +37,30 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
   const today = new Date()
   today.setHours(0, 0, 0, 0)
 
+  const [filter, setFilter] = React.useState<string>('ALL')
+  const statuses = ['ALL', 'PENDING', 'OVERDUE', 'PAID']
+
+  const filteredInvoices = invoices.filter(inv => filter === 'ALL' || inv.status === filter)
+
   return (
-    <div className="rounded-xl border border-surface-border bg-surface-card overflow-hidden">
-      <Table>
+    <div className="flex flex-col gap-4">
+      <div className="flex gap-2">
+        {statuses.map(s => (
+          <button
+            key={s}
+            onClick={() => setFilter(s)}
+            className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition-colors ${
+              filter === s
+                ? 'bg-brand-500 border-brand-500 text-white'
+                : 'border-surface-border text-zinc-400 hover:text-white hover:border-zinc-600'
+            }`}
+          >
+            {s === 'ALL' ? 'All' : s.charAt(0) + s.slice(1).toLowerCase()}
+          </button>
+        ))}
+      </div>
+      <div className="rounded-xl border border-surface-border bg-surface-card overflow-hidden">
+        <Table>
         <TableHeader className="bg-surface-border/20">
           <TableRow className="hover:bg-transparent border-surface-border">
             <TableHead className="font-semibold text-zinc-400 pl-6">Invoice</TableHead>
@@ -50,8 +71,15 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {invoices.map((inv) => {
-            const dueDate = new Date(inv.dueDate)
+          {filteredInvoices.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={5} className="text-center py-12 text-zinc-500 text-sm border-none">
+                No invoices match the selected status.
+              </TableCell>
+            </TableRow>
+          ) : (
+            filteredInvoices.map((inv) => {
+              const dueDate = new Date(inv.dueDate)
             const diffDays = differenceInDays(today, dueDate) // positive if today > dueDate
             
             return (
@@ -88,9 +116,11 @@ export function InvoiceList({ invoices }: { invoices: any[] }) {
                 </TableCell>
               </TableRow>
             )
-          })}
+            })
+          )}
         </TableBody>
       </Table>
+    </div>
     </div>
   )
 }

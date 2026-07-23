@@ -1,0 +1,4 @@
+Customer Name,Invoice Number,Invoice Amount,Issue Date,Due Date,Phone,Email,GST
+Acme Corp,INV-1001,1500.00,2026-07-01,2026-07-31,555-0101,billing@acmecorp.com,GST123456789
+Global Tech,INV-1002,3250.50,2026-07-10,2026-08-09,555-0102,accounts@globaltech.io,GST987654321
+Stark Industries,INV-1003,10000.00,2026-06-15,2026-07-15,555-0103,tony@starkindustries.com,GST555555555

@@ -41,6 +41,8 @@ export type ImportJobMinAggregateOutputType = {
   companyId: string | null
   fileName: string | null
   status: $Enums.ImportJobStatus | null
+  type: $Enums.ImportType | null
+  fileHash: string | null
   totalRows: number | null
   processedRows: number | null
   errorLog: string | null
@@ -53,6 +55,8 @@ export type ImportJobMaxAggregateOutputType = {
   companyId: string | null
   fileName: string | null
   status: $Enums.ImportJobStatus | null
+  type: $Enums.ImportType | null
+  fileHash: string | null
   totalRows: number | null
   processedRows: number | null
   errorLog: string | null
@@ -65,6 +69,8 @@ export type ImportJobCountAggregateOutputType = {
   companyId: number
   fileName: number
   status: number
+  type: number
+  fileHash: number
   totalRows: number
   processedRows: number
   errorLog: number
@@ -89,6 +95,8 @@ export type ImportJobMinAggregateInputType = {
   companyId?: true
   fileName?: true
   status?: true
+  type?: true
+  fileHash?: true
   totalRows?: true
   processedRows?: true
   errorLog?: true
@@ -101,6 +109,8 @@ export type ImportJobMaxAggregateInputType = {
   companyId?: true
   fileName?: true
   status?: true
+  type?: true
+  fileHash?: true
   totalRows?: true
   processedRows?: true
   errorLog?: true
@@ -113,6 +123,8 @@ export type ImportJobCountAggregateInputType = {
   companyId?: true
   fileName?: true
   status?: true
+  type?: true
+  fileHash?: true
   totalRows?: true
   processedRows?: true
   errorLog?: true
@@ -212,6 +224,8 @@ export type ImportJobGroupByOutputType = {
   companyId: string
   fileName: string
   status: $Enums.ImportJobStatus
+  type: $Enums.ImportType
+  fileHash: string | null
   totalRows: number | null
   processedRows: number | null
   errorLog: string | null
@@ -247,6 +261,8 @@ export type ImportJobWhereInput = {
   companyId?: Prisma.StringFilter<"ImportJob"> | string
   fileName?: Prisma.StringFilter<"ImportJob"> | string
   status?: Prisma.EnumImportJobStatusFilter<"ImportJob"> | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeFilter<"ImportJob"> | $Enums.ImportType
+  fileHash?: Prisma.StringNullableFilter<"ImportJob"> | string | null
   totalRows?: Prisma.IntNullableFilter<"ImportJob"> | number | null
   processedRows?: Prisma.IntNullableFilter<"ImportJob"> | number | null
   errorLog?: Prisma.StringNullableFilter<"ImportJob"> | string | null
@@ -259,6 +275,8 @@ export type ImportJobOrderByWithRelationInput = {
   companyId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  fileHash?: Prisma.SortOrderInput | Prisma.SortOrder
   totalRows?: Prisma.SortOrderInput | Prisma.SortOrder
   processedRows?: Prisma.SortOrderInput | Prisma.SortOrder
   errorLog?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -274,6 +292,8 @@ export type ImportJobWhereUniqueInput = Prisma.AtLeast<{
   companyId?: Prisma.StringFilter<"ImportJob"> | string
   fileName?: Prisma.StringFilter<"ImportJob"> | string
   status?: Prisma.EnumImportJobStatusFilter<"ImportJob"> | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeFilter<"ImportJob"> | $Enums.ImportType
+  fileHash?: Prisma.StringNullableFilter<"ImportJob"> | string | null
   totalRows?: Prisma.IntNullableFilter<"ImportJob"> | number | null
   processedRows?: Prisma.IntNullableFilter<"ImportJob"> | number | null
   errorLog?: Prisma.StringNullableFilter<"ImportJob"> | string | null
@@ -286,6 +306,8 @@ export type ImportJobOrderByWithAggregationInput = {
   companyId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  fileHash?: Prisma.SortOrderInput | Prisma.SortOrder
   totalRows?: Prisma.SortOrderInput | Prisma.SortOrder
   processedRows?: Prisma.SortOrderInput | Prisma.SortOrder
   errorLog?: Prisma.SortOrderInput | Prisma.SortOrder
@@ -306,6 +328,8 @@ export type ImportJobScalarWhereWithAggregatesInput = {
   companyId?: Prisma.StringWithAggregatesFilter<"ImportJob"> | string
   fileName?: Prisma.StringWithAggregatesFilter<"ImportJob"> | string
   status?: Prisma.EnumImportJobStatusWithAggregatesFilter<"ImportJob"> | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeWithAggregatesFilter<"ImportJob"> | $Enums.ImportType
+  fileHash?: Prisma.StringNullableWithAggregatesFilter<"ImportJob"> | string | null
   totalRows?: Prisma.IntNullableWithAggregatesFilter<"ImportJob"> | number | null
   processedRows?: Prisma.IntNullableWithAggregatesFilter<"ImportJob"> | number | null
   errorLog?: Prisma.StringNullableWithAggregatesFilter<"ImportJob"> | string | null
@@ -318,6 +342,8 @@ export type ImportJobCreateInput = {
   companyId: string
   fileName: string
   status?: $Enums.ImportJobStatus
+  type?: $Enums.ImportType
+  fileHash?: string | null
   totalRows?: number | null
   processedRows?: number | null
   errorLog?: string | null
@@ -330,6 +356,8 @@ export type ImportJobUncheckedCreateInput = {
   companyId: string
   fileName: string
   status?: $Enums.ImportJobStatus
+  type?: $Enums.ImportType
+  fileHash?: string | null
   totalRows?: number | null
   processedRows?: number | null
   errorLog?: string | null
@@ -342,6 +370,8 @@ export type ImportJobUpdateInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumImportJobStatusFieldUpdateOperationsInput | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeFieldUpdateOperationsInput | $Enums.ImportType
+  fileHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   processedRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   errorLog?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -354,6 +384,8 @@ export type ImportJobUncheckedUpdateInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumImportJobStatusFieldUpdateOperationsInput | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeFieldUpdateOperationsInput | $Enums.ImportType
+  fileHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   processedRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   errorLog?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -366,6 +398,8 @@ export type ImportJobCreateManyInput = {
   companyId: string
   fileName: string
   status?: $Enums.ImportJobStatus
+  type?: $Enums.ImportType
+  fileHash?: string | null
   totalRows?: number | null
   processedRows?: number | null
   errorLog?: string | null
@@ -378,6 +412,8 @@ export type ImportJobUpdateManyMutationInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumImportJobStatusFieldUpdateOperationsInput | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeFieldUpdateOperationsInput | $Enums.ImportType
+  fileHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   processedRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   errorLog?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -390,6 +426,8 @@ export type ImportJobUncheckedUpdateManyInput = {
   companyId?: Prisma.StringFieldUpdateOperationsInput | string
   fileName?: Prisma.StringFieldUpdateOperationsInput | string
   status?: Prisma.EnumImportJobStatusFieldUpdateOperationsInput | $Enums.ImportJobStatus
+  type?: Prisma.EnumImportTypeFieldUpdateOperationsInput | $Enums.ImportType
+  fileHash?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
   totalRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   processedRows?: Prisma.NullableIntFieldUpdateOperationsInput | number | null
   errorLog?: Prisma.NullableStringFieldUpdateOperationsInput | string | null
@@ -402,6 +440,8 @@ export type ImportJobCountOrderByAggregateInput = {
   companyId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  fileHash?: Prisma.SortOrder
   totalRows?: Prisma.SortOrder
   processedRows?: Prisma.SortOrder
   errorLog?: Prisma.SortOrder
@@ -419,6 +459,8 @@ export type ImportJobMaxOrderByAggregateInput = {
   companyId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  fileHash?: Prisma.SortOrder
   totalRows?: Prisma.SortOrder
   processedRows?: Prisma.SortOrder
   errorLog?: Prisma.SortOrder
@@ -431,6 +473,8 @@ export type ImportJobMinOrderByAggregateInput = {
   companyId?: Prisma.SortOrder
   fileName?: Prisma.SortOrder
   status?: Prisma.SortOrder
+  type?: Prisma.SortOrder
+  fileHash?: Prisma.SortOrder
   totalRows?: Prisma.SortOrder
   processedRows?: Prisma.SortOrder
   errorLog?: Prisma.SortOrder
@@ -445,6 +489,10 @@ export type ImportJobSumOrderByAggregateInput = {
 
 export type EnumImportJobStatusFieldUpdateOperationsInput = {
   set?: $Enums.ImportJobStatus
+}
+
+export type EnumImportTypeFieldUpdateOperationsInput = {
+  set?: $Enums.ImportType
 }
 
 export type NullableIntFieldUpdateOperationsInput = {
@@ -462,6 +510,8 @@ export type ImportJobSelect<ExtArgs extends runtime.Types.Extensions.InternalArg
   companyId?: boolean
   fileName?: boolean
   status?: boolean
+  type?: boolean
+  fileHash?: boolean
   totalRows?: boolean
   processedRows?: boolean
   errorLog?: boolean
@@ -474,6 +524,8 @@ export type ImportJobSelectCreateManyAndReturn<ExtArgs extends runtime.Types.Ext
   companyId?: boolean
   fileName?: boolean
   status?: boolean
+  type?: boolean
+  fileHash?: boolean
   totalRows?: boolean
   processedRows?: boolean
   errorLog?: boolean
@@ -486,6 +538,8 @@ export type ImportJobSelectUpdateManyAndReturn<ExtArgs extends runtime.Types.Ext
   companyId?: boolean
   fileName?: boolean
   status?: boolean
+  type?: boolean
+  fileHash?: boolean
   totalRows?: boolean
   processedRows?: boolean
   errorLog?: boolean
@@ -498,6 +552,8 @@ export type ImportJobSelectScalar = {
   companyId?: boolean
   fileName?: boolean
   status?: boolean
+  type?: boolean
+  fileHash?: boolean
   totalRows?: boolean
   processedRows?: boolean
   errorLog?: boolean
@@ -505,7 +561,7 @@ export type ImportJobSelectScalar = {
   updatedAt?: boolean
 }
 
-export type ImportJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "fileName" | "status" | "totalRows" | "processedRows" | "errorLog" | "createdAt" | "updatedAt", ExtArgs["result"]["importJob"]>
+export type ImportJobOmit<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = runtime.Types.Extensions.GetOmit<"id" | "companyId" | "fileName" | "status" | "type" | "fileHash" | "totalRows" | "processedRows" | "errorLog" | "createdAt" | "updatedAt", ExtArgs["result"]["importJob"]>
 
 export type $ImportJobPayload<ExtArgs extends runtime.Types.Extensions.InternalArgs = runtime.Types.Extensions.DefaultArgs> = {
   name: "ImportJob"
@@ -515,6 +571,8 @@ export type $ImportJobPayload<ExtArgs extends runtime.Types.Extensions.InternalA
     companyId: string
     fileName: string
     status: $Enums.ImportJobStatus
+    type: $Enums.ImportType
+    fileHash: string | null
     totalRows: number | null
     processedRows: number | null
     errorLog: string | null
@@ -947,6 +1005,8 @@ export interface ImportJobFieldRefs {
   readonly companyId: Prisma.FieldRef<"ImportJob", 'String'>
   readonly fileName: Prisma.FieldRef<"ImportJob", 'String'>
   readonly status: Prisma.FieldRef<"ImportJob", 'ImportJobStatus'>
+  readonly type: Prisma.FieldRef<"ImportJob", 'ImportType'>
+  readonly fileHash: Prisma.FieldRef<"ImportJob", 'String'>
   readonly totalRows: Prisma.FieldRef<"ImportJob", 'Int'>
   readonly processedRows: Prisma.FieldRef<"ImportJob", 'Int'>
   readonly errorLog: Prisma.FieldRef<"ImportJob", 'String'>
