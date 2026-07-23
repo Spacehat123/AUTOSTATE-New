@@ -308,11 +308,11 @@ export function UsersSettings() {
               </Select>
               
               <DropdownMenu>
-                <DropdownMenuTrigger asChild>
+                <DropdownMenuTrigger render={
                   <Button variant="ghost" size="icon" className="h-9 w-9 text-zinc-400 hover:text-foreground">
                     <MoreHorizontal className="w-4 h-4" />
                   </Button>
-                </DropdownMenuTrigger>
+                } />
                 <DropdownMenuContent align="end" className="w-48">
                   {user.role === 'ADMIN' && (
                     <DropdownMenuItem onClick={() => handleToggleAuthorization(user.id, !!user.isAuthorizedByOwner)}>

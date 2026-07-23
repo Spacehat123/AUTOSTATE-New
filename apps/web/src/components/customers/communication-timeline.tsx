@@ -181,7 +181,7 @@ export function CommunicationTimeline({ customerId, messages = [] }: { customerI
 
       <CardFooter className="flex-shrink-0 border-t border-surface-border/50 p-4 gap-2 flex-col">
         <div className="flex w-full gap-2 items-end">
-          <Select value={msgType} onValueChange={setMsgType}>
+          <Select value={msgType} onValueChange={(val) => val && setMsgType(val)}>
             <SelectTrigger className="w-[110px] bg-black/20 border-surface-border h-10">
               <SelectValue />
             </SelectTrigger>

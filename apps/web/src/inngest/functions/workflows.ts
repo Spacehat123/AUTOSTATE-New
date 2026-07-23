@@ -2,8 +2,7 @@ import { inngest } from '../client'
 import { prisma } from '@autostate/database'
 
 export const evaluateDunningWorkflows = inngest.createFunction(
-  { id: 'evaluate-dunning-workflows', name: 'Evaluate Dunning Workflows' },
-  { cron: '0 * * * *' },
+  { id: 'evaluate-dunning-workflows', name: 'Evaluate Dunning Workflows', triggers: [{ cron: '0 * * * *' }] },
   async ({ step }) => {
     // 1. Fetch all active workflows with their steps
     const workflows = await step.run('fetch-active-workflows', async () => {

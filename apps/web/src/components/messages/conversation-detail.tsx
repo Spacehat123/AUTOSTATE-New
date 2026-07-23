@@ -179,7 +179,7 @@ export function ConversationDetail({ customerId, customerName }: ConversationDet
           </div>
         ) : (
           <div className="p-4">
-            <CommunicationTimeline messages={messages} />
+            <CommunicationTimeline customerId={customerId} messages={messages} />
             <div ref={bottomRef} />
           </div>
         )}

@@ -176,7 +176,7 @@ export function RecordPaymentModal({
 
   return (
     <Dialog open={open} onOpenChange={setOpen}>
-      {trigger && <DialogTrigger asChild>{trigger}</DialogTrigger>}
+      {trigger && <DialogTrigger render={trigger as any} />}
       <DialogContent className="bg-surface-card border-surface-border text-foreground max-w-lg">
         <DialogHeader>
           <DialogTitle>Record Payment Received</DialogTitle>

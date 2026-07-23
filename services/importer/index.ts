@@ -85,7 +85,7 @@ function parseDate(value: unknown): Date | null {
     const parts = str.split(/[\/\-]/)
     if (parts.length === 3) {
       const [p1, p2, p3] = parts
-      if (p3.length === 4) {
+      if (p3?.length === 4) {
         // Swap DD and MM
         date = new Date(`${p2}/${p1}/${p3}`)
         if (!Number.isNaN(date.getTime())) return date
